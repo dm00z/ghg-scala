@@ -13,10 +13,13 @@ scalacOptions ++= Seq("-encoding", "UTF-8", "-deprecation", "-unchecked", "-feat
 )
 
 libraryDependencies ++= Seq(
-  "org.scalafx"     %% "scalafx"    % "8.0.60-R9",
-  "org.controlsfx"  % "controlsfx"  % "8.40.10"
+  "ch.qos.logback" % "logback-classic" % "1.1.3",
+//  "org.controlsfx"  % "controlsfx"  % "8.40.10",
+  "org.scalafx"     %% "scalafx"    % "8.0.60-R9"
 )
 
 mainClass := Some("ghg.Main")
 
 assemblyJarName in assembly := s"${name.value}-${version.value}.jar"
+
+unmanagedJars in Compile += Attributed.blank(file(System.getenv("JAVA_HOME") + "/jre/lib/ext/jfxrt.jar"))
