@@ -4,7 +4,9 @@ import scalafx.Includes._
 import scalafx.scene.control.Label
 import scalafx.scene.layout.GridPane
 
-class TopView(d: TopData) extends GridPane {
+class TopView extends GridPane {
+  @inline private[this] def d = TopData
+
   val rowNames = Seq("Loại nước thải", "Tên nhà máy", "Địa điểm", "Hạng mục")
 
   addColumn(0, rowNames.map(Label(_).delegate): _*)
