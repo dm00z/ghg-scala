@@ -14,7 +14,7 @@ scalacOptions ++= Seq("-encoding", "UTF-8", "-deprecation", "-unchecked", "-feat
 
 libraryDependencies ++= Seq(
   "ch.qos.logback" % "logback-classic" % "1.1.3",
-//  "org.controlsfx"  % "controlsfx"  % "8.40.10",
+  "org.controlsfx"  % "controlsfx"  % "8.40.10",
   "org.scalafx"     %% "scalafx"    % "8.0.60-R9"
 )
 
