@@ -24,9 +24,12 @@ artifactPath in (Compile, fastOptJS) <<= (
 
 val vReact = "0.14.3"
 val vScalaReact = "0.10.2"
-
+val vScalaCSS = "0.3.1"
+val vScalaReactCom = "0.2.0"
 libraryDependencies ++= Seq(
-  //  "com.github.chandu0101.scalajs-react-components" %%% "core" % "0.2.0",
+  "com.github.chandu0101.scalajs-react-components" %%% "core" % vScalaReactCom,
+  "com.github.japgolly.scalacss" %%% "core" % vScalaCSS,
+  "com.github.japgolly.scalacss" %%% "ext-react" % vScalaCSS,
   "com.github.japgolly.scalajs-react" %%% "extra" % vScalaReact,
   "com.github.japgolly.scalajs-react" %%% "core" % vScalaReact
 )
