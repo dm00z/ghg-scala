@@ -1,25 +1,16 @@
 name := "ghg"
 version := "0.1"
-//scalaVersion := "2.11.7"
-scalaVersion := "2.12.0-M3"
+scalaVersion := "2.11.7"
 
-scalacOptions ++= Seq("-encoding", "UTF-8", "-deprecation", "-unchecked", "-feature"
-  ,"-Yinline-warnings" //, "-Yinline"
-  ,"-Xfuture" //, "–Xverify", "-Xcheck-null"
-//  ,"-Xexperimental"
-//  ,"-Yopt:l:classpath"
-  ,"-Ywarn-unused-import", "-Ywarn-numeric-widen"
-  //,"nullary-unit", "nullary-override", "unsound-match", "adapted-args", "infer-any"
-)
+enablePlugins(ScalaJSPlugin)
 
-libraryDependencies ++= Seq(
-  "ch.qos.logback" % "logback-classic" % "1.1.3",
-  "org.controlsfx"  % "controlsfx"  % "8.40.10",
-  "org.scalafx"     %% "scalafx"    % "8.0.60-R9"
-)
+scalacOptions ++= Seq("-encoding", "UTF-8", "-deprecation", "-unchecked", "-feature")
 
-mainClass := Some("ghg.Main")
+//libraryDependencies ++= Seq(
+//  "com.github.chandu0101.scalajs-react-components" %%% "core" % "0.2.0"
+//)
 
-assemblyJarName in assembly := s"${name.value}-${version.value}.jar"
-
-unmanagedJars in Compile += Attributed.blank(file(System.getenv("JAVA_HOME") + "/jre/lib/ext/jfxrt.jar"))
+//scalaJSStage in Global := FastOptStage
+skip in packageJSDependencies := false
+persistLauncher in Compile := true
+persistLauncher in Test := false

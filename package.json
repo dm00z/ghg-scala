@@ -1,0 +1,8 @@
+{
+  "name"    : "ghg",
+  "version" : "0.1.0",
+  "main"    : "main.js",
+  "devDependencies": {
+    "source-map-support": "^0.3.3"
+  }
+}
