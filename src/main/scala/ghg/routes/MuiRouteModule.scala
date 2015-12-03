@@ -7,15 +7,15 @@ object MuiRouteModule {
   case object Info     extends LeftRoute("1. Thông tin chung", "info", InfoPage.apply)
 
   case object Indirect extends LeftRoute("2. Gián tiếp", "indirect", IndirectPage.apply)
-  case object Electric    extends LeftRoute("2.1. Điện", "electric", ElectricPage.apply)
-  case object Gas         extends LeftRoute("2.2. Nhiên liêu", "gas", GasPage.apply)
-  case object Material    extends LeftRoute("2.3. Nguyên Liệu", "material", MaterialPage.apply)
+  case object Electric    extends LeftRoute("a. Điện", "electric", ElectricPage.apply, 1)
+  case object Gas         extends LeftRoute("b. Nhiên liêu", "gas", GasPage.apply, 1)
+  case object Material    extends LeftRoute("c. Nguyên Liệu", "material", MaterialPage.apply, 1)
 
   case object Direct   extends LeftRoute("3. Trực tiếp", "direct", DirectPage.apply)
-  case object KineticRelation     extends LeftRoute("3.1. Quan hệ động học", "kinetic-relation", KineticRelationPage.apply)
-  case object KineticCoefficient  extends LeftRoute("3.2. Hệ số động học", "kinetic-coefficient", KineticCoefficientPage.apply)
-  case object DirectData          extends LeftRoute("3.3. Dữ liệu", "direct-data", DirectDataPage.apply)
-  case object Aerobic             extends LeftRoute("3.4. Hệ hiếu khí", "aerobic", AerobicPage.apply)
+  case object KineticRelation     extends LeftRoute("a. Quan hệ động học", "kinetic-relation", KineticRelationPage.apply, 1)
+  case object KineticCoefficient  extends LeftRoute("b. Hệ số động học", "kinetic-coefficient", KineticCoefficientPage.apply, 1)
+  case object DirectData          extends LeftRoute("c. Dữ liệu", "direct-data", DirectDataPage.apply, 1)
+  case object Aerobic             extends LeftRoute("d. Hệ hiếu khí", "aerobic", AerobicPage.apply, 1)
 
   val menu: List[LeftRoute] = List(
     Info,

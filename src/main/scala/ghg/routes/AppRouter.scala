@@ -10,7 +10,10 @@ object AppRouter {
 
   val config = RouterConfigDsl[Page].buildConfig { dsl =>
     import dsl._
-    val muiRoutes: Rule = MuiRouteModule.routes.prefixPath_/("#").pmap[Page](MuiPages) { case MuiPages(p) => p }
+    val muiRoutes: Rule = MuiRouteModule.routes
+      .prefixPath_/("#")
+      .pmap[Page](MuiPages) { case MuiPages(p) => p }
+
     (trimSlashes | muiRoutes)
       .notFound(redirectToPage(MuiPages(MuiRouteModule.Info))(Redirect.Replace))
       .renderWith(layout)

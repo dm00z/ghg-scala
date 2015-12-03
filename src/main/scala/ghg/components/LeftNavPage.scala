@@ -37,5 +37,5 @@ object LeftNavPage {
 
   def apply(menu: List[LeftRoute], selectedPage: LeftRoute, ctrl: RouterCtl[LeftRoute],
             ref: js.UndefOr[String] = "",
-            key: js.Any = {}) = component.set(key, ref)(Props(menu,selectedPage,ctrl))
+            key: js.Any = {}) = component.set(key, ref)(Props(menu, selectedPage, ctrl))
 }

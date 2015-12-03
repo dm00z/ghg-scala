@@ -16,19 +16,26 @@ object LeftNav {
       listStyle := "none",
       padding.`0`)
 
-    val menuItem = styleF.bool(selected => styleS(
-      lineHeight(48.px),
-      padding :=! "0 25px",
-      cursor.pointer,
-      textDecoration := "none",
-      mixinIfElse(selected)(
-        color.red, fontWeight._500
-      )(color.black,
-        &.hover(
-          color(c"#555555"),
-          backgroundColor(c"#ecf0f1")
+    val menuItem = styleF(Domain.ofValues(0, 1) *** Domain.boolean) {
+      case (indentLevel, selected) => styleS(
+        lineHeight(48.px),
+        padding :=! "0 25px",
+        cursor.pointer,
+        textDecoration := "none",
+
+        marginLeft((indentLevel * 5).px),
+        mixinIf(indentLevel == 0)(fontWeight.bold),
+
+        mixinIfElse(selected)(
+          color.red
+        )(color.black,
+          &.hover(
+            color(c"#555555"),
+            backgroundColor(c"#ecf0f1")
+          )
         )
-      )))
+      )
+    }
   }
 
   case class Props(menus: List[LeftRoute], selectedPage: LeftRoute, ctrl: RouterCtl[LeftRoute])
@@ -37,7 +44,7 @@ object LeftNav {
     def render(P: Props) = {
       <.ul(Style.container)(
         P.menus.map(item => <.li(^.key := item.name,
-          Style.menuItem(item == P.selectedPage),
+          Style.menuItem(item.indentLevel, item == P.selectedPage),
           item.name,
           P.ctrl setOnClick item))
       )
