@@ -1,8 +1,32 @@
 {
-  "name"    : "ghg",
-  "version" : "0.1.0",
-  "main"    : "main.js",
+  "name": "ghg",
+  "version": "0.1.0",
+  "main": "main.js",
+  "license": "UNLICENSED",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/giabao/???.git"
+  },
+  "scripts": {
+    "start": "webpack --watch & webpack-dev-server --progress --colors --port 8090",
+    "build": "webpack --config webpack.config.prod.js"
+  },
   "devDependencies": {
-    "source-map-support": "^0.3.3"
+    "css-loader": "^0.23.0",
+    "file-loader": "^0.8.5",
+    "source-map-support": "^0.3.3",
+    "style-loader": "^0.13.0",
+    "url-loader": "^0.5.7",
+    "webpack": "^1.12.9",
+    "webpack-dev-server": "^1.14.0"
+  },
+  "dependencies": {
+    "react": "^0.14.3",
+    "react-dom": "^0.14.3",
+    "react-addons-update": "^0.14.3",
+    "react-infinite": "^0.7.1",
+    "material-ui": "^0.13.4",
+    "react-tap-event-plugin": "^0.2.1"
   }
 }

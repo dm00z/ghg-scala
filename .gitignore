@@ -4,3 +4,8 @@ src_managed/
 project/boot/
 .cache
 /js/
+/node_modules/
+/assets/
+/.idea/libraries/
+/.idea/modules.xml
+
