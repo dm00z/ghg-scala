@@ -1,5 +1,11 @@
 package ghg.routes
 
-import japgolly.scalajs.react.ReactElement
+import ghg.components.AppHeader
+import japgolly.scalajs.react.{ReactComponentB, ReactElement}
+import japgolly.scalajs.react.vdom.prefix_<^._
 
-abstract class LeftRoute(val name: String, val route: String, val render: () => ReactElement, val indentLevel: Int = 0)
+abstract class LeftRoute(val name: String, val route: String, pageRender: () => ReactElement, val indentLevel: Int = 0) {
+  val render = ReactComponentB[Unit]("LeftRoute")
+    .render(_ => <.div(AppHeader(), pageRender()))
+    .buildU
+}

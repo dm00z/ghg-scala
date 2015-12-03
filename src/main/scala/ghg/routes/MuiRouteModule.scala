@@ -20,7 +20,7 @@ object MuiRouteModule {
   val menu: List[LeftRoute] = List(
     Info,
     Indirect, Electric, Gas, Material,
-    Direct, KineticRelation, KineticRelation, KineticCoefficient, DirectData, Aerobic
+    Direct, KineticRelation, KineticCoefficient, DirectData, Aerobic
   )
 
   val routes = RouterConfigDsl[LeftRoute].buildRule { dsl =>

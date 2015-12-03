@@ -1,6 +1,5 @@
 package ghg.routes
 
-import ghg.components.AppHeader
 import japgolly.scalajs.react.extra.router._
 import japgolly.scalajs.react.vdom.prefix_<^._
 
@@ -20,9 +19,7 @@ object AppRouter {
   }
 
   def layout(c: RouterCtl[Page], r: Resolution[Page]) = {
-    <.div(
-      AppHeader(),
-      r.render(),
+    <.div(r.render(),
       <.div(^.textAlign := "center", ^.key := "footer")(
         <.hr(),
         <.p("Nguyễn Vân Anh")))
