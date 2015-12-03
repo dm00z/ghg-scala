@@ -15,6 +15,8 @@ scalacOptions ++= Seq("-encoding", "UTF-8", "-deprecation", "-unchecked", "-feat
 persistLauncher in Compile := true
 persistLauncher in Test := false
 
+scalaJSOptimizerOptions in fastOptJS ~= { _.withDisableOptimizer(true) }
+
 // copy  javascript files to js folder,that are generated using fastOptJS/fullOptJS
 Seq(fullOptJS, fastOptJS, packageJSDependencies, packageScalaJSLauncher, packageMinifiedJSDependencies)
   .map(scope => crossTarget in (Compile, scope) := file("assets"))

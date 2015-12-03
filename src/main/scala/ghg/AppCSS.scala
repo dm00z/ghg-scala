@@ -17,7 +17,7 @@ object AppCSS {
 //      MobileTearSheet.Style,
       ReactTable.DefaultStyle,
       ReactListView.DefaultStyle,
-      ReactSearchBox.DefaultStyle,
+//      ReactSearchBox.DefaultStyle,
       Pager.DefaultStyle
 //      ScalaCSSTutorial.Style,
 //      InfoTemplate.Style,
