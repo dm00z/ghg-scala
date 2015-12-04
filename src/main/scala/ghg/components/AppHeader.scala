@@ -11,7 +11,7 @@ object AppHeader {
     .renderBackend[Backend]
     .build
 
-  @inline def apply(group: String, subGroup: Option[String]) = component(Props(Factory("", "", ""), group, subGroup))
+  @inline def apply(group: String, subGroup: Option[String] = None) = component(Props(Factory("", "", ""), group, subGroup))
 
   case class Props(f: Factory, group: String, subGroup: Option[String]) {
     def divs = {

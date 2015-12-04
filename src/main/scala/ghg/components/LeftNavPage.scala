@@ -8,6 +8,7 @@ import scala.scalajs.js
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 
+//fixme naming. This component is not only `left`
 object LeftNavPage {
   object Style extends StyleSheet.Inline { import dsl._
     val container = style(
@@ -32,7 +33,7 @@ object LeftNavPage {
     .renderBackend[Backend]
     .build
 
-  case class Props(menu: List[LeftRoute], selectedPage: LeftRoute,ctrl: RouterCtl[LeftRoute])
+  case class Props(menu: List[LeftRoute], selectedPage: LeftRoute, ctrl: RouterCtl[LeftRoute])
 
   def apply(menu: List[LeftRoute], selectedPage: LeftRoute, ctrl: RouterCtl[LeftRoute],
             ref: js.UndefOr[String] = "",

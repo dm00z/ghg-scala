@@ -43,10 +43,14 @@ object LeftNav {
   case class Backend($: BackendScope[Props, _]){
     def render(P: Props) = {
       <.ul(Style.container)(
-        P.menus.map(item => <.li(^.key := item.name,
-          Style.menuItem(item.subGroup.fold(0)(_ => 1), item == P.selectedPage),
-          item.name,
-          P.ctrl setOnClick item))
+        P.menus.map { item =>
+          <.li(
+            ^.key := item.name,
+            Style.menuItem(item.indentLevel, item == P.selectedPage),
+            item.name,
+            P.ctrl setOnClick item
+          )
+        }
       )
     }
   }
