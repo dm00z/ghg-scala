@@ -1,7 +1,7 @@
 package ghg
 
 import chandu0101.scalajs.react.components._
-import ghg.components.{LeftNavPage, LeftNav}
+import ghg.components.{AppHeader, LeftNavPage, LeftNav}
 import scalacss.mutable.GlobalRegistry
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
@@ -10,7 +10,6 @@ object AppCSS {
   def load() = {
     GlobalRegistry.register(LeftNav.Style,
       LeftNavPage.Style,
-//      MuiButtonsDemo.Style,
 //      MuiPaperDemo.Style,
 //      MuiSwitchesDemo.Style,
 //      MuiMenuDemo.Style,
