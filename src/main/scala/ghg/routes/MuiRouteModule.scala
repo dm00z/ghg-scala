@@ -16,11 +16,12 @@ object MuiRouteModule {
   case object KineticCoefficient  extends LeftRoute("b. Hệ số động học", "kinetic-coefficient", KineticCoefficientPage.apply, 1)
   case object DirectData          extends LeftRoute("c. Dữ liệu", "direct-data", DirectDataPage.apply, 1)
   case object Aerobic             extends LeftRoute("d. Hệ hiếu khí", "aerobic", AerobicPage.apply, 1)
+  case object Anaerobic           extends LeftRoute("e. Hệ yếm khí", "anaerobic", AnaerobicPage.apply, 1)
 
   val menu: List[LeftRoute] = List(
     Info,
     Indirect, Electric, Gas, Material,
-    Direct, KineticRelation, KineticCoefficient, DirectData, Aerobic
+    Direct, KineticRelation, KineticCoefficient, DirectData, Aerobic, Anaerobic
   )
 
   val routes = RouterConfigDsl[LeftRoute].buildRule { dsl =>

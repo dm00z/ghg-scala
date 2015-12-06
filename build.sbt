@@ -29,6 +29,7 @@ val vScalaReact = "0.10.2"
 val vScalaCSS = "0.3.1"
 val vScalaReactCom = "0.2.0"
 libraryDependencies ++= Seq(
+  "io.github.widok" %%% "scala-js-momentjs" % "0.1.4",
   "com.github.chandu0101.scalajs-react-components" %%% "core" % vScalaReactCom,
   "com.github.japgolly.scalacss" %%% "ext-react" % vScalaCSS,
   "com.github.japgolly.scalajs-react" %%% "extra" % vScalaReact

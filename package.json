@@ -22,11 +22,12 @@
     "webpack-dev-server": "^1.14.0"
   },
   "dependencies": {
-    "react": "^0.14.3",
-    "react-dom": "^0.14.3",
-    "react-addons-update": "^0.14.3",
-    "react-infinite": "^0.7.1",
     "material-ui": "^0.13.4",
+    "moment": "^2.10.6",
+    "react": "^0.14.3",
+    "react-addons-update": "^0.14.3",
+    "react-dom": "^0.14.3",
+    "react-infinite": "^0.7.1",
     "react-tap-event-plugin": "^0.2.1"
   }
 }
