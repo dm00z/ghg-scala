@@ -34,7 +34,23 @@ object KineticCoefficientData {
 
   //TODO impl - không biết công thức!
   object Anaerobic {
+    val Y = RNorm(R(.05, .1), .08)
+    val KD = RNorm(R(.02, .04), .03)
 
+    val test = Anaerobic(KT(.2, 1.06, 25), Y.norm, KT(900, 0.841371404, 25), KD.norm, .15)
+  }
+
+  /** Quá trình yếm khí
+    * @param m day^-1
+    * @param y mg/mg
+    * @param ks mg/l
+    * @param kd day^-1
+    * @param f ??
+    *
+    * @note Giả định m, kd cũng tuân theo công thức KT
+    */
+  case class Anaerobic(m: KT, y: Double, ks: KT, kd: Double, f: Double) {
+    def k(t: Int) = m(t) / y
   }
 }
 

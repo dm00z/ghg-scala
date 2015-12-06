@@ -12,7 +12,7 @@ case class GhgData(info: InfoData, indirect: IndirectData) {
 }
 
 object GhgData {
-  val d = GhgData(
+  val testData = GhgData(
     InfoData(
       Factory(
         "Nước thải công nghiệp",
