@@ -14,8 +14,4 @@ window.mui.Menu = require('material-ui/lib/menus/menu');
 window.mui.MenuItem = require('material-ui/lib/menus/menu-item');
 window.mui.MenuDivider = require('material-ui/lib/menus/menu-divider');
 
-//todo use
-var Infinite = require('react-infinite');
-window.Infinite = Infinite;
-
-var moment = require("moment")
+var moment = require("moment");

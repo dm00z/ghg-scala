@@ -27,7 +27,6 @@
     "react": "^0.14.3",
     "react-addons-update": "^0.14.3",
     "react-dom": "^0.14.3",
-    "react-infinite": "^0.7.1",
     "react-tap-event-plugin": "^0.2.1"
   }
 }
