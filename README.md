@@ -29,3 +29,4 @@ electron .
 
 # TODO
 + i18n
++ should we use [squants](http://www.squants.com/)?

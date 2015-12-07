@@ -48,17 +48,8 @@ object ElectricData {
   }
 }
 
-case class ElectricData(method: ElectricData.CalcMethod.Value = ElectricData.CalcMethod.Method1,
+case class ElectricData(powerStruct: CountryPowerStruct,
+                        method: ElectricData.CalcMethod.Value,
                         _1: Option[ElectricData.D1] = None,
                         _2: Option[ElectricData.D2] = None,
-                        _3: Option[ElectricData.D3] = None,
-                        powerStruct: CountryPowerStruct = CountryPowerStruct(
-                          "Việt Nam", "Báo cáo thường niên của EVN năm 2013",
-                          Seq(
-                            ElectricData.PowerSupply("Thủy điện", 10, R(16, 410), "Rasha and Hammad, 2000") -> 48.78,
-                            ElectricData.PowerSupply("Hạt nhân", 9, R(9, 30), "Andesta et al., 1998") -> 0,
-                            ElectricData.PowerSupply("Than", 877, R(860, 1290), "IPCC,2001") -> 23.07,
-                            ElectricData.PowerSupply("Khí tự nhiên", 640, R(460, 1234), "") -> 0,
-                            ElectricData.PowerSupply("Sinh học, gió, thủy triều", 11, R(11, 279), "") -> 0.43,
-                            ElectricData.PowerSupply("Nhiên liệu khác", 604, R(600, 890), "IPCC,2001") -> 27.72
-                          )))
+                        _3: Option[ElectricData.D3] = None)

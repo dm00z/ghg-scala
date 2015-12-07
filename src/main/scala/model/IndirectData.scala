@@ -1,5 +1,5 @@
 package model
 
-case class IndirectData(electric: ElectricData = ElectricData(),
-                        gas: GasData = GasData(),
-                        material: MaterialData = MaterialData())
+case class IndirectData(electric: ElectricData,
+                        gas: GasData,
+                        material: MaterialData)

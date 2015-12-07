@@ -1,15 +1,8 @@
 package model
 
 object KineticRelationData {
-//  case class NamedData(symbol: String, unit: String, value: Double)
-//  type Ds = Seq[NamedData]
-//  case class Data(aerobic1: Ds, aerobic2: Ds,
-//                  anaerobic1: Ds, anaerobic2: Ds,
-//                  nitrate: Ds, denitrate: Ds,
-//                  decay1: Ds, decay2: Ds,
-//                  incinerate: Ds)
-//
-//  import KineticRelationData.{NamedData => D}
+
+  /** Mối quan hệ động học - chung cho mọi nhà máy */
   case class Data(yC02: Double, yVSS: Double, yAlk: Double, rCO2: Double,
                   yC02Decay: Double, yAlkDecay: Double, rCO2Decay: Double,
                   yC02An: Double, yCH4An: Double, yVSSAn: Double, yAlkAn: Double,

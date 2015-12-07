@@ -37,7 +37,7 @@ object KineticCoefficientData {
     val Y = RNorm(R(.05, .1), .08)
     val KD = RNorm(R(.02, .04), .03)
 
-    val test = Anaerobic(KT(.2, 1.06, 25), Y.norm, KT(900, 0.841371404, 25), KD.norm, .15)
+    val default = Anaerobic(KT(.2, 1.06, 25), Y.norm, KT(900, 0.841371404, 25), KD.norm, .15)
   }
 
   /** Quá trình yếm khí
@@ -55,4 +55,4 @@ object KineticCoefficientData {
 }
 
 import KineticCoefficientData._
-case class KineticCoefficientData(aerobic: Aerobic, nitrate: Nitrate)
+case class KineticCoefficientData(aerobic: Aerobic, nitrate: Nitrate, anaerobic: Anaerobic)
