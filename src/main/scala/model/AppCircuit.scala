@@ -5,8 +5,9 @@ import DirectTable.{PoolData, PrimaryPoolData, GenericData}
 import GasData.{GasRatioTable, GWP}, GWP.{Row => GWPRow}
 import GasRatioTable.{Group => GasGroup, Row => GasRow}
 import ElectricData.{CountryPowerStruct, CalcMethod, PowerSupply}
+import diode.react.ReactConnector
 
-object AppCircuit extends Circuit[GhgData] {
+object AppCircuit extends Circuit[GhgData] with ReactConnector[GhgData]{
   protected var model = testData()
 
   protected def actionHandler: HandlerFunction = ???

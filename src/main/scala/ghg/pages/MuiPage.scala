@@ -2,13 +2,13 @@ package ghg.pages
 
 import chandu0101.scalajs.react.components.materialui.ThemeInstaller
 import ghg.components.LeftNavPage
-import ghg.routes.{LeftRoute, MuiRouteModule}
+import ghg.routes.{LeftRoute, AppRouter}
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.router.RouterCtl
 
 object MuiPage {
   case class Backend($: BackendScope[Props, _]) {
-    def render(P: Props) = LeftNavPage(MuiRouteModule.menu, P.selectedPage, P.ctrl)
+    def render(P: Props) = LeftNavPage(AppRouter.menu, P.selectedPage, P.ctrl)
   }
 
   val component = ReactComponentB[Props]("MuiPage")
