@@ -25,20 +25,19 @@ artifactPath in (Compile, fastOptJS) <<= (
   moduleName in fastOptJS
 ) { (dir, name) => dir / s"$name-opt.js" }
 
-val vScalaReact = "0.10.2"
-val vScalaCSS = "0.3.1"
-val vScalaReactCom = "0.2.0"
+//dependencies
+val VsReact = "0.10.2"
+val VsCss = "0.3.1"
+val VsReactCom = "0.2.0"
+val VsMoment = "0.1.4"
+val Vdiode = "0.2.0"
 libraryDependencies ++= Seq(
-  "io.github.widok" %%% "scala-js-momentjs" % "0.1.4",
-  "com.github.chandu0101.scalajs-react-components" %%% "core" % vScalaReactCom,
-  "com.github.japgolly.scalacss" %%% "ext-react" % vScalaCSS,
-  "com.github.japgolly.scalajs-react" %%% "extra" % vScalaReact
+  "io.github.widok" %%% "scala-js-momentjs" % VsMoment,
+  "me.chrons" %%% "diode-react" % Vdiode,
+  "com.github.chandu0101.scalajs-react-components" %%% "core" % VsReactCom,
+  "com.github.japgolly.scalacss" %%% "ext-react" % VsCss,
+  "com.github.japgolly.scalajs-react" %%% "extra" % VsReact
 )
-
-//val vReact = "0.14.3"
-//jsDependencies ++= Seq(
-//  "org.webjars.bower" % "react" % vReact / "react-with-addons.js"
-//    minified "react-with-addons.min.js" commonJSName "React",
-//  "org.webjars.bower" % "react" % vReact / "react-dom.js"
-//    minified  "react-dom.min.js" dependsOn "react-with-addons.js" commonJSName "ReactDOM"
-//)
+dependencyOverrides ++= Set(
+  "com.github.japgolly.scalajs-react" %%% "core" % VsReact
+)
