@@ -4,8 +4,6 @@ import ghg.routes.AppRoute
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
-import scala.scalajs.js
-import scala.scalajs.js.UndefOr
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
 
@@ -58,7 +56,9 @@ object LeftNav {
     .renderBackend[Backend]
     .build
 
-  def apply(menus: List[AppRoute], selectedPage: AppRoute, ctrl: RouterCtl[AppRoute],
-            ref: UndefOr[String] = "",
-            key: js.Any = {}) = component.set(key, ref)(Props(menus, selectedPage, ctrl))
+  def apply(menus: List[AppRoute], selectedPage: AppRoute, ctrl: RouterCtl[AppRoute]) = component(Props(menus, selectedPage, ctrl))
+
+//  def apply(menus: List[AppRoute], selectedPage: AppRoute, ctrl: RouterCtl[AppRoute],
+//            ref: UndefOr[String] = "",
+//            key: js.Any = {}) = component.set(key, ref)(Props(menus, selectedPage, ctrl))
 }
