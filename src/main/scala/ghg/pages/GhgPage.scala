@@ -1,6 +1,5 @@
 package ghg.pages
 
-import chandu0101.scalajs.react.components.materialui.ThemeInstaller
 import diode.react.ModelProxy
 import ghg.components.LeftNavPage
 import ghg.routes.{AppRoutes, AppRoute}
@@ -15,7 +14,7 @@ object GhgPage {
 
   val component = ReactComponentB[Props]("MuiPage")
     .renderBackend[Backend]
-    .configureSpec(ThemeInstaller.installMuiContext())
+//    .configureSpec(ThemeInstaller.installMuiContext())
     .build
 
   case class Props(proxy: ModelProxy[GhgData], selectedPage: AppRoute, ctrl: RouterCtl[AppRoute])
