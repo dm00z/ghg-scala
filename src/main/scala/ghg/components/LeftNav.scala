@@ -1,6 +1,6 @@
 package ghg.components
 
-import ghg.routes.LeftRoute
+import ghg.routes.AppRoute
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
@@ -38,7 +38,7 @@ object LeftNav {
     }
   }
 
-  case class Props(menus: List[LeftRoute], selectedPage: LeftRoute, ctrl: RouterCtl[LeftRoute])
+  case class Props(menus: List[AppRoute], selectedPage: AppRoute, ctrl: RouterCtl[AppRoute])
 
   case class Backend($: BackendScope[Props, _]){
     def render(P: Props) = {
@@ -58,7 +58,7 @@ object LeftNav {
     .renderBackend[Backend]
     .build
 
-  def apply(menus: List[LeftRoute], selectedPage: LeftRoute, ctrl: RouterCtl[LeftRoute],
+  def apply(menus: List[AppRoute], selectedPage: AppRoute, ctrl: RouterCtl[AppRoute],
             ref: UndefOr[String] = "",
             key: js.Any = {}) = component.set(key, ref)(Props(menus, selectedPage, ctrl))
 }
