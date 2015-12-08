@@ -3,14 +3,18 @@ package ghg.routes
 import ghg.pages._
 import japgolly.scalajs.react.extra.router._
 import japgolly.scalajs.react.vdom.prefix_<^._
+import model.AppCircuit
 
 object AppRouter {
   private val config = RouterConfigDsl[AppRoute].buildConfig { dsl =>
     import dsl._
 
-    val routes = AppRoutes.all.map(i =>
-      staticRoute("#/" + i.route, i) ~> renderR(r => MuiPage(i, r))
-    ).reduce(_ | _)
+    def route(s: AppRoute): Rule =
+      staticRoute("#/" + s.route, s) ~> renderR { ctrl =>
+        AppCircuit.connect(d => d)(p => GhgPage(p, s, ctrl))
+      }
+
+    val routes = AppRoutes.all.map(route).reduce(_ | _)
 
     routes.notFound(redirectToPage(AppRoutes.Info)(Redirect.Replace))
     .renderWith(layout)
