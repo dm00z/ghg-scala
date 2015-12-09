@@ -6,6 +6,7 @@ import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
+import scala.language.existentials
 
 object LeftNav {
   object Style extends StyleSheet.Inline { import dsl._
@@ -44,7 +45,7 @@ object LeftNav {
         P.menus.map { item =>
           <.li(
             ^.key := item.name,
-            Style.menuItem(item.indentLevel, item == P.selectedPage),
+            Style.menuItem(if(item.subGroup == null) 0 else 1, item == P.selectedPage),
             item.name,
             P.ctrl setOnClick item
           )

@@ -1,18 +1,15 @@
 package ghg.pages
 
-import ghg.components.AppHeader
+import diode.react.ModelProxy
 import japgolly.scalajs.react.ReactComponentB
 import japgolly.scalajs.react.vdom.prefix_<^._
+import model.GhgData
 
 object DirectDataPage {
   val component = ReactComponentB[Unit]("DirectData")
     .render(_ =>
-      <.div(
-        AppHeader(
-          "Tính toán phát thải khí nhà kính trực tiếp",
-          Some("Thông số dòng vào")),
-        "(DirectData page)")
+      <.div("(DirectData page)")
     ).buildU
 
-  def apply() = component()
+  def apply(d: ModelProxy[GhgData]) = component()
 }

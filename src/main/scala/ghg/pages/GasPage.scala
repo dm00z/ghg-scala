@@ -1,19 +1,15 @@
 package ghg.pages
 
-import ghg.components.AppHeader
+import diode.react.ModelProxy
 import japgolly.scalajs.react.ReactComponentB
 import japgolly.scalajs.react.vdom.prefix_<^._
+import model.GhgData
 
 object GasPage {
   val component = ReactComponentB[Unit]("Gas")
     .render(_ =>
-      <.div(
-        AppHeader(
-          "Tính toán phát thải khí nhà kính gián tiếp",
-          Some("Phát thải KNK từ sản xuất và vận chuyển khí tự nhiên")),
-        "(gas page)"
-      )
+      <.div("(gas page)")
     ).buildU
 
-  def apply() = component()
+  def apply(d: ModelProxy[GhgData]) = component()
 }

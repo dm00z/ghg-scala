@@ -1,7 +1,7 @@
 package ghg.pages
 
 import diode.react.ModelProxy
-import ghg.components.LeftNav
+import ghg.components.{AppHeader, LeftNav}
 import ghg.routes.{AppRoutes, AppRoute}
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.router.RouterCtl
@@ -9,6 +9,7 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import model.GhgData
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
+import scala.language.existentials
 
 object GhgPage {
   object Style extends StyleSheet.Inline { import dsl._
@@ -26,7 +27,10 @@ object GhgPage {
     def render(P: Props) = {
       <.div(Style.container,
         <.div(Style.nav, LeftNav(AppRoutes.all, P.selectedPage, P.ctrl)),
-        <.div(Style.content, P.selectedPage.render())
+        <.div(Style.content,
+          AppHeader(P.proxy.zoom(_.info.f), P.selectedPage.group, Option(P.selectedPage.subGroup)),
+          P.selectedPage.render(P.proxy)
+        )
       )
     }
   }

@@ -18,7 +18,7 @@ object AppCircuit extends Circuit[GhgData] with ReactConnector[GhgData]{
 
     GhgData(
       InfoData(
-        Factory(
+        Plant(
           "Nước thải công nghiệp",
           "Nhà máy xử lý nước thải cho công ty Giấy Bãi Bằng",
           "Thị trấn Phong Châu, huyện Phù Ninh, tỉnh Phú Thọ"),

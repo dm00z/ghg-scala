@@ -1,18 +1,15 @@
 package ghg.pages
 
-import ghg.components.AppHeader
+import diode.react.ModelProxy
 import japgolly.scalajs.react.ReactComponentB
 import japgolly.scalajs.react.vdom.prefix_<^._
+import model.GhgData
 
 object KineticCoefficientPage {
   val component = ReactComponentB[Unit]("KineticCoefficient")
     .render(_ =>
-      <.div(
-        AppHeader(
-          "Tính toán phát thải khí nhà kính trực tiếp",
-          Some("Hệ số động học của các quá trình")),
-        "(KineticCoefficient page)")
+      <.div("(KineticCoefficient page)")
     ).buildU
 
-  def apply() = component()
+  def apply(d: ModelProxy[GhgData]) = component()
 }

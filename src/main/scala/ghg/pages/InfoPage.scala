@@ -1,35 +1,38 @@
 package ghg.pages
 
 import chandu0101.scalajs.react.components.materialui.MuiTextField
-import ghg.components.AppHeader
+import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
+import model.{GhgData, InfoData}
+import scala.language.existentials
 
 object InfoPage {
-  case class State(f: AppHeader.Factory)
+  type Props = ModelProxy[InfoData]
 
-  val component = ReactComponentB[Unit]("Info")
-    .initialState(State(AppHeader.Factory("", "", "")))
-    .render(_ =>
+  case class Backend($: BackendScope[Props, _]) {
+    def render(P: Props) = <.div(
       <.div(
-        AppHeader("Thông tin chung"),
-        <.div(
-          MuiTextField(
-            hintText = "Loại nước thải": ReactNode,
-            onChange = (e: ReactEventI) => Callback { println(e.target.value) }
-          )()),
-        <.div(
-          MuiTextField(
-            hintText = "Tên nhà máy": ReactNode,
-            onChange = (e: ReactEventI) => Callback { println(e.target.value) }
-          )()),
-        <.div(
-          MuiTextField(
-            hintText = "Địa điểm": ReactNode,
-            onChange = (e: ReactEventI) => Callback { println(e.target.value) }
-          )())
-      )
-    ).buildU
+        MuiTextField(
+          hintText = "Loại nước thải": ReactNode,
+          onChange = (e: ReactEventI) => Callback { println(e.target.value) }
+        )()),
+      <.div(
+        MuiTextField(
+          hintText = "Tên nhà máy": ReactNode,
+          onChange = (e: ReactEventI) => Callback { println(e.target.value) }
+        )()),
+      <.div(
+        MuiTextField(
+          hintText = "Địa điểm": ReactNode,
+          onChange = (e: ReactEventI) => Callback { println(e.target.value) }
+        )())
+    )
+  }
 
-  def apply() = component()
+  val component = ReactComponentB[Props]("Info")
+    .renderBackend[Backend]
+    .build
+
+  def apply(d: ModelProxy[GhgData]) = component(d.zoom(_.info))
 }
