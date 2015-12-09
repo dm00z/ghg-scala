@@ -1,6 +1,6 @@
 package model
 
-import diode.Circuit
+import diode.{ActionHandler, Circuit}
 import DirectTable.{PoolData, PrimaryPoolData, GenericData}
 import GasData.{GasRatioTable, GWP}, GWP.{Row => GWPRow}
 import GasRatioTable.{Group => GasGroup, Row => GasRow}
@@ -10,7 +10,13 @@ import diode.react.ReactConnector
 object AppCircuit extends Circuit[GhgData] with ReactConnector[GhgData]{
   protected var model = testData()
 
-  protected def actionHandler: HandlerFunction = ???
+  private val infoHandler = new ActionHandler(zoomRW(_.info)((d, v) => d.copy(info = v))) {
+    def handle = {
+      case f: Plant => updated(value.copy(f = f))
+    }
+  }
+
+  protected val actionHandler = combineHandlers(infoHandler)
 
   private def testData() = {
     val testAnaerobicPool = PoolData(40, 20, Some(15))

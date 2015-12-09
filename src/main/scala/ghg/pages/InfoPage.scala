@@ -1,6 +1,5 @@
 package ghg.pages
 
-import chandu0101.scalajs.react.components.materialui.MuiTextField
 import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
@@ -12,21 +11,7 @@ object InfoPage {
 
   case class Backend($: BackendScope[Props, _]) {
     def render(P: Props) = <.div(
-      <.div(
-        MuiTextField(
-          hintText = "Loại nước thải": ReactNode,
-          onChange = (e: ReactEventI) => Callback { println(e.target.value) }
-        )()),
-      <.div(
-        MuiTextField(
-          hintText = "Tên nhà máy": ReactNode,
-          onChange = (e: ReactEventI) => Callback { println(e.target.value) }
-        )()),
-      <.div(
-        MuiTextField(
-          hintText = "Địa điểm": ReactNode,
-          onChange = (e: ReactEventI) => Callback { println(e.target.value) }
-        )())
+      <.div("(info page)")
     )
   }
 

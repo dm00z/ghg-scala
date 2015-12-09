@@ -1,9 +1,11 @@
 package ghg.components
 
+import chandu0101.scalajs.react.components.materialui._
 import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import model.Plant
+import scala.scalajs.js.Dynamic.{literal => jsObj}
 
 object AppHeader {
   val component = ReactComponentB[Props]("AppHeader")
@@ -11,28 +13,26 @@ object AppHeader {
     .renderBackend[Backend]
     .build
 
-  @inline def apply(plant: ModelProxy[Plant], group: String, subGroup: Option[String]) =
-    component(Props(plant, group, subGroup))
+  case class Props(plant: ModelProxy[Plant], group: String, subGroup: Option[String], readonly: Boolean = true)
 
-  case class Props(plant: ModelProxy[Plant], group: String, subGroup: Option[String]) {
-    def divs = {
-      val f = plant()
-      val l = Seq(
-        "Loại nước thải" -> f.tpe,
-        "Tên nhà máy" -> f.name,
-        "Địa điểm" -> f.addr,
-        "Hạng mục" -> group
-      )
-      subGroup.map("Tiểu mục" -> _).fold(l)(l :+ _)
-    }
-  }
-
-  class Backend(t: BackendScope[Props, _]) {
+  class Backend($: BackendScope[Props, _]) {
+    private lazy val txtStyle = jsObj(width = "600px")
     def render(P: Props) = {
-      val divs = P.divs.map {
-        case (n, v) => <.div(<.label(n + ": "), v)
-      }
-      <.div(<.h1("Tính toán phát thải khí nhà kính từ hệ thống xử lý nước thải") +: divs :_*)
+      val f = P.plant()
+      <.div(
+        <.h1("Tính toán phát thải khí nhà kính từ hệ thống xử lý nước thải"),
+        <.div(<.label("Loại nước thải: "),
+          if(P.readonly) f.tpe
+          else MuiTextField(value = f.tpe, style = txtStyle, onChange = {e: ReactEventI => P.plant.dispatch(P.plant().copy(tpe = e.target.value))})()),
+        <.div(<.label("Tên nhà máy: "),
+          if(P.readonly) f.name
+          else MuiTextField(value = f.name, style = txtStyle, onChange = { e: ReactEventI => P.plant.dispatch(P.plant().copy(name = e.target.value))})()),
+        <.div(<.label("Địa điểm: "),
+          if(P.readonly) f.addr
+          else MuiTextField(value = f.addr, style = txtStyle, onChange = {e: ReactEventI => P.plant.dispatch(P.plant().copy(addr = e.target.value))})()),
+        <.div(<.label("Hạng mục: "), P.group),
+        P.subGroup.fold(EmptyTag)(v => <.div(<.label("Tiểu mục: "), v))
+      )
     }
   }
 }

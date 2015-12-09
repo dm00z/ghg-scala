@@ -28,7 +28,9 @@ object GhgPage {
       <.div(Style.container,
         <.div(Style.nav, LeftNav(AppRoutes.all, P.selectedPage, P.ctrl)),
         <.div(Style.content,
-          AppHeader(P.proxy.zoom(_.info.f), P.selectedPage.group, Option(P.selectedPage.subGroup)),
+          AppHeader.component(AppHeader.Props(
+            P.proxy.zoom(_.info.f), P.selectedPage.group, Option(P.selectedPage.subGroup), P.selectedPage != AppRoutes.Info
+          )),
           P.selectedPage.render(P.proxy)
         )
       )
