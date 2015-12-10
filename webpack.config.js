@@ -5,7 +5,7 @@ var CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;
 
 module.exports = {
     entry: {
-        index: './bundles/index.js',
+        index: './bundles/index.js'
     },
     output: {
         path: __dirname + '/assets',
@@ -33,6 +33,4 @@ module.exports = {
             } // inline base64 URLs for <=8k images, direct URLs for the rest
         ]
     }
-
-
 };

@@ -6,7 +6,7 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/giabao/???.git"
+    "url": "https://github.com/giabao/ghg-scala.git"
   },
   "scripts": {
     "start": "webpack --watch & webpack-dev-server --progress --colors --port 8090",
