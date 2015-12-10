@@ -18,13 +18,14 @@ object AppCircuit extends Circuit[GhgData] with ReactConnector[GhgData]{
   }
 
   private val electricRw = zoomRW(_.indirect.electric)((d, v) => d.copy(indirect = d.indirect.copy(electric = v)))
-  private val d1Handler = new ActionHandler(electricRw.zoomRW(_._1)((d, v) => d.copy(_1 = v))) {
+  private val electricHandler = new ActionHandler(electricRw) {
     def handle = {
-      case d1: ElectricData.D1 => updated(d1)
+      case d1: ElectricData.D1 => updated(value.copy(_1 = d1))
+      case m: CalcMethod.Value => updated(value.copy(method = m))
     }
   }
 
-  protected val actionHandler = combineHandlers(infoHandler, d1Handler)
+  protected val actionHandler = combineHandlers(infoHandler, electricHandler)
 
   private def testData() = {
     val testAnaerobicPool = PoolData(40, 20, Some(15))
