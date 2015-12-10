@@ -13,6 +13,7 @@ object AppCircuit extends Circuit[GhgData] with ReactConnector[GhgData]{
   private val infoHandler = new ActionHandler(zoomRW(_.info)((d, v) => d.copy(info = v))) {
     def handle = {
       case f: Plant => updated(value.copy(f = f))
+      case i: InfoData => updated(i)
     }
   }
 

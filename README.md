@@ -30,3 +30,4 @@ electron .
 # TODO
 + i18n
 + should we use [squants](http://www.squants.com/)?
++ use [formsy-react](https://github.com/christianalfoni/formsy-react) to validate inputs?

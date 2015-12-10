@@ -8,6 +8,8 @@ import model.Plant
 import scala.scalajs.js.Dynamic.{literal => jsObj}
 
 object AppHeader {
+  lazy val txtStyle = jsObj(width = "600px")
+
   val component = ReactComponentB[Props]("AppHeader")
     .stateless
     .renderBackend[Backend]
@@ -16,7 +18,6 @@ object AppHeader {
   case class Props(plant: ModelProxy[Plant], group: String, subGroup: Option[String], readonly: Boolean = true)
 
   class Backend($: BackendScope[Props, _]) {
-    private lazy val txtStyle = jsObj(width = "600px")
     def render(P: Props) = {
       val f = P.plant()
       <.div(

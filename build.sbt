@@ -28,7 +28,7 @@ artifactPath in (Compile, fastOptJS) <<= (
 //dependencies
 val VsReact = "0.10.2"
 val VsCss = "0.3.1"
-val VsReactCom = "0.2.0"
+val VsReactCom = "0.2.1-SNAPSHOT"
 val VsMoment = "0.1.4"
 val Vdiode = "0.2.0"
 libraryDependencies ++= Seq(
