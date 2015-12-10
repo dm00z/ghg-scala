@@ -2,7 +2,7 @@ package ghg.pages
 
 import chandu0101.scalajs.react.components.materialui.{MuiDropDownMenuItem, MuiDropDownMenu}
 import diode.react.ModelProxy
-import ghg.components.Electric1
+import ghg.components.{Electric1, Electric2, Electric3}
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import model.ElectricData.CalcMethod
@@ -32,8 +32,8 @@ object ElectricPage {
           )(),
           my.method match {
             case CalcMethod.Method1 => Electric1(P)
-            case CalcMethod.Method2 => ???
-            case CalcMethod.Method3 => ???
+            case CalcMethod.Method2 => Electric2(P)
+            case CalcMethod.Method3 => Electric3(P)
           }
         )
       )
