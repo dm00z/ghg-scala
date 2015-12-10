@@ -1,15 +1,48 @@
 package ghg.pages
 
+import chandu0101.scalajs.react.components.materialui.{MuiDropDownMenuItem, MuiDropDownMenu}
 import diode.react.ModelProxy
-import japgolly.scalajs.react.ReactComponentB
+import ghg.components.Electric1
+import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
-import model.GhgData
+import model.ElectricData.CalcMethod
+import model.{ElectricData, GhgData}
+import scala.scalajs.js, js.JSConverters._
 
 object ElectricPage {
-  val component = ReactComponentB[Unit]("Electric")
-    .render(_ =>
-      <.div("(electric page)")
-    ).buildU
+  type Props = ModelProxy[GhgData]
+  implicit final class PropsEx(val p: Props) extends AnyVal {
+    @inline def my = p.zoom(_.indirect.electric)
+  }
 
-  def apply(d: ModelProxy[GhgData]) = component()
+  final case class Backend($: BackendScope[Props, _]) {
+    @inline def calcMethods = CalcMethod.values.map(m => MuiDropDownMenuItem(m.id.toString, m.toString)).toJSArray
+//    val onCalcMethodChange: (ReactEventI, Int, js.Any) => Callback = (e, selectedIndex, menuItem) =>
+//      ???
+
+    def render(P: Props) = {
+      val my = P.my()
+      <.div(
+        <.div(
+          <.label("Cách tính công suất tiêu thụ điện năng: "),
+          MuiDropDownMenu(
+            menuItems = calcMethods,
+            selectedIndex = my.method.id,
+            onChange = (_: ReactEventI, i: Int, _: js.Any) => P.dispatch(CalcMethod(i))
+          )(),
+          my.method match {
+            case CalcMethod.Method1 => Electric1(P)
+            case CalcMethod.Method2 => ???
+            case CalcMethod.Method3 => ???
+          }
+        )
+      )
+    }
+  }
+
+  val component = ReactComponentB[Props]("Electric")
+    .renderBackend[Backend]
+    .build
+
+  def apply(d: ModelProxy[GhgData]) = component(d)
 }

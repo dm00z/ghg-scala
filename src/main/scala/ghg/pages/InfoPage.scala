@@ -20,10 +20,10 @@ object InfoPage {
       P.value.copy(power = powerRef.getValue() >| 0)
     }
 
-    def render(P: Props) = {
+    def render(P: Props) =
       <.div(
         <.div(
-          <.label("Công suất xử lý: "),
+          <.label("Công suất xử lý (m3/ngày): "),
           MuiTextField(
             style = AppHeader.txtStyle,
             ref = (r: MuiTextFieldM) => if (r != null) {
@@ -35,7 +35,6 @@ object InfoPage {
             })()
         )
       )
-    }
   }
 
   val component = ReactComponentB[Props]("Info")

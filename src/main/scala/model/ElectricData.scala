@@ -12,7 +12,11 @@ object ElectricData {
     val Method3 = Value("Từ các thiết bị trong hệ thống")
   }
 
-  case class D1(ratio: Double, ratioRange: R[Double] = R(0.1, 0.45))
+  object D1 {
+    /** unit: kwh/m3 */
+    val Ratio = RNorm(R(.1, .45), .12)
+  }
+  case class D1(ratio: Double = D1.Ratio.norm)
 
   object D2 {
     case class Row(from: Date, to: Date, kwh: Double) {
@@ -34,8 +38,9 @@ object ElectricData {
       def operateMode = if (workHoursPerDay < 24) "Gián đoạn" else "Liên tục"
       def kwhPerDay = kw * quantity * workHoursPerDay
     }
+    val Ratio = RNorm(R(0, 1), .5)
   }
-  case class D3(rows: Seq[D3.Row], ratio: Double, ratioRange: R[Double] = R(0, 1)) {
+  case class D3(rows: Seq[D3.Row], ratio: Double = D3.Ratio.norm) {
     def powerCalc = rows.map(_.kwhPerDay).sum
     def power = ratio * powerCalc
   }
@@ -50,6 +55,6 @@ object ElectricData {
 
 case class ElectricData(powerStruct: CountryPowerStruct,
                         method: ElectricData.CalcMethod.Value,
-                        _1: Option[ElectricData.D1] = None,
-                        _2: Option[ElectricData.D2] = None,
-                        _3: Option[ElectricData.D3] = None)
+                        _1: ElectricData.D1,
+                        _2: ElectricData.D2,
+                        _3: ElectricData.D3)

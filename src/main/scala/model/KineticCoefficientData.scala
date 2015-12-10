@@ -1,7 +1,6 @@
 package model
 
 object KineticCoefficientData {
-  case class RNorm(range: R[Double], norm: Double)
   case class KT(vNorm: Double, coeff: Double, tNorm: Int = 20) {
     def apply(t: Int) = vNorm * Math.pow(coeff, t - tNorm)
   }

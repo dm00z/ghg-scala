@@ -4,7 +4,7 @@ import diode.{ActionHandler, Circuit}
 import DirectTable.{PoolData, PrimaryPoolData, GenericData}
 import GasData.{GasRatioTable, GWP}, GWP.{Row => GWPRow}
 import GasRatioTable.{Group => GasGroup, Row => GasRow}
-import ElectricData.{CountryPowerStruct, CalcMethod, PowerSupply}
+import ElectricData.{CountryPowerStruct, CalcMethod, PowerSupply, D1, D2, D3}
 import diode.react.ReactConnector
 
 object AppCircuit extends Circuit[GhgData] with ReactConnector[GhgData]{
@@ -17,7 +17,14 @@ object AppCircuit extends Circuit[GhgData] with ReactConnector[GhgData]{
     }
   }
 
-  protected val actionHandler = combineHandlers(infoHandler)
+  private val electricRw = zoomRW(_.indirect.electric)((d, v) => d.copy(indirect = d.indirect.copy(electric = v)))
+  private val d1Handler = new ActionHandler(electricRw.zoomRW(_._1)((d, v) => d.copy(_1 = v))) {
+    def handle = {
+      case d1: ElectricData.D1 => updated(d1)
+    }
+  }
+
+  protected val actionHandler = combineHandlers(infoHandler, d1Handler)
 
   private def testData() = {
     val testAnaerobicPool = PoolData(40, 20, Some(15))
@@ -43,7 +50,8 @@ object AppCircuit extends Circuit[GhgData] with ReactConnector[GhgData]{
               PowerSupply("Sinh học, gió, thủy triều", 11, R(11, 279), "") -> 0.43,
               PowerSupply("Nhiên liệu khác", 604, R(600, 890), "IPCC,2001") -> 27.72
             )),
-          CalcMethod.Method1
+          CalcMethod.Method1,
+          D1(), D2(Nil), D3(Nil)
         ),
         GasData(Nil,
           GasRatioTable("MS: 9/070514. Nguồn: Picard, 1999", Seq(
