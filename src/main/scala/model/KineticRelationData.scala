@@ -1,9 +1,11 @@
 package model
 
+import monocle.macros.Lenses
+
 object KineticRelationData {
 
   /** Mối quan hệ động học - chung cho mọi nhà máy */
-  case class Data(yCO2: Double, yVSS: Double, yAlk: Double, rCO2: Double,
+  @Lenses case class Data(yCO2: Double, yVSS: Double, yAlk: Double, rCO2: Double,
                   yCO2Decay: Double, yAlkDecay: Double, rCO2Decay: Double,
                   yCO2An: Double, yCH4An: Double, yVSSAn: Double, yAlkAn: Double,
                   yCO2AnDecay: Double, yCH4AnDecay: Double, yAlkAnDecay: Double,

@@ -8,7 +8,6 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import model.ElectricData.CalcMethod
 import model.GhgData
 import scala.scalajs.js, js.JSConverters._
-import scala.language.existentials
 
 object ElectricPage {
   type Props = ModelProxy[GhgData]

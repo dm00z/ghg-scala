@@ -4,7 +4,11 @@ name := "ghg"
 version := "0.1"
 scalaVersion := "2.11.7"
 
-scalacOptions ++= Seq("-encoding", "UTF-8", "-deprecation", "-unchecked", "-feature")
+scalacOptions ++= Seq(
+  "-encoding", "UTF-8", "-deprecation", "-unchecked", "-feature"
+  ,"-language:existentials", "-language:higherKinds"
+//  ,"-language:postfixOps", "-language:implicitConversions"
+)
 
 //scalaJSStage in Global := FastOptStage
 
@@ -32,6 +36,7 @@ val VsReactCom = "0.2.1-SNAPSHOT"
 val VsMoment = "0.1.4"
 val Vdiode = "0.2.0"
 libraryDependencies ++= Seq(
+  "com.github.japgolly.fork.monocle" %%% "monocle-macro" % "1.1.1",
   "io.github.widok" %%% "scala-js-momentjs" % VsMoment,
   "me.chrons" %%% "diode-react" % Vdiode,
   "com.github.chandu0101.scalajs-react-components" %%% "core" % VsReactCom,
@@ -41,3 +46,5 @@ libraryDependencies ++= Seq(
 dependencyOverrides ++= Set(
   "com.github.japgolly.scalajs-react" %%% "core" % VsReact
 )
+
+addCompilerPlugin(compilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full))

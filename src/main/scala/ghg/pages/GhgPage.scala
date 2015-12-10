@@ -9,7 +9,6 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import model.GhgData
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
-import scala.language.existentials
 
 object GhgPage {
   object Style extends StyleSheet.Inline { import dsl._

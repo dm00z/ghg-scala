@@ -5,7 +5,6 @@ import diode.react.ModelProxy
 import ghg.components.KRData
 import japgolly.scalajs.react.{BackendScope, ReactComponentB}
 import model.{WaterType, GhgData}
-import scala.language.existentials
 import scala.scalajs.js.|
 
 object KineticRelationPage {
@@ -20,10 +19,10 @@ object KineticRelationPage {
       val my = P.my()
       MuiTabs(value = my.tpe.id.toString: String | Double)(
         MuiTab(value = Domestic.id.toString, label = Domestic.toString)(
-          KRData(P.my.zoom(_.domestic))
+          KRData(P.my.zoom(_.domestic), Domestic)
         ),
         MuiTab(value = Industrial.id.toString, label = Industrial.toString)(
-          KRData(P.my.zoom(_.industrial))
+          KRData(P.my.zoom(_.industrial), Industrial)
         )
       )
     }

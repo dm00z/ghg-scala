@@ -6,7 +6,6 @@ import ghg.components.AppHeader
 import japgolly.scalajs.react.{BackendScope, ReactComponentB}
 import japgolly.scalajs.react.vdom.prefix_<^._
 import model.{MaterialData, GhgData}
-import scala.language.existentials
 
 object MaterialPage {
   type Props = ModelProxy[GhgData]

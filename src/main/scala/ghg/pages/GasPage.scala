@@ -4,7 +4,6 @@ import diode.react.ModelProxy
 import japgolly.scalajs.react.{BackendScope, ReactComponentB}
 import japgolly.scalajs.react.vdom.prefix_<^._
 import model.GhgData
-import scala.language.existentials
 
 /**
   * TODO A. Công suất tiêu thụ khí tự nhiên (hiện tại không impl - tương ứng với nhà máy không dùng khí tự nhiên)

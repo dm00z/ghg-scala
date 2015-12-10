@@ -5,7 +5,7 @@ import model.R
 object Utils {
   val decimalRegex = """^\-?[0-9]*\.?[0-9]+$"""
   implicit final class StringValidator(val v: String) extends AnyVal {
-    @inline def decimal(v: String) = v matches decimalRegex
+    @inline def decimal = v matches decimalRegex
     @inline def >#(x: Double) = v.matches(decimalRegex) && v.toDouble > x
     @inline def >=#(x: Double) = v.matches(decimalRegex) && v.toDouble >= x
     @inline def <#(x: Double) = v.matches(decimalRegex) && v.toDouble < x

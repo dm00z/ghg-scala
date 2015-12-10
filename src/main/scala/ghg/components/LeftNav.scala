@@ -6,7 +6,6 @@ import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
-import scala.language.existentials
 
 object LeftNav {
   object Style extends StyleSheet.Inline { import dsl._
