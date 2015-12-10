@@ -14,5 +14,10 @@ object KineticRelationData {
                   yCH4Combusion: Double)
 }
 
+object WaterType extends Enumeration {
+  val Domestic = Value("Nước thải sinh hoạt")
+  val Industrial = Value("Nước thải công nghiệp")
+}
+
 import KineticRelationData._
-case class KineticRelationData(domestic: Data, industrial: Data)
+case class KineticRelationData(tpe: WaterType.Value, domestic: Data, industrial: Data)

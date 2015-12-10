@@ -1,9 +1,12 @@
 package ghg.pages
 
+import chandu0101.scalajs.react.components.materialui.{MuiTab, MuiTabs}
 import diode.react.ModelProxy
 import japgolly.scalajs.react.{BackendScope, ReactComponentB}
 import japgolly.scalajs.react.vdom.prefix_<^._
-import model.GhgData
+import model.{WaterType, GhgData}
+import scala.language.existentials
+import scala.scalajs.js.|
 
 object KineticRelationPage {
   type Props = ModelProxy[GhgData]
@@ -13,8 +16,16 @@ object KineticRelationPage {
 
   case class Backend($: BackendScope[Props, _]) {
     def render(P: Props) = {
+      import WaterType._
       val my = P.my()
-      <.div("(KineticRelation page)")
+      MuiTabs(value = my.tpe.id.toString: String | Double)(
+        MuiTab(value = Domestic.id.toString, label = Domestic.toString)(
+
+        ),
+        MuiTab(value = Industrial.id.toString, label = Industrial.toString)(
+
+        )
+      )
     }
   }
 

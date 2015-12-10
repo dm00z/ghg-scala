@@ -89,6 +89,7 @@ object AppCircuit extends Circuit[GhgData] with ReactConnector[GhgData]{
           KineticCoefficientData.Anaerobic.default
         ),
         KineticRelationData(
+          WaterType.Industrial,
           KineticRelationData.Data( //sinh hoạt - chưa dùng
             0.33, 0.422, 0, 0.4,
             1.56, 0, 1.42,
