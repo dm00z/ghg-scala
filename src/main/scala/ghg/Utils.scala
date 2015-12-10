@@ -20,4 +20,7 @@ object Utils {
     @inline def <|(x: Double, d: Double): Double = if (v <# x) v.toDouble else d
     @inline def <=|(x: Double, d: Double): Double = if (v <=# x) v.toDouble else d
   }
+
+  import japgolly.scalajs.react.vdom.prefix_<^._
+  def table(xs: TagMod*) = <.table(^.className := Styles.kr, <.tbody(xs: _*))
 }

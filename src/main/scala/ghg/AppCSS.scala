@@ -20,6 +20,6 @@ object AppCSS {
     )
     GlobalRegistry.addToDocumentOnRegistration()
 
-    ScalaCssReactFns.installStyle(KRData.Styles.render[HTMLStyleElement])
+    ScalaCssReactFns.installStyle(Styles.render[HTMLStyleElement])
   }
 }
