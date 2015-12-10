@@ -2,6 +2,7 @@ package ghg.pages
 
 import chandu0101.scalajs.react.components.materialui._
 import diode.react.ModelProxy
+import ghg.components.AppHeader
 import japgolly.scalajs.react.{BackendScope, ReactComponentB}
 import japgolly.scalajs.react.vdom.prefix_<^._
 import model.{MaterialData, GhgData}
@@ -14,34 +15,33 @@ object MaterialPage {
   }
 
   case class Backend($: BackendScope[Props, _]) {
-    private lazy val colNames = MuiTableRow()(
-      MuiTableHeaderColumn(key = "meta")(),
-      MuiTableHeaderColumn(key = "Methanol")("Methanol"),
-      MuiTableHeaderColumn(key = "Kiềm")("Kiềm"),
-      MuiTableHeaderColumn(key = "x2")("Ferric chloride (FeCl3 .6H2O)"),
-      MuiTableHeaderColumn(key = "x3")("Javen"),
-      MuiTableHeaderColumn(key = "x4")("Polimer"),
-      MuiTableHeaderColumn(key = "ref")() //TL tham khảo
+    private val colNames2 = MuiTableRow()(
+      MuiTableHeaderColumn()(),
+      MuiTableHeaderColumn(tooltip = "Hệ số phát thải của nguyên liệu (gCO2/gNguyenLieu). [Ref: Bani Shahabadi et al., 2009; Maas, 2009]")(
+        <.span("EF", <.sup("i"), <.sub("NguyenLieu"))),
+      MuiTableHeaderColumn(tooltip = "Khối lượng nguyên liệu (kg/ngày)")(
+        <.span("Q", <.sup("i"), <.sub("ng")))
     )
 
     def render(P: Props) = {
       import MaterialData.Ratio
       val my = P.my()
       <.div(
-        MuiTable()(
+        MuiTable(style = AppHeader.txtStyle)(
           MuiTableHeader(displaySelectAll = false, adjustForCheckbox = false)(
             MuiTableRow()(MuiTableHeaderColumn()()),
-            colNames),
+            colNames2),
           MuiTableBody(displayRowCheckbox = false)(
-            MuiTableRow(key = "1")(
-              Ratio.all.map(MuiTableRowColumn()(_)): _*
-            ),
-            MuiTableRow(key = "2")(
-              my.all.map(MuiTableRowColumn()(_)): _*
-            )
+            Ratio.names zip Ratio.all zip my.all map {
+              case ((n, r), v) => MuiTableRow()(
+                MuiTableRowColumn()(n),
+                MuiTableRowColumn()(r),
+                MuiTableRowColumn()(v)
+              )
+            } :_*
           ),
           MuiTableFooter(adjustForCheckbox = false)(
-            colNames,
+            colNames2,
             MuiTableRow()()
           )
         )
