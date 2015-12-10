@@ -26,7 +26,7 @@ object KRData {
   private val GiaTri = <.td(<.b("Giá trị"))
 
   @inline private def td(n: String, sub: String) = <.td(n, <.sub(sub))
-  @inline private def td(n: String, sub: String, sup: String) = <.td(n, <.sup(sup), <.sub(^.marginLeft := "-10px", sub))
+  private def td(n: String, sub: String, sup: String) = <.td(n, <.sup(sup), <.sub(^.marginLeft := "-10px", sub))
   case class Backend($: BackendScope[Props, _]) {
     import ghg.Utils._
 
