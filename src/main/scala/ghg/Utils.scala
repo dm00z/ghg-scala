@@ -22,5 +22,5 @@ object Utils {
   }
 
   import japgolly.scalajs.react.vdom.prefix_<^._
-  def table(xs: TagMod*) = <.table(^.className := Styles.kr, <.tbody(xs: _*))
+  def table(xs: TagMod*) = <.table(^.className := Styles.borderCls, <.tbody(xs: _*))
 }
