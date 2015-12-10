@@ -6,8 +6,9 @@ import ghg.components.{Electric1, Electric2, Electric3}
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import model.ElectricData.CalcMethod
-import model.{ElectricData, GhgData}
+import model.GhgData
 import scala.scalajs.js, js.JSConverters._
+import scala.language.existentials
 
 object ElectricPage {
   type Props = ModelProxy[GhgData]
@@ -17,8 +18,6 @@ object ElectricPage {
 
   final case class Backend($: BackendScope[Props, _]) {
     @inline def calcMethods = CalcMethod.values.map(m => MuiDropDownMenuItem(m.id.toString, m.toString)).toJSArray
-//    val onCalcMethodChange: (ReactEventI, Int, js.Any) => Callback = (e, selectedIndex, menuItem) =>
-//      ???
 
     def render(P: Props) = {
       val my = P.my()
