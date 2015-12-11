@@ -1,7 +1,9 @@
 package model
 
+import monocle.macros.Lenses
+
 object KineticCoefficientData {
-  case class KT(vNorm: Double, coeff: Double, tNorm: Int = 20) {
+  @Lenses case class KT(vNorm: Double, coeff: Double, tNorm: Int = 20) {
     def apply(t: Int) = vNorm * Math.pow(coeff, t - tNorm)
   }
   object Aerobic {
@@ -11,7 +13,7 @@ object KineticCoefficientData {
 
     def default = Aerobic(KT(4, 1.07), KT(Kd.norm, 1.04), KT(Y.norm, 1))
   }
-  case class Aerobic(m: KT, kd: KT, y: KT) {
+  @Lenses case class Aerobic(m: KT, kd: KT, y: KT) {
     def k(t: Int) = m(t) / y(t)
   }
 
@@ -40,12 +42,12 @@ object KineticCoefficientData {
   }
 
   /** Quá trình yếm khí
+    *
     * @param m day^-1
     * @param y mg/mg
     * @param ks mg/l
     * @param kd day^-1
     * @param f ??
-    *
     * @note Giả định m, kd cũng tuân theo công thức KT
     */
   case class Anaerobic(m: KT, y: Double, ks: KT, kd: Double, f: Double) {

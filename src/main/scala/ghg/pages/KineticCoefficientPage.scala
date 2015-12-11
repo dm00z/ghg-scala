@@ -1,7 +1,7 @@
 package ghg.pages
 
 import diode.react.ModelProxy
-import japgolly.scalajs.react.{BackendScope, ReactComponentB}
+import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import model.{KineticCoefficientData, GhgData}
 
@@ -23,26 +23,34 @@ object KineticCoefficientPage {
 
   case class Backend($: BackendScope[Props, _]) {
     def render(P: Props) = {
-      val p = P.my()
-
-      def aerobicTbl(d: Aerobic) = table(
-        <.tr(
-          td2("Thông số"),
-          td2("Đơn vị"),
-          <.td(^.colSpan := 2, <.b("Giá trị tiêu chuẩn ở 20°C")),
-          td2("Hệ số nhiệt độ θ")
-        ),
-        <.tr(Khoang, GiaTri),
-        <.tr(<.td(Muy), Ngay1, <.td(), d.m.tdV, d.m.tdCo),
-        <.tr(<.td("Y"), <.td("mg/mg"), <.td(Aerobic.Y.range.text), d.y.tdV, d.y.tdCo),
-        <.tr(td("k", "d"), Ngay1, <.td(Aerobic.Kd.range.text), d.kd.tdV, d.kd.tdCo)
-//        <.tr(<.td(Muy, "/Y"), <.td(), <.td(), <.td(), <.td()),
-      )
+      def aerobicTbl(implicit d: Aerobic) = {
+        @inline implicit def dispatch: Aerobic => Callback = P.my.dispatch
+        table(
+          <.tr(
+            td2("Thông số"),
+            td2("Đơn vị"),
+            <.td(^.colSpan := 2, <.b("Giá trị tiêu chuẩn ở 20°C")),
+            td2("Hệ số nhiệt độ θ")
+          ),
+          <.tr(Khoang, GiaTri),
+          <.tr(<.td(Muy), Ngay1, <.td(),
+            tdInput(Aerobic.m ^|-> KT.vNorm),
+            tdInput(Aerobic.m ^|-> KT.coeff)),
+          <.tr(<.td("Y"), <.td("mg/mg"), <.td(Aerobic.Y.range.text),
+            tdInput(Aerobic.y ^|-> KT.vNorm, _.between(Aerobic.Y.range)),
+            tdInput(Aerobic.y ^|-> KT.coeff)),
+          <.tr(td("k", "d"), Ngay1, <.td(Aerobic.Kd.range.text),
+            tdInput(Aerobic.kd ^|-> KT.vNorm, _.between(Aerobic.Kd.range)),
+            tdInput(Aerobic.kd ^|-> KT.coeff))
+          //        <.tr(<.td(Muy, "/Y"), <.td(), <.td(), <.td(), <.td()),
+        )
+      }
 
       def nitratTbl(d: Nitrate) = table(
 
       )
 
+      val p = P.my()
       <.div(
         <.h3("1. Quá trình hiếu khí"),
         aerobicTbl(p.aerobic),

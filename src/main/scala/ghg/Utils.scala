@@ -28,11 +28,13 @@ object Utils {
   @inline def sym(n: String, sub: String) = <.span(n, <.sub(sub))
   @inline def td(n: String, sub: String) = <.td(n, <.sub(sub))
   def td(n: String, sub: String, sup: String) = <.td(n, <.sup(sup), <.sub(^.marginLeft := "-10px", sub))
-  def tdInput[D](lens: Lens[D, Double])(implicit d: D, dispatch: D => Callback) =
+  def tdInput[D](lens: Lens[D, Double],
+                 validator: String => Boolean = _.decimal)
+                (implicit d: D, dispatch: D => Callback) =
     <.td(<.input(
       ^.value := lens.get(d),
       ^.onChange ==> { e: ReactEventI =>
-        val valid = e.target.value.decimal
+        val valid = validator(e.target.value)
         Callback.ifTrue(valid, dispatch(lens.set(e.target.value.toDouble)(d)))
       })
     )

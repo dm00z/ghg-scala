@@ -34,7 +34,17 @@ object AppCircuit extends Circuit[GhgData] with ReactConnector[GhgData]{
     }
   }
 
-  protected val actionHandler = combineHandlers(infoHandler, electricHandler, krHandler)
+  private val coefRw = zoomRW(_.direct.coef)((d, v) => d.copy(direct = d.direct.copy(coef = v)))
+  private val coefHandler = new ActionHandler(coefRw) {
+    import KineticCoefficientData._
+    def handle = {
+      case x: Aerobic => updated(value.copy(aerobic = x))
+      case x: Nitrate => updated(value.copy(nitrate = x))
+      case x: Anaerobic => updated(value.copy(anaerobic = x))
+    }
+  }
+
+  protected val actionHandler = combineHandlers(infoHandler, electricHandler, krHandler, coefHandler)
 
   private def testData() = {
     val testAnaerobicPool = PoolData(40, 20, Some(15))
