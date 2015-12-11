@@ -9,10 +9,10 @@ object KineticCoefficientData {
     val Ks = RNorm(R(25, 100), 60)
     val Kd = RNorm(R(.02, .1), .1)
 
-    def default = Aerobic(KT(4, 1.07), KT(Kd.norm, 1.04), Y.norm)
+    def default = Aerobic(KT(4, 1.07), KT(Kd.norm, 1.04), KT(Y.norm, 1))
   }
-  case class Aerobic(m: KT, kd: KT, y: Double) {
-    def k(t: Int) = m(t) / y
+  case class Aerobic(m: KT, kd: KT, y: KT) {
+    def k(t: Int) = m(t) / y(t)
   }
 
   object Nitrate {
