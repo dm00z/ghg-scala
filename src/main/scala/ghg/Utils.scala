@@ -25,7 +25,6 @@ object Utils {
 
   import japgolly.scalajs.react.vdom.prefix_<^._
   def table(xs: TagMod*) = <.table(^.className := Styles.borderCls, <.tbody(xs: _*))
-  @inline def sym(n: String, sub: String) = <.span(n, <.sub(sub))
   @inline def td(n: String, sub: String) = <.td(n, <.sub(sub))
   def td(n: String, sub: String, sup: String) = <.td(n, <.sup(sup), <.sub(^.marginLeft := "-10px", sub))
   def tdInput[D](lens: Lens[D, Double],
@@ -40,8 +39,9 @@ object Utils {
     )
   def Ngay1 = <.td("day", <.sup("-1"))
   def ThongSo = <.td(<.b("Thông số"))
+  def KyHieu = <.td(<.b("Ký hiệu"))
   def DonVi = <.td(<.b("Đơn vị"))
   def Khoang = <.td(<.b("Khoảng dao động"))
   def GiaTri = <.td(<.b("Giá trị"))
-  def Muy = sym("μ", "m")
+  def Muy = <.span("μ", <.sub("m"))
 }

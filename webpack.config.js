@@ -1,10 +1,15 @@
 'use strict';
 
-var webpack = require('webpack');
-var CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;
+var path = require('path'),
+    webpack = require('webpack'),
+    CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;
 
 module.exports = {
     entry: {
+        //mathjax: [
+        //    //'exports-loader?MathJax!./author_app/vendor/MathJax/MathJax.js',
+        //    //'mathjax',
+        //],
         index: './bundles/index.js'
     },
     output: {
@@ -14,6 +19,7 @@ module.exports = {
     },
     plugins: [
         new webpack.NoErrorsPlugin(),
+        //CommonsChunkPlugin('vendor', 'vendor.bundle.js'),
         new CommonsChunkPlugin({
             name: "index"
         })

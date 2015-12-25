@@ -3,6 +3,7 @@ package ghg.pages
 import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
+import model.KineticCoefficientData.Nitrate.MT
 import model.{KineticCoefficientData, GhgData}
 
 object KineticCoefficientPage {
@@ -14,10 +15,10 @@ object KineticCoefficientPage {
   import ghg.Utils._
   import KineticCoefficientData._
 
-  implicit class KTEx(val k: KT) extends AnyVal {
-    def tdV = <.td(k.vNorm)
-    def tdCo = <.td(k.coeff)
-  }
+//  implicit class KTEx(val k: KT) extends AnyVal {
+//    def tdV = <.td(k.vNorm)
+//    def tdCo = <.td(k.coeff)
+//  }
 
   @inline def td2(s: String) = <.td(^.rowSpan := 2, <.b(s))
 
@@ -46,9 +47,33 @@ object KineticCoefficientPage {
         )
       }
 
-      def nitratTbl(d: Nitrate) = table(
+      def nitratTbl(implicit d: Nitrate) = {
+        @inline implicit def dispatch: Nitrate => Callback = P.my.dispatch
+        table(
+          <.tr(
+            td2("Thông số"),
+            td2("Đơn vị"),
+            <.td(^.colSpan := 2, <.b("Giá trị tiêu chuẩn ở 20°C"))
+          ),
+          <.tr(Khoang, GiaTri),
+          <.tr(td("μ", "m,nit"), Ngay1,
+            <.td(Nitrate.M.range.text),
+            tdInput(Nitrate.m ^|-> MT.vNorm, _.between(Nitrate.M.range))),
+          <.tr(td("Y", "nit"), <.td("mg/mg"),
+            <.td(Nitrate.Y.range.text),
+            tdInput(Nitrate.y ^|-> KT.vNorm, _.between(Nitrate.Y.range))),
+          <.tr(td("k", "d,nit"), Ngay1,
+            <.td(Nitrate.Kd.range.text),
+            tdInput(Nitrate.kd ^|-> KT.vNorm, _.between(Nitrate.Kd.range)))
+        )
+      }
 
-      )
+      def anaerobicTbl(implicit d: Anaerobic) = {
+        @inline implicit def dispatch: Anaerobic => Callback = P.my.dispatch
+        table(
+
+        )
+      }
 
       val p = P.my()
       <.div(
@@ -56,7 +81,8 @@ object KineticCoefficientPage {
         aerobicTbl(p.aerobic),
         <.h3("2. Quá trình nitrat và khử nitrat"),
         nitratTbl(p.nitrate),
-        <.h3("3. Quá trình yếm khí ")
+        <.h3("3. Quá trình yếm khí"),
+        anaerobicTbl(p.anaerobic)
       )
     }
   }

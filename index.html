@@ -7,6 +7,15 @@
 <body>
 <div id="container"></div>
 <script type="text/javascript" src="assets/index-bundle.js"></script>
+<script type="text/javascript" src="bower_components/mathjax/MathJax.js"></script>
+<script type="text/javascript">
+    MathJax.Hub.Config({
+        config: ["MMLorHTML.js"],
+        jax: ["input/AsciiMath","output/HTML-CSS","output/NativeMML", "output/CommonHTML"],
+        extensions: ["asciimath2jax.js","MathMenu.js","MathZoom.js", "CHTML-preview.js"],
+        elements: []
+    });
+</script>
 <script type="text/javascript" src="assets/ghg-opt.js"></script>
 <script type="text/javascript" src="assets/ghg-launcher.js"></script>
 </body>

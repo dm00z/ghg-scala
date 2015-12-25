@@ -5,7 +5,6 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import model.KineticRelationData.Data
 import model.WaterType
-import monocle.Lens
 
 /** KineticRelation.Data component */
 object KRData {
