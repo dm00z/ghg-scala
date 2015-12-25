@@ -71,7 +71,7 @@ object KineticCoefficientPage {
       def anaerobicTbl(implicit d: Anaerobic) = {
         @inline implicit def dispatch: Anaerobic => Callback = P.my.dispatch
         table(
-
+          <.tr()
         )
       }
 

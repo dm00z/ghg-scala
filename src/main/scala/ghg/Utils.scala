@@ -3,6 +3,7 @@ package ghg
 import japgolly.scalajs.react._
 import model.R
 import monocle._
+import org.scalajs.dom.html
 
 object Utils {
   val decimalRegex = """^\-?[0-9]*\.?[0-9]+$"""
@@ -24,6 +25,11 @@ object Utils {
   }
 
   import japgolly.scalajs.react.vdom.prefix_<^._
+  def table(th: ReactTagOf[html.TableHeaderCell]*)(xs: TagMod*) = <.table(
+    ^.className := Styles.borderCls,
+    <.thead(<.tr(th: _*)),
+    <.tbody(xs: _*)
+  )
   def table(xs: TagMod*) = <.table(^.className := Styles.borderCls, <.tbody(xs: _*))
   @inline def td(n: String, sub: String) = <.td(n, <.sub(sub))
   def td(n: String, sub: String, sup: String) = <.td(n, <.sup(sup), <.sub(^.marginLeft := "-10px", sub))

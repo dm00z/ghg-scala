@@ -1,6 +1,7 @@
 package model
 
 import model.ElectricData.CountryPowerStruct
+import monocle.macros.Lenses
 import org.widok.moment.Date
 
 object ElectricData {
@@ -19,13 +20,13 @@ object ElectricData {
   case class D1(ratio: Double = D1.Ratio.norm)
 
   object D2 {
-    case class Row(from: Date, to: Date, kwh: Double) {
+    @Lenses case class Row(from: Date, to: Date, kwh: Double) {
       def days = to.diff(from, "days", asFloat = true)
       def average = kwh / days
     }
   }
   /** dates.length must == kwh.length + 1 */
-  case class D2(rows: Seq[D2.Row]) {
+  case class D2(rows: List[D2.Row]) {
     def power = rows.foldLeft((0D, 0D)) {
       case ((kwh, days), r) => (kwh + r.kwh, days + r.days)
     } match {
@@ -40,7 +41,7 @@ object ElectricData {
     }
     val Ratio = RNorm(R(0, 1), .5)
   }
-  case class D3(rows: Seq[D3.Row], ratio: Double = D3.Ratio.norm) {
+  case class D3(rows: List[D3.Row], ratio: Double = D3.Ratio.norm) {
     def powerCalc = rows.map(_.kwhPerDay).sum
     def power = ratio * powerCalc
   }

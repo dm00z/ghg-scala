@@ -1,12 +1,15 @@
 package ghg.components
 
-import chandu0101.scalajs.react.components.materialui.{MuiTextField, MuiTextFieldM}
+import chandu0101.scalajs.react.components.materialui.MuiDatePicker
 import diode.react.ModelProxy
 import ghg.Utils._
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
-import model.ElectricData.D1
-import model.{ElectricData, GhgData}
+import model.ElectricData.D2
+import model.GhgData
+import org.widok.moment.Moment
+import scala.scalajs.js
+import scala.scalajs.js.UndefOr
 
 object Electric2 {
   type Props = ModelProxy[GhgData]
@@ -18,8 +21,43 @@ object Electric2 {
   case class Backend($: BackendScope[Props, _]) {
     def render(P: Props) = {
       val my = P.my()
+      val rows = my.rows.zipWithIndex.map { case (r, i) =>
+        implicit val rImplicit: D2.Row = r
+        implicit val dispatch: D2.Row => Callback = d => {
+          my.rows.splitAt(i) match {
+            case (r1, _ :: r2) => P.my.dispatch(my.copy(rows = (r1 :+ d) ++ r2))
+            case (r1, Nil) => P.my.dispatch(my.copy(rows = r1 :+ d))
+          }
+        }
+        <.tr(
+          <.td(MuiDatePicker(
+            onDismiss = Callback.empty, onShow = Callback.empty,
+            autoOk = true,
+            defaultDate = r.from.toDate(),
+            onChange = { (_: UndefOr[Nothing], d: js.Date) => dispatch(r.copy(from = Moment(d))) }
+          )()),
+          <.td(MuiDatePicker(
+            autoOk = true,
+            defaultDate = r.to.toDate(),
+            onChange = { (_: UndefOr[Nothing], d: js.Date) => dispatch(r.copy(to = Moment(d))) }
+          )()),
+          <.td(r.days),
+          tdInput(D2.Row.kwh),
+          <.td(r.average)
+        )
+      }
+
       <.div(
-        "TODO impl Electric2"
+        table(<.th("Từ ngày"), <.th("Đến ngày"), <.th("Số ngày"), <.th("Tiêu thụ (kwh)"), <.th("Trung bình (kwh/day)"))(
+          rows :+ <.tr(
+            <.td(^.colSpan := 4, <.b("Tổng cộng")),
+            <.td(my.power)
+          ): _*
+        ),
+        <.button(^.onClick ==> { e: ReactMouseEvent =>
+          val today = Moment().startOf("d")
+          P.my.dispatch(my.copy(rows = my.rows :+ D2.Row(today.subtract(1, "d"), today, 0)))
+        }, "Thêm")
       )
     }
   }
