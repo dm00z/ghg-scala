@@ -22,11 +22,13 @@
     "webpack-dev-server": "^1.14.0"
   },
   "dependencies": {
+    "d3": "^3.5.12",
     "material-ui": "^0.13.4",
     "moment": "^2.10.6",
     "react": "^0.14.3",
     "react-addons-update": "^0.14.3",
     "react-dom": "^0.14.3",
+    "react-faux-dom": "^2.1.1",
     "react-tap-event-plugin": "^0.2.1"
   }
 }

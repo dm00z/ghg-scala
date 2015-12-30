@@ -3,7 +3,7 @@ package model
 import monocle.macros.Lenses
 
 object KineticCoefficientData {
-  @Lenses case class KT(vNorm: Double, coeff: Double, tNorm: Double = 20) {
+  @Lenses case class KT(vNorm: Double, coeff: Double, tNorm: Double = 20) extends (Double => Double) {
     def apply(t: Double) = vNorm * Math.pow(coeff, t - tNorm)
   }
   object Aerobic {
