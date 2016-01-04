@@ -5,7 +5,7 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import model.KineticCoefficientData.Nitrate.MT
 import model.{R, KineticCoefficientData, GhgData}
-
+import reactd3.ChartSerie
 import scala.scalajs.js
 
 object KineticCoefficientPage {
@@ -79,20 +79,14 @@ object KineticCoefficientPage {
 
       val p = P.my()
 
-      def graph() = {
-        import d3charts.LinesChart, LinesChart.LineD
-        import d3charts.DataSeries.D
-
-        val range = 20 to 40
-        val m = range.map(x => D(x, p.aerobic.m(x))).toJsArray
-        val kd = range.map(x => D(x, p.aerobic.kd(x))).toJsArray
-        LinesChart(600, 300, List(LineD(m, "blue"), LineD(kd, "red")))
-      }
-
       <.div(
         <.h3("1. Quá trình hiếu khí"),
         aerobicTbl(p.aerobic),
-        graph(),
+        KTGrapth(p.aerobic.m, "m"),
+//        KTGrapth(p.aerobic.ks, "ks"),
+        KTGrapth(p.aerobic.kd, "kd"),
+//        KTGrapth(p.aerobic.y, "y"),
+        KTGrapth(p.aerobic.k, "k", "red"),
         <.h3("2. Quá trình nitrat và khử nitrat"),
         nitratTbl(p.nitrate),
         <.h3("3. Quá trình yếm khí"),
@@ -106,4 +100,18 @@ object KineticCoefficientPage {
     .build
 
   def apply(d: ModelProxy[GhgData]) = component(d)
+}
+
+object KTGrapth {
+  import reactd3._
+
+  def apply(f: Double => Double, field: String, color: String = "green") = {
+    val data = for(t <- 20 to 40)
+      yield js.Dynamic.literal("t" -> t, field -> f(t))
+    LineChart(
+      data.toJsArray,
+      (d: js.Object with js.Dynamic) => d.t.asInstanceOf[Double],
+      js.Array(ChartSerie(field, color))
+    )(js.Dynamic.literal(width = 400, height = 260))
+  }
 }
