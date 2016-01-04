@@ -1,10 +1,12 @@
 package ghg.pages
 
 import diode.react.ModelProxy
+import ghg.components.MGraph
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import model.KineticCoefficientData.Nitrate.MT
 import model.{KineticCoefficientData, GhgData}
+import reactd3.ChartSerie
 import scala.scalajs.js
 import tex.TeX._
 
@@ -42,6 +44,10 @@ object KineticCoefficientPage {
           <.tr(<.td("Y"), <.td("mg/mg"), <.td(Aerobic.Y.range.text),
             tdInput(Aerobic.y ^|-> KT.vNorm, _.between(Aerobic.Y.range)),
             tdInput(Aerobic.y ^|-> KT.coeff)),
+          <.tr(td("K", "S"), <.td("mg/l"), <.td(Aerobic.Ks.range.text),
+            tdInput(Aerobic.ks ^|-> KT.vNorm, _.between(Aerobic.Ks.range)),
+            <.td()
+          ),
           <.tr(td("k", "d"), Ngay1, <.td(Aerobic.Kd.range.text),
             tdInput(Aerobic.kd ^|-> KT.vNorm, _.between(Aerobic.Kd.range)),
             tdInput(Aerobic.kd ^|-> KT.coeff))
@@ -77,25 +83,59 @@ object KineticCoefficientPage {
         )
       }
 
+      def aerobicGraph(d: Aerobic) = MGraph(
+        <.div(^.marginTop := 10.px,
+          <.span(^.color := "green", ^.marginLeft := 140.px, "μ", <.sub("m")),
+          <.span(^.color := "blue", ^.marginLeft := 260.px, "k", <.sub("d")),
+          <.span(^.color := "red", ^.marginLeft := 240.px, "`k = mu_m / Y`".teX)
+        ),
+        (20 to 40).map(t => js.Dynamic.literal(
+          "t" -> t,
+          "m" -> d.m(t),
+          "kd" -> d.kd(t),
+          "k" -> d.k(t)
+        )).toJsArray,
+        ChartSerie("m", "green"),
+        ChartSerie("kd", "blue"),
+        ChartSerie("k", "red")
+      )
+
+      def nitratGraph(d: Nitrate) = MGraph(
+        <.div(^.marginTop := 10.px,
+          <.span(^.color := "green", ^.marginLeft := 20.px, s"`mu_(m,nit)(t) = mu_(m,nit)(${d.m.tNorm}) * e^(0.098 * (t-${d.m.tNorm}))`".teX),
+          <.span(^.color := "blue", ^.marginLeft := 60.px, s"`k_(d,nit)(t) = k_(d,nit)(${d.kd.tNorm}) * theta ^ (t-${d.kd.tNorm})`"),
+          <.span(^.color := "red", ^.marginLeft := 100.px, "`k = mu_(m,nit) / Y`".teX),
+          <.span(^.color := "black", ^.marginLeft := 172.px, "`K_N(t) = 10^(0.05*t - 1.185)`".teX)
+        ),
+        (20 to 40).map(t => js.Dynamic.literal(
+          "t" -> t,
+          "m" -> d.m(t),
+          "kd" -> d.kd(t),
+          "k" -> d.k(t),
+          "kn" -> d.kn(t)
+        )).toJsArray,
+        ChartSerie("m", "green"),
+        ChartSerie("kd", "blue"),
+        ChartSerie("k", "red"),
+        ChartSerie("kn", "black")
+      )
+
+      def anaerobicGraph(d: Anaerobic) = <.div(
+
+      )
+
       val p = P.my()
 
       <.div(
         <.h3("1. Quá trình hiếu khí"),
         aerobicTbl(p.aerobic),
-        <.div(^.marginTop := 10.px,
-          <.span(^.color := "green", ^.marginLeft := 140.px, "μ", <.sub("m")),
-          <.span(^.color := "blue", ^.marginLeft := 280.px, "k", <.sub("d")),
-          <.span(^.color := "red", ^.marginLeft := 290.px, "`k = mu_m / Y`".teX)
-        ),
-        KTGrapth(p.aerobic.m, "m", "green"),
-//        KTGrapth(p.aerobic.ks, "ks"),
-        KTGrapth(p.aerobic.kd, "kd", "blue"),
-//        KTGrapth(p.aerobic.y, "y"),
-        KTGrapth(p.aerobic.k, "k", "red"),
+        aerobicGraph(p.aerobic),
         <.h3("2. Quá trình nitrat và khử nitrat"),
         nitratTbl(p.nitrate),
+        nitratGraph(p.nitrate),
         <.h3("3. Quá trình yếm khí"),
-        anaerobicTbl(p.anaerobic)
+        anaerobicTbl(p.anaerobic),
+        anaerobicGraph(p.anaerobic)
       )
     }
   }
@@ -105,23 +145,4 @@ object KineticCoefficientPage {
     .build
 
   def apply(d: ModelProxy[GhgData]) = component(d)
-}
-
-object KTGrapth {
-  import reactd3._
-
-  def apply(f: Double => Double, field: String, color: String) = {
-    val data = for(t <- 20 to 40)
-      yield js.Dynamic.literal("t" -> t, field -> f(t))
-    val chartSeries = js.Array(ChartSerie(field, color))
-    val otherProps = js.Dynamic.literal(
-      width = 300, height = 260,
-      margins = js.Dynamic.literal(
-        top = 20, bottom = 20, left = 40, right = 40
-      ))
-    LineChart(
-      data.toJsArray,
-      (d: js.Object with js.Dynamic) => d.t.asInstanceOf[Double],
-      chartSeries)(otherProps)
-  }
 }

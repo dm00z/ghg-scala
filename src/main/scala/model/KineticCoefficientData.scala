@@ -22,7 +22,7 @@ object KineticCoefficientData {
     val Y = RNorm(R(.1, .3), .16)
     val Kd = RNorm(R(.03, .06), .04)
 
-    @Lenses case class MT(vNorm: Double, tNorm: Double) {
+    @Lenses case class MT(vNorm: Double, tNorm: Double) extends (Double => Double) {
       def apply(t: Double) = vNorm * Math.exp(.089 * (t - tNorm))
     }
 
