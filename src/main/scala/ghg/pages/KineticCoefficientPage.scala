@@ -4,9 +4,9 @@ import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import model.KineticCoefficientData.Nitrate.MT
-import model.{R, KineticCoefficientData, GhgData}
-import reactd3.ChartSerie
+import model.{KineticCoefficientData, GhgData}
 import scala.scalajs.js
+import tex.TeX._
 
 object KineticCoefficientPage {
   type Props = ModelProxy[GhgData]
@@ -82,9 +82,14 @@ object KineticCoefficientPage {
       <.div(
         <.h3("1. Quá trình hiếu khí"),
         aerobicTbl(p.aerobic),
-        KTGrapth(p.aerobic.m, "m"),
+        <.div(^.marginTop := 10.px,
+          <.span(^.color := "green", ^.marginLeft := 140.px, "μ", <.sub("m")),
+          <.span(^.color := "blue", ^.marginLeft := 280.px, "k", <.sub("d")),
+          <.span(^.color := "red", ^.marginLeft := 290.px, "`k = mu_m / Y`".teX)
+        ),
+        KTGrapth(p.aerobic.m, "m", "green"),
 //        KTGrapth(p.aerobic.ks, "ks"),
-        KTGrapth(p.aerobic.kd, "kd"),
+        KTGrapth(p.aerobic.kd, "kd", "blue"),
 //        KTGrapth(p.aerobic.y, "y"),
         KTGrapth(p.aerobic.k, "k", "red"),
         <.h3("2. Quá trình nitrat và khử nitrat"),
@@ -105,13 +110,18 @@ object KineticCoefficientPage {
 object KTGrapth {
   import reactd3._
 
-  def apply(f: Double => Double, field: String, color: String = "green") = {
+  def apply(f: Double => Double, field: String, color: String) = {
     val data = for(t <- 20 to 40)
       yield js.Dynamic.literal("t" -> t, field -> f(t))
+    val chartSeries = js.Array(ChartSerie(field, color))
+    val otherProps = js.Dynamic.literal(
+      width = 300, height = 260,
+      margins = js.Dynamic.literal(
+        top = 20, bottom = 20, left = 40, right = 40
+      ))
     LineChart(
       data.toJsArray,
       (d: js.Object with js.Dynamic) => d.t.asInstanceOf[Double],
-      js.Array(ChartSerie(field, color))
-    )(js.Dynamic.literal(width = 400, height = 260))
+      chartSeries)(otherProps)
   }
 }

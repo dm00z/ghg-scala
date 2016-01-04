@@ -17,5 +17,6 @@ window.mui.MenuDivider = require('material-ui/lib/menus/menu-divider');
 window.moment = require("moment");
 window.d3 = require("d3");
 window.ReactFauxDOM = require('react-faux-dom');
-window.ReactD3Basic = require('react-d3-basic');
 window.ReactD3 = require('react-d3-core');
+window.ReactD3Shape = require('react-d3-shape');
+window.ReactD3Basic = require('react-d3-basic');
