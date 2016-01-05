@@ -9,20 +9,15 @@ import model.{KineticCoefficientData, GhgData}
 import reactd3.ChartSerie
 import scala.scalajs.js
 import tex.TeX._
+import ghg.Utils._
+import KineticCoefficientData._
+
 
 object KineticCoefficientPage {
   type Props = ModelProxy[GhgData]
   implicit final class PropsEx(val p: Props) extends AnyVal {
     @inline def my = p.zoom(_.direct.coef)
   }
-
-  import ghg.Utils._
-  import KineticCoefficientData._
-
-//  implicit class KTEx(val k: KT) extends AnyVal {
-//    def tdV = <.td(k.vNorm)
-//    def tdCo = <.td(k.coeff)
-//  }
 
   @inline def td2(s: String) = <.td(^.rowSpan := 2, <.b(s))
 
@@ -133,7 +128,7 @@ object KineticCoefficientPage {
         <.h3("2. Quá trình nitrat và khử nitrat"),
         nitratTbl(p.nitrate),
         nitratGraph(p.nitrate),
-        <.h3("3. Quá trình yếm khí"),
+//        <.h3("3. Quá trình yếm khí"), TODO impl
         anaerobicTbl(p.anaerobic),
         anaerobicGraph(p.anaerobic)
       )
