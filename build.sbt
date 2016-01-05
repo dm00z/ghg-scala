@@ -30,11 +30,11 @@ artifactPath in (Compile, fastOptJS) <<= (
 ) { (dir, name) => dir / s"$name-opt.js" }
 
 //dependencies
-val VsReact = "0.10.2"
-val VsCss = "0.3.1"
-val VsReactCom = "0.2.1-SNAPSHOT"
+val VsReact = "0.10.3"
+val VsCss = "0.3.2"
+val VsReactCom = "0.3.0"
 val VsMoment = "0.1.4"
-val Vdiode = "0.2.0"
+val Vdiode = "0.3.0"
 val Vmonocle = "1.2.0"
 libraryDependencies ++= Seq(
   "org.singlespaced" %%% "scalajs-d3" % "0.2.0-SNAPSHOT",
@@ -46,6 +46,7 @@ libraryDependencies ++= Seq(
   "com.github.japgolly.scalajs-react" %%% "extra" % VsReact
 )
 dependencyOverrides ++= Set(
+  "com.github.japgolly.scalacss"      %%% "core" % VsCss,
   "com.github.japgolly.scalajs-react" %%% "core" % VsReact
 )
 
