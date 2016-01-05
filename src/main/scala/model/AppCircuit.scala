@@ -44,8 +44,15 @@ object AppCircuit extends Circuit[GhgData] with ReactConnector[GhgData]{
       case x: Anaerobic => updated(value.copy(anaerobic = x))
     }
   }
+  private val directDataRw = zoomRW(_.direct.d)((d, v) => d.copy(direct = d.direct.copy(d = v)))
+  private val directDataHandler = new ActionHandler(directDataRw) {
+    import DirectTable._
+    def handle = {
+      case x: GenericData => updated(value.copy(generic = x))
+    }
+  }
 
-  protected val actionHandler = combineHandlers(infoHandler, electricHandler, krHandler, coefHandler)
+  protected val actionHandler = combineHandlers(infoHandler, electricHandler, krHandler, coefHandler, directDataHandler)
 
   private def testData() = {
     val testAnaerobicPool = PoolData(40, 20, Some(15))
