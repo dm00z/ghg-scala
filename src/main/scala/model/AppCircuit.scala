@@ -49,14 +49,15 @@ object AppCircuit extends Circuit[GhgData] with ReactConnector[GhgData]{
     import DirectTable._
     def handle = {
       case x: GenericData => updated(value.copy(generic = x))
+      case x: PrimaryPoolData => updated(value.copy(primaryPool = x))
     }
   }
 
   protected val actionHandler = combineHandlers(infoHandler, electricHandler, krHandler, coefHandler, directDataHandler)
 
   private def testData() = {
-    val testAnaerobicPool = PoolData(40, 20, Some(15))
-//    val testAerobicPool = PoolData(20, 10, Some(5))
+    val testAnaerobicPool = PoolData(40, 20, 15)
+    val testAerobicPool = PoolData(25, 10, 8)
 
     GhgData(
       InfoData(
@@ -106,9 +107,9 @@ object AppCircuit extends Circuit[GhgData] with ReactConnector[GhgData]{
         DirectTable(
           GenericData(350, 30, 1000),
           PrimaryPoolData(.25, .40, 150),
-          PoolData(30, 20, Some(20)),
+          PoolData(30, 20, 20),
           Some(testAnaerobicPool),
-          None
+          Some(testAerobicPool)
         ),
         KineticCoefficientData(
           KineticCoefficientData.Aerobic.default,

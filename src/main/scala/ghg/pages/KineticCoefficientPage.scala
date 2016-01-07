@@ -98,7 +98,7 @@ object KineticCoefficientPage {
       def nitratGraph(d: Nitrate) = MGraph(
         <.div(^.marginTop := 10.px,
           <.span(^.color := "green", ^.marginLeft := 20.px, s"`mu_(m,nit)(t) = mu_(m,nit)(${d.m.tNorm}) * e^(0.098 * (t-${d.m.tNorm}))`".teX),
-          <.span(^.color := "blue", ^.marginLeft := 60.px, s"`k_(d,nit)(t) = k_(d,nit)(${d.kd.tNorm}) * theta ^ (t-${d.kd.tNorm})`"),
+          <.span(^.color := "blue", ^.marginLeft := 60.px, s"`k_(d,nit)(t) = k_(d,nit)(${d.kd.tNorm}) * theta ^ (t-${d.kd.tNorm})`".teX),
           <.span(^.color := "red", ^.marginLeft := 100.px, "`k = mu_(m,nit) / Y`".teX),
           <.span(^.color := "black", ^.marginLeft := 172.px, "`K_N(t) = 10^(0.05*t - 1.185)`".teX)
         ),

@@ -19,18 +19,21 @@ object DirectTable {
     * @param prSS (%) value in rang [0,1]
     * @param q m3/day
     */
-  case class PrimaryPoolData(prBOD: Double, prSS: Double, q: Double)
+  @Lenses case class PrimaryPoolData(prBOD: Double, prSS: Double, q: Double)
 
   /** Thông số bể yếm khí hoặc hiếu khí
     *
     * @param t oC
     * @param srt day
-    * @param hrtOpt hour
-    * @param vOpt m3
+    * @param hrt hour
     * @note sv, s, x, q are derivative
-    *       v and hrt have a relation (v = hrt / q), we must provide only one value.
+    *       v and hrt have a relation (v = hrt * q), we must provide only one value.
+    *       But for simply, hrt is input & v is calculated based on hrt
     */
-  case class PoolData(t: Int, srt: Double, hrtOpt: Option[Double], vOpt: Option[Double] = None)
+  @Lenses case class PoolData(t: Double, srt: Double, hrt: Double) {
+    /** m3, = hrt * q / 24 hours */
+//    def v: Double
+  }
 
   /** Thông số dòng ra hệ thống xử lý
     *
@@ -38,7 +41,7 @@ object DirectTable {
     * @param n mg/l
     * @param vss mg/l
     * @note Sr (mg/l) là thông số dòng ra, là giá trị được tính toán. */
-  case class Output(t: Int, n: Double, vss: Double)
+  case class Output(t: Double, n: Double, vss: Double)
 }
 
 import DirectTable._

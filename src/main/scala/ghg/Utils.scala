@@ -47,7 +47,12 @@ object Utils {
   def ThongSo = <.td(<.b("Thông số"))
   def KyHieu = <.td(<.b("Ký hiệu"))
   def DonVi = <.td(<.b("Đơn vị"))
+  def GhiChu = <.td(<.b("Ghi chú"))
   def Khoang = <.td(<.b("Khoảng dao động"))
   def GiaTri = <.td(<.b("Giá trị"))
   def Muy = <.span("μ", <.sub("m"))
+
+  implicit final class OptionEx[T](val o: Option[T]) extends AnyVal {
+    def ?(f: T => TagMod): TagMod = o.fold(EmptyTag)(f)
+  }
 }
