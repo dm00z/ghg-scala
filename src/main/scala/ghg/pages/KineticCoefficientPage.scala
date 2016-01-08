@@ -59,23 +59,29 @@ object KineticCoefficientPage {
 
       def nitratTbl(implicit d: Nitrate) = {
         @inline implicit def dispatch: Nitrate => Callback = P.my.dispatch
-        table(
+        val tbl = table(
           <.tr(
             td2("Thông số"),
             td2("Đơn vị"),
-            <.td(^.colSpan := 2, <.b("Giá trị tiêu chuẩn ở 20°C"))
+            <.td(^.colSpan := 2, <.b("Giá trị tiêu chuẩn ở 20°C")),
+            td2("Giá trị ở nhiện độ t°C")
           ),
           <.tr(Khoang, GiaTri),
           <.tr(td("μ", "m,nit"), Ngay1,
             <.td(Nitrate.M.range.text),
-            tdInput(Nitrate.m ^|-> MT.vNorm, _.between(Nitrate.M.range))),
+            tdInput(Nitrate.m ^|-> MT.vNorm, _.between(Nitrate.M.range)),
+            <.td(d.m_)),
           <.tr(td("Y", "nit"), <.td("mg/mg"),
             <.td(Nitrate.Y.range.text),
-            tdInput(Nitrate.y ^|-> KT.vNorm, _.between(Nitrate.Y.range))),
+            tdInput(Nitrate.y ^|-> KT.vNorm, _.between(Nitrate.Y.range)),
+            <.td(d.y_)),
           <.tr(td("k", "d,nit"), Ngay1,
             <.td(Nitrate.Kd.range.text),
-            tdInput(Nitrate.kd ^|-> KT.vNorm, _.between(Nitrate.Kd.range)))
+            tdInput(Nitrate.kd ^|-> KT.vNorm, _.between(Nitrate.Kd.range)),
+            <.td(d.kd_))
         )
+
+        Seq(<.div("Nhiệt độ t°C: ", input(Nitrate.t)), tbl)
       }
 
       def anaerobicTbl(implicit d: Anaerobic) = {

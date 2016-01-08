@@ -28,15 +28,23 @@ object KineticCoefficientData {
     val Y = RNorm(R(.1, .3), .16)
     val Kd = RNorm(R(.03, .06), .04)
 
+    val Kdo = 1.3
+    val DO = 2
+
     @Lenses case class MT(vNorm: Double, tNorm: Double) extends (Double => Double) {
-      def apply(t: Double) = vNorm * Math.exp(.089 * (t - tNorm))
+      def apply(t: Double) = vNorm * Math.exp(.098 * (t - tNorm))
     }
 
     val default = Nitrate(MT(M.norm, 15), KT(Y.norm, 1), KT(Kd.norm, 1.04))
   }
-  @Lenses case class Nitrate(m: Nitrate.MT, y: KT, kd: KT) {
+  @Lenses case class Nitrate(m: Nitrate.MT, y: KT, kd: KT, t: Double = 22) {
     def kn(t: Double) = Math.pow(10, .05*t - 1.158) //fixme why not (t - tNorm)?
     def k(t: Double) = m(t) / y(t)
+    @inline def k_ = k(t)
+    @inline def m_ = m(t)
+    @inline def kn_ = kn(t)
+    @inline def kd_ = kd(t)
+    @inline def y_ = y(t)
   }
 
   //TODO impl - không biết công thức!

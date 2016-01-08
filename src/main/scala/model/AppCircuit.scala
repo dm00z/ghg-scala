@@ -1,7 +1,7 @@
 package model
 
 import diode.{ActionHandler, Circuit}
-import DirectTable.{PoolData, PrimaryPoolData, GenericData}
+import DirectTable.{PoolData, PrimaryPoolData, StreamInData}
 import GasData.{GasRatioTable, GWP}, GWP.{Row => GWPRow}
 import GasRatioTable.{Group => GasGroup, Row => GasRow}
 import ElectricData.{CountryPowerStruct, CalcMethod, PowerSupply, D1, D2, D3}
@@ -48,7 +48,8 @@ object AppCircuit extends Circuit[GhgData] with ReactConnector[GhgData]{
   private val directDataHandler = new ActionHandler(directDataRw) {
     import DirectTable._
     def handle = {
-      case x: GenericData => updated(value.copy(generic = x))
+      case x: StreamInData => updated(value.copy(streamIn = x))
+      case x: StreamOutData => updated(value.copy(streamOut = x))
       case x: PrimaryPoolData => updated(value.copy(primaryPool = x))
     }
   }
@@ -106,7 +107,7 @@ object AppCircuit extends Circuit[GhgData] with ReactConnector[GhgData]{
       ),
       DirectData(
         DirectTable(
-          GenericData(45, 34, 51),
+          StreamInData(45, 34, 51),
           PrimaryPoolData(.30, .40, 0),
           PoolData(30, 20, 5),
           Some(testAnaerobicPool),
@@ -193,7 +194,7 @@ object AppCircuit extends Circuit[GhgData] with ReactConnector[GhgData]{
       ),
       DirectData(
         DirectTable(
-          GenericData(350, 30, 1000),
+          StreamInData(350, 30, 1000),
           PrimaryPoolData(.25, .40, 150),
           PoolData(30, 20, 20),
           Some(testAnaerobicPool),

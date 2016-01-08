@@ -17,8 +17,8 @@ object DirectDataPage {
     def render(P: Props) = {
       val my = P.my
 
-      def genericTbl(implicit d: GenericData) = {
-        @inline implicit def dispatch: GenericData => Callback = my.dispatch
+      def streamInTbl(implicit d: StreamInData) = {
+        @inline implicit def dispatch: StreamInData => Callback = my.dispatch
 
         table(
           <.tr(ThongSo, DonVi, GiaTri, GhiChu),
@@ -26,16 +26,33 @@ object DirectDataPage {
             <.td("Lưu lượng dòng vào hệ thống xử lý")
           ),
           <.tr(td("S", "o,v"), <.td("mg/l"),
-            tdInput(GenericData.s),
+            tdInput(StreamInData.s),
             <.td("Nồng độ cơ chất dòng vào hệ thống")
           ),
           <.tr(td("TKN", "v"), <.td("mg/l"),
-            tdInput(GenericData.tkn),
+            tdInput(StreamInData.tkn),
             <.td()
           ),
           <.tr(<.td("TSS"), <.td("mg/l"),
-            tdInput(GenericData.tss),
+            tdInput(StreamInData.tss),
             <.td()
+          )
+        )
+      }
+
+      def streamOutTbl(implicit d: StreamOutData) = {
+        @inline implicit def dispatch: StreamOutData => Callback = my.dispatch
+
+        table(
+          <.tr(ThongSo, DonVi, GiaTri),
+          <.tr(td("S", "r"), <.td("mg/l"),
+            tdInput(StreamOutData.s)
+          ),
+          <.tr(td("N", "r"), <.td("mg/l"),
+            tdInput(StreamOutData.n)
+          ),
+          <.tr(td("VSS", "r"), <.td("mg/l"),
+            tdInput(StreamOutData.vss)
           )
         )
       }
@@ -84,7 +101,7 @@ object DirectDataPage {
       val d = my()
       <.div(
         <.h3("1. Thông số dòng vào hệ thống xử lý"),
-        genericTbl(d.generic),
+        streamInTbl(d.streamIn),
         <.h3("2. Thông số bể xử lý sơ cấp"),
         <.p(<.i("Tài liệu tham khảo: Metcalf and Eddy (2002)")),
         primaryTbl(d.primaryPool),
@@ -96,10 +113,10 @@ object DirectDataPage {
           <.h3("4. Thông số bể hiếu khí"),
           poolTbl(pool)
         )),
-        Seq(
-          <.h3("5. Thông số bể phân hủy yếm khí "),
-          poolTbl(d.decayPool)
-        )
+        <.h3("5. Thông số bể phân hủy yếm khí"),
+        poolTbl(d.decayPool),
+        <.h3("6. Thông số dòng ra hệ thống xử lý"),
+        streamOutTbl(d.streamOut)
       )
     }
   }

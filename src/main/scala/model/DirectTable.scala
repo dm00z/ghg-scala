@@ -10,7 +10,7 @@ object DirectTable {
     * @param s mg/l
     * @param tkn mg/l
     * @param tss mg/l */
-  @Lenses case class GenericData(s: Double, tkn: Double, tss: Double)
+  @Lenses case class StreamInData(s: Double, tkn: Double, tss: Double)
 
   /** Thông số bể xử lý sơ cấp
     * Tài liệu tham khảo 	Metcalf and Eddy (2002)
@@ -31,7 +31,8 @@ object DirectTable {
     *       But for simply, hrt is input & v is calculated based on hrt
     */
   @Lenses case class PoolData(t: Double, srt: Double, hrt: Double) {
-    /** m3, = hrt * q / 24 hours */
+    val hrtDay = hrt / 24
+    /** m3, = hrtDay * q */
 //    def v: Double
   }
 
@@ -40,8 +41,8 @@ object DirectTable {
     * @param t oC
     * @param n mg/l
     * @param vss mg/l
-    * @note Sr (mg/l) là thông số dòng ra, là giá trị được tính toán. */
-  case class Output(t: Double, n: Double, vss: Double)
+    * @param s (mg/l) là thông số dòng ra, là giá trị được tính toán nhưng hiện tại cho input :D. */
+  @Lenses case class StreamOutData(t: Double, s: Double, n: Double, vss: Double)
 }
 
 import DirectTable._
@@ -49,7 +50,8 @@ import DirectTable._
   *       Nếu có cả 2 thì thông số dòng ra của bể yếm khí sẽ được dùng làm thông số dòng vào cho hiếu khí
   *       (không nhập dữ liệu cho thông số dòng vào cho bể hiếu khí)
   */
-case class DirectTable(generic: GenericData, primaryPool: PrimaryPoolData,
+case class DirectTable(streamIn: StreamInData, primaryPool: PrimaryPoolData,
                        decayPool: PoolData,
                        anaerobicPool: Option[DirectTable.PoolData] = None,
-                       aerobicPool: Option[DirectTable.PoolData] = None)
+                       aerobicPool: Option[DirectTable.PoolData] = None,
+                       streamOut: DirectTable.StreamOutData = DirectTable.StreamOutData(22, 10, 8, 10))
