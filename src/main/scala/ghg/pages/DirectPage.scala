@@ -6,6 +6,8 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import model.GhgData
 import model.KineticCoefficientData.Nitrate
 
+import scala.annotation.tailrec
+
 //import model.KineticCoefficientData.Aerobic
 import tex.TeX._
 import ghg.Utils._
@@ -231,7 +233,27 @@ object DirectPage {
           <.tr(<.td("N"), <.td(calcN(N)), <.td("mg/l"))
         )
 
-        val N = 24.2284
+        /** Tính ratio N/ TN:
+          * 1. Giả định = 0.5 */
+        def calcNRatio(epsilon: Double, maxLoop: Int): Double = {
+          @tailrec
+          def calc(rmin: Double, rmax: Double, loop: Int): Double = {
+            val len = rmax - rmin
+            val r = (rmin + rmax) / 2
+            val n0 = r * d.direct.d.streamIn.tkn
+            val n = calcN(n0)
+            if (loop >= maxLoop || Math.abs(n - n0) < epsilon) {
+              r
+            } else {
+              val (rmin2, rmax2) = if (n > n0) (r, rmax) else (rmin, r)
+              calc(rmin2, rmax2, loop + 1)
+            }
+          }
+          calc(0, 1, 0)
+        }
+
+//        val N = 24.2284
+        val N = calcNRatio(.001, 30) * d.direct.d.streamIn.tkn
 
         Seq(
           <.h3("2. Đường biên 2 - Hệ xử lý hiếu khí"),
