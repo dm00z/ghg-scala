@@ -6,10 +6,6 @@ var path = require('path'),
 
 module.exports = {
     entry: {
-        //mathjax: [
-        //    //'exports-loader?MathJax!./author_app/vendor/MathJax/MathJax.js',
-        //    //'mathjax',
-        //],
         index: './bundles/index.js'
     },
     output: {

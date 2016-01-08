@@ -1,15 +1,24 @@
 package ghg.pages
 
 import diode.react.ModelProxy
-import japgolly.scalajs.react.ReactComponentB
+import japgolly.scalajs.react.{BackendScope, ReactComponentB}
 import japgolly.scalajs.react.vdom.prefix_<^._
 import model.GhgData
 
 object AerobicPage {
-  val component = ReactComponentB[Unit]("Aerobic")
-    .render(_ =>
-      <.div("(Aerobic page)")
-    ).buildU
+  type Props = GhgData
 
-  def apply(d: ModelProxy[GhgData]) = component()
+  case class Backend($: BackendScope[Props, _]) {
+    def render(P: Props) = {
+      <.div(
+        <.h3("1. Đường biên 1 - Bể lắng sơ cấp???")
+      )
+    }
+  }
+
+  val component = ReactComponentB[Props]("Aerobic")
+    .renderBackend[Backend]
+    .build
+
+  def apply(d: ModelProxy[GhgData]) = component(d())
 }

@@ -95,9 +95,12 @@ object DirectDataPage {
         d.aerobicPool ? (pool => Seq(
           <.h3("4. Thông số bể hiếu khí"),
           poolTbl(pool)
-        ))
+        )),
+        Seq(
+          <.h3("5. Thông số bể phân hủy yếm khí "),
+          poolTbl(d.decayPool)
+        )
       )
-
     }
   }
 

@@ -33,16 +33,22 @@ object Utils {
   def table(xs: TagMod*) = <.table(^.className := Styles.borderCls, <.tbody(xs: _*))
   @inline def td(n: String, sub: String) = <.td(n, <.sub(sub))
   def td(n: String, sub: String, sup: String) = <.td(n, <.sup(sup), <.sub(^.marginLeft := "-10px", sub))
-  def tdInput[D](lens: Lens[D, Double],
-                 validator: String => Boolean = _.decimal)
-                (implicit d: D, dispatch: D => Callback) =
-    <.td(<.input(
+
+  def input[D](lens: Lens[D, Double],
+               validator: String => Boolean = _.decimal)
+              (implicit d: D, dispatch: D => Callback) =
+    <.input(
       ^.value := lens.get(d),
       ^.onChange ==> { e: ReactEventI =>
         val valid = validator(e.target.value)
         Callback.ifTrue(valid, dispatch(lens.set(e.target.value.toDouble)(d)))
       })
-    )
+
+  @inline def tdInput[D](lens: Lens[D, Double],
+                         validator: String => Boolean = _.decimal)
+                        (implicit d: D, dispatch: D => Callback) =
+    <.td(input(lens, validator)(d, dispatch))
+
   def Ngay1 = <.td("day", <.sup("-1"))
   def ThongSo = <.td(<.b("Thông số"))
   def KyHieu = <.td(<.b("Ký hiệu"))

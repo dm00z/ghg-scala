@@ -40,7 +40,7 @@ object Electric1 {
             }
           )()),
         <.div(
-          "Công suất điện (kwwh/ngày): ", P().power
+          "Công suất điện (kwwh/ngày): ", P().electricPower
         )
       )
     }

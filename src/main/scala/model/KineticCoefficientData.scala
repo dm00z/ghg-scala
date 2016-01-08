@@ -12,9 +12,15 @@ object KineticCoefficientData {
     val Kd = RNorm(R(.02, .1), .1)
 
     def default = Aerobic(KT(4, 1.07), KT(60, 1), KT(Kd.norm, 1.04), KT(Y.norm, 1))
+    def yenSo = Aerobic(KT(4, 1.07), KT(60, 1), KT(Kd.norm, 1.04), KT(.6, 1), t = 22)
   }
-  @Lenses case class Aerobic(m: KT, ks: KT, kd: KT, y: KT, t: Double = 25) {
-    def k(t: Double) = m(t) / y(t)
+  @Lenses final case class Aerobic(m: KT, ks: KT, kd: KT, y: KT, fd: Double = .1, t: Double = 25) {
+    @inline def k(t: Double) = m(t) / y(t)
+    @inline def k_ = k(t)
+    @inline def m_ = m(t)
+    @inline def ks_ = ks(t)
+    @inline def kd_ = kd(t)
+    @inline def y_ = y(t)
   }
 
   object Nitrate {
