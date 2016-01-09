@@ -6,6 +6,7 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import model.GhgData
 import model.DirectTable._
+import tex.TeX._
 
 object DirectDataPage {
   type Props = ModelProxy[GhgData]
@@ -77,8 +78,8 @@ object DirectDataPage {
         )
       }
 
-      def poolTbl(implicit d: PoolData) = {
-        @inline implicit def dispatch: PoolData => Callback = my.dispatch
+      def poolTbl(tpe: String)(implicit d: PoolData) = {
+        @inline implicit def dispatch: PoolData => Callback = pd => my.dispatch(tpe -> pd)
 
         table(
           <.tr(ThongSo, DonVi, GiaTri, GhiChu),
@@ -94,6 +95,11 @@ object DirectDataPage {
             <.td("HRT"), <.td("hours"),
             tdInput(PoolData.hrt),
             <.td("Thời gian lưu thủy lực")
+          ),
+          <.tr(
+            <.td("Q_ratio"), <.td(),
+            tdInput(PoolData.qxRatio),
+            <.td("Tỉ lệ `Q_(xa) / Q_v`".teX)
           )
         )
       }
@@ -107,14 +113,14 @@ object DirectDataPage {
         primaryTbl(d.primaryPool),
         d.anaerobicPool ? (pool => Seq(
           <.h3("3. Thông số bể yếm khí"),
-          poolTbl(pool)
+          poolTbl("ane")(pool)
         )),
         d.aerobicPool ? (pool => Seq(
           <.h3("4. Thông số bể hiếu khí"),
-          poolTbl(pool)
+          poolTbl("ae")(pool)
         )),
         <.h3("5. Thông số bể phân hủy yếm khí"),
-        poolTbl(d.decayPool),
+        poolTbl("decay")(d.decayPool),
         <.h3("6. Thông số dòng ra hệ thống xử lý"),
         streamOutTbl(d.streamOut)
       )

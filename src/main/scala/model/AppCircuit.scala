@@ -51,6 +51,9 @@ object AppCircuit extends Circuit[GhgData] with ReactConnector[GhgData]{
       case x: StreamInData => updated(value.copy(streamIn = x))
       case x: StreamOutData => updated(value.copy(streamOut = x))
       case x: PrimaryPoolData => updated(value.copy(primaryPool = x))
+      case ("ae", x: PoolData) => updated(value.copy(aerobicPool = Some(x)))
+      case ("ane", x: PoolData) => updated(value.copy(anaerobicPool = Some(x)))
+      case ("decay", x: PoolData) => updated(value.copy(decayPool = x))
     }
   }
 

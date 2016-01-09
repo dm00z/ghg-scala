@@ -26,11 +26,12 @@ object DirectTable {
     * @param t oC
     * @param srt day
     * @param hrt hour
+    * @param qxRatio tỉ lệ q xả / q vào
     * @note sv, s, x, q are derivative
     *       v and hrt have a relation (v = hrt * q), we must provide only one value.
     *       But for simply, hrt is input & v is calculated based on hrt
     */
-  @Lenses case class PoolData(t: Double, srt: Double, hrt: Double) {
+  @Lenses case class PoolData(t: Double, srt: Double, hrt: Double, qxRatio: Double = .2) {
     val hrtDay = hrt / 24
     /** m3, = hrtDay * q */
 //    def v: Double

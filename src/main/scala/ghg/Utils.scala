@@ -26,6 +26,18 @@ object Utils {
   }
 
   import japgolly.scalajs.react.vdom.prefix_<^._
+//  implicit final class LightTeX(val sc: StringContext) extends AnyVal {
+//    def t(args: Any*): TagMod = {
+//      val s = sc.s()
+//      val b = new StringBuilder
+//      <.span()
+//      s.foreach {
+//        case '_' =>
+//
+//      }
+//    }
+//  }
+
   def table(th: ReactTagOf[html.TableHeaderCell]*)(xs: TagMod*) = <.table(
     ^.className := Styles.borderCls,
     <.thead(<.tr(th: _*)),
