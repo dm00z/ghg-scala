@@ -5,15 +5,31 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import model.GhgData
 import model.KineticCoefficientData.Nitrate
-
 import scala.annotation.tailrec
-
-//import model.KineticCoefficientData.Aerobic
 import tex.TeX._
 import ghg.Utils._
 
 object DirectPage {
   type Props = ModelProxy[GhgData]
+
+  private def dataTbl(result: TagMod, dataRows: TagMod*) =
+    table(
+      <.tr(<.td(^.colSpan := 3, <.b("Dữ liệu:"))),
+      dataRows,
+      <.tr(<.td(^.colSpan := 3, <.b("Kết quả tính toán:"))),
+      result
+    )
+
+  private def dataTbl(numResult: Int, rows: TagMod*) =
+    rows.splitAt(numResult) match {
+      case (results, dataRows) =>
+        table(
+          <.tr(<.td(^.colSpan := 3, <.b("Dữ liệu:"))),
+          dataRows,
+          <.tr(<.td(^.colSpan := 3, <.b("Kết quả tính toán:"))),
+          results
+        )
+  }
 
   case class Backend($: BackendScope[Props, _]) {
     def render(P: Props) = {
@@ -24,35 +40,22 @@ object DirectPage {
       val s_ov = d.direct.d.streamIn.s
       val pr_blBod = pPool.prBOD
       val bod_khuBl = d.info.power * s_ov * pr_blBod
-      def tbl1_1() = {
-        table(
-          <.tr(<.td(^.colSpan := 3, <.b("Dữ liệu:"))),
-          <.tr(td("Q", "o,v"), <.td(d.info.power), <.td("m3/day")), //Công suất dòng vào ban đầu
-          <.tr(td("S", "o,v"), <.td(s_ov), <.td("mg/l")), //Nồng độ `BOD_5` dòng vào ban đầu
-          <.tr(td("Pr", "bl,BOD"), <.td(pr_blBod), <.td("%")), //Phần trăm khư `BOD_5` trong bể lắng sơ cấp
-
-          <.tr(<.td(^.colSpan := 3, <.b("Kết quả tính toán:"))),
-          <.tr(td("BOD", "khu,bl"), <.td(bod_khuBl), <.td("g/day")), //Lượng `BOD_5` bị khử trong bể lắng sơ cấp (g/day)
-          <.tr(td("BOD", "khu,bl"), <.td(bod_khuBl / 1000), <.td("kg/day")) //Lượng `BOD_5` bị khử trong bể lắng sơ cấp (kg/day)
-        )
-      }
+      val tbl1_1 = dataTbl(
+        tr("BOD", "khu,bl", bod_khuBl, "g/day"), //Lượng `BOD_5` bị khử trong bể lắng sơ cấp (g/day)
+        tr("Q", "o,v", d.info.power, "m3/day"), //Công suất dòng vào ban đầu
+        tr("S", "o,v", s_ov, "mg/l"), //Nồng độ `BOD_5` dòng vào ban đầu
+        tr("Pr", "bl,BOD", pr_blBod, "%") //Phần trăm khư `BOD_5` trong bể lắng sơ cấp
+      )
 
       val x_ov = d.direct.d.streamIn.tss
       val pr_blSs = pPool.prSS
       val ss_khuBl = d.info.power * x_ov * pr_blSs
-      def tbl1_2() = {
-
-        table(
-          <.tr(<.td(^.colSpan := 3, <.b("Dữ liệu:"))),
-          <.tr(td("Q", "o,v"), <.td(d.info.power), <.td("m3/day")), //Công suất dòng vào ban đầu
-          <.tr(td("X", "o,v"), <.td(x_ov), <.td("mg/l")), //Nồng độ SS dòng vào ban đầu
-          <.tr(td("Pr", "bl,SS"), <.td(pr_blSs), <.td("%")), //Phần trăm khư SS trong bể lắng sơ cấp
-
-          <.tr(<.td(^.colSpan := 3, <.b("Kết quả tính toán:"))),
-          <.tr(td("SS", "khu,bl"), <.td(ss_khuBl), <.td("g/day")), //Lượng SS bị khử trong bể lắng sơ cấp (g/day)
-          <.tr(td("SS", "khu,bl"), <.td(ss_khuBl / 1000), <.td("kg/day")) //Lượng SS bị khử trong bể lắng sơ cấp (kg/day)
-        )
-      }
+      val tbl1_2 = dataTbl(
+        tr("SS", "khu,bl", ss_khuBl, "g/day"), //Lượng SS bị khử trong bể lắng sơ cấp (g/day)
+        tr("Q", "o,v", d.info.power, "m3/day"), //Công suất dòng vào ban đầu
+        tr("X", "o,v", x_ov, "mg/l"), //Nồng độ SS dòng vào ban đầu
+        tr("Pr", "bl,SS", pr_blSs, "%") //Phần trăm khư SS trong bể lắng sơ cấp
+      )
 
 //      def tbl2(implicit d: Aerobic) = {
 //        @inline implicit def dispatch: Aerobic => Callback = P.my.dispatch
@@ -69,172 +72,135 @@ object DirectPage {
         val ae = d.direct.coef.aerobic
         val s = ae.ks_ * (1 + ae.kd_ * pool.srt) / (pool.srt * (ae.y_ * ae.k_ - ae.kd_) - 1)
 
-        val p21S = table(
-          <.tr(<.td(^.colSpan := 3, <.b("Dữ liệu:"))),
-          <.tr(td("K", "S"), <.td(ae.ks_), <.td("mg/l")),
-          <.tr(td("k", "d"), <.td(ae.kd_), Ngay1),
-          <.tr(<.td("Y"), <.td(ae.y_), <.td("mg/mg")),
-          <.tr(<.td("k"), <.td(ae.k_), <.td()),
-          <.tr(<.td("SRT"), <.td(pool.srt), <.td("day")),
-
-          <.tr(<.td(^.colSpan := 3, <.b("Kết quả tính toán:"))),
-          <.tr(<.td("S"), <.td(s), <.td("mg/l"))
+        val p21S = dataTbl(
+          tr("S", s, "mg/l"),
+          tr("K", "S", ae.ks_, "mg/l"),
+          tr("k", "d", ae.kd_, Day1),
+          tr("Y", ae.y_, "mg/mg"),
+          tr("k", ae.k_),
+          tr("SRT", pool.srt, "day")
         )
-
 
         val q_v = d.info.power - pPool.q
         val qv_21a = <.div(s"a. Tính `Q_v = Q_(o,v) - Q_(bl) = ${d.info.power} - ${pPool.q} = $q_v`(m3/day)".teX)
 
         val s_v = d.direct.d.streamIn.s - bod_khuBl / q_v
-        val sv_21b = table(
-          <.tr(<.td(^.colSpan := 3, <.b("Dữ liệu:"))),
-          <.tr(td("S", "o,v"), <.td(d.direct.d.streamIn.s), <.td("mg/l")),
-          <.tr(td("BOD", "khu,bl"), <.td(bod_khuBl), <.td("g/day")),
-          <.tr(td("Q", "v"), <.td(q_v), <.td("m3/day")),
-
-          <.tr(<.td(^.colSpan := 3, <.b("Kết quả tính toán:"))),
-          <.tr(td("S", "v"), <.td(s_v), <.td("mg/l"))
+        val sv_21b = dataTbl(
+          tr("S", "v", s_v, "mg/l"),
+          tr("S", "o,v", d.direct.d.streamIn.s, "mg/l"),
+          tr("BOD", "khu,bl", bod_khuBl, "g/day"),
+          tr("Q", "v", q_v, "m3/day")
         )
 
         val X = pool.srt / pool.hrtDay * ae.y_ * (s_v - s) / (1 + ae.kd_ * pool.srt)
-        val x_21c = table(
-          <.tr(<.td(^.colSpan := 3, <.b("Dữ liệu:"))),
-          <.tr(<.td("SRT"), <.td(pool.srt), <.td("day")),
-          <.tr(<.td("HRT"), <.td(pool.hrt), <.td("hour")),
-          <.tr(td("S", "v"), <.td(s_v), <.td("mg/l")),
-          <.tr(<.td("S"), <.td(s), <.td("mg/l")),
-          <.tr(<.td("Y"), <.td(ae.y_), <.td("mg/mg")),
-          <.tr(td("k", "d"), <.td(ae.kd_), Ngay1),
-
-          <.tr(<.td(^.colSpan := 3, <.b("Kết quả tính toán:"))),
-          <.tr(<.td("X"), <.td(X), <.td("mg/l"))
+        val x_21c = dataTbl(
+          tr("X", X, "mg/l"),
+          tr("SRT", pool.srt, "day"),
+          tr("HRT", pool.hrt, "hour"),
+          tr("S", "v", s_v, "mg/l"),
+          tr("S", s, "mg/l"),
+          tr("Y", ae.y_, "mg/mg"),
+          tr("k", "d", ae.kd_, Day1)
         )
 
         val ss_v = x_ov - ss_khuBl / q_v
         val vss_v = 0.85 * ss_v
-        val vss_23a = table(
-          <.tr(<.td(^.colSpan := 3, <.b("Dữ liệu:"))),
-          <.tr(td("X", "o,v"), <.td(x_ov), <.td("mg/l")), //Nồng độ SS dòng vào ban đầu
-          <.tr(td("SS", "khu,bl"), <.td(ss_khuBl), <.td("g/day")), //Lượng SS bị khử trong bể lắng sơ cấp (g/day)
-          <.tr(td("Q", "v"), <.td(q_v), <.td("m3/day")),
-
-          <.tr(<.td(^.colSpan := 3, <.b("Kết quả tính toán:"))),
-          <.tr(td("SS", "v"), <.td(ss_v), <.td("mg/l")),
-          <.tr(<.td("`VSS_v = 0.85 * SS_v`".teX), <.td(vss_v), <.td("mg/l"))
+        val vss_23a = dataTbl(2,
+          tr("SS", "v", ss_v, "mg/l"),
+          tr("`VSS_v = 0.85 * SS_v`".teX, vss_v, "mg/l"),
+          tr("X", "o,v", x_ov, "mg/l"), //Nồng độ SS dòng vào ban đầu
+          tr("SS", "khu,bl", ss_khuBl, "g/day"), //Lượng SS bị khử trong bể lắng sơ cấp (g/day)
+          tr("Q", "v", q_v, "m3/day")
         )
 
         val X_nbV = vss_v * (1 - 60D/ 73)
 
         val X_nb = ae.fd * ae.kd_ *  X * pool.srt + X_nbV * pool.srt / pool.hrtDay
-        val X_nb_23c = table(
-          <.tr(<.td(^.colSpan := 3, <.b("Dữ liệu:"))),
-          <.tr(td("f", "d"), <.td(ae.fd), <.td()),
-          <.tr(td("k", "d"), <.td(ae.kd_), <.td()),
-          <.tr(<.td("X"), <.td(X), <.td("mg/l")),
-          <.tr(td("X", "nb,v"), <.td(X_nbV), <.td("mg/l")),
-          <.tr(<.td("SRT"), <.td(pool.srt), <.td("day")),
-          <.tr(<.td("HRT"), <.td(pool.hrt), <.td("hour")),
-
-          <.tr(<.td(^.colSpan := 3, <.b("Kết quả tính toán:"))),
-          <.tr(td("X", "nb"), <.td(X_nb), <.td("mg/l"))
+        val X_nb_23c = dataTbl(
+          tr("X", "nb", X_nb, "mg/l"),
+          tr("f", "d", ae.fd),
+          tr("k", "d", ae.kd_),
+          tr("X", X, "mg/l"),
+          tr("X", "nb,v", X_nbV, "mg/l"),
+          tr("SRT", pool.srt, "day"),
+          tr("HRT", pool.hrt, "hour")
         )
 
         val nit = d.direct.coef.nitrate
         def m_nit(N: Double) = nit.m_ * N / (nit.kn_ + N) * Nitrate.DO / (Nitrate.Kdo + Nitrate.DO) - nit.kd_
-        def mu_24a(N: Double) = table(
-          <.tr(<.td(^.colSpan := 3, <.b("Dữ liệu:"))),
-          <.tr(<.td("TN"), <.td(d.direct.d.streamIn.tkn), <.td("mg/l")),
-          <.tr(td("μ", "m,nit"), <.td(nit.m_), <.td()),
-          <.tr(td("K", "N"), <.td(nit.kn_), <.td()),
-          <.tr(td("k", "d,nit"), <.td(nit.kd_), Ngay1),
-          <.tr(td("K", "DO"), <.td(Nitrate.Kdo), <.td()),
-          <.tr(<.td("DO"), <.td(Nitrate.DO), <.td()),
-          <.tr(<.td("N"), <.td(N), <.td("mg/l")),
-
-          <.tr(<.td(^.colSpan := 3, <.b("Kết quả tính toán:"))),
-          <.tr(td("μ", "nit"), <.td(m_nit(N)), Ngay1)
+        def mu_24a(N: Double) = dataTbl(
+          tr("μ", "nit", m_nit(N), Day1),
+          tr("TN", d.direct.d.streamIn.tkn, "mg/l"),
+          tr("μ", "m,nit", nit.m_),
+          tr("K", "N", nit.kn_),
+          tr("k", "d,nit", nit.kd_, Day1),
+          tr("K", "DO", Nitrate.Kdo),
+          tr("DO", Nitrate.DO),
+          tr("N", N, "mg/l")
         )
 
         @inline def srtNit(N: Double) = 1 / m_nit(N)
 
-        def Xnit(N: Double) = srtNit(N) / pool.hrtDay * nit.y_ * N / (1 + nit.kd_ * srtNit(N))
+        def x_nit(N: Double) = srtNit(N) / pool.hrtDay * nit.y_ * N / (1 + nit.kd_ * srtNit(N))
 
-        def Xnit_24c(N: Double) = table(
-          <.tr(<.td(^.colSpan := 3, <.b("Dữ liệu:"))),
-          <.tr(td("SRT", "nit"), <.td(srtNit(N)), <.td("day")),
-          <.tr(<.td("HRT"), <.td(pool.hrt), <.td("hour")),
-          <.tr(td("Y", "nit"), <.td(nit.y_), <.td()),
-          <.tr(td("k", "d,nit"), <.td(nit.kd_), Ngay1),
-          <.tr(<.td("N"), <.td(N), <.td("mg/l")),
-
-          <.tr(<.td(^.colSpan := 3, <.b("Kết quả tính toán:"))),
-          <.tr(td("X", "nit"), <.td(Xnit(N)), <.td("mg/l"))
+        def x_nit_24c(N: Double) = dataTbl(
+          tr("X", "nit", x_nit(N), "mg/l"),
+          tr("SRT", "nit", srtNit(N), "day"),
+          tr("HRT", pool.hrt, "hour"),
+          tr("Y", "nit", nit.y_),
+          tr("k", "d,nit", nit.kd_, Day1),
+          tr("N", N, "mg/l")
         )
 
         val V = pool.hrtDay * q_v
         val p_ssBod = X * V / pool.srt
-        val p_ssBod_25a = table(
-          <.tr(<.td(^.colSpan := 3, <.b("Dữ liệu:"))),
-          <.tr(<.td("X"), <.td(X), <.td("mg/l")),
-          <.tr(<.td("V"), <.td(V), <.td("mg/l")),
-          <.tr(<.td("SRT"), <.td(pool.srt), <.td("day")),
-
-          <.tr(<.td(^.colSpan := 3, <.b("Kết quả tính toán:"))),
-          <.tr(td("P", "SS,BOD"), <.td(p_ssBod), <.td("g/day"))
+        val p_ssBod_25a = dataTbl(
+          tr("P", "SS,BOD", p_ssBod, "g/day"),
+          tr("X", X, "mg/l"),
+          tr("V", V, "mg/l"),
+          tr("SRT", pool.srt, "day")
         )
 
-        def p_ssNit(N: Double) = Xnit(N) * V / srtNit(N)
+        def p_ssNit(N: Double) = x_nit(N) * V / srtNit(N)
 
-        def p_ssNit_25b(N: Double) = table(
-          <.tr(<.td(^.colSpan := 3, <.b("Dữ liệu:"))),
-          <.tr(td("X", "nit"), <.td(Xnit(N)), <.td("mg/l")),
-          <.tr(<.td("V"), <.td(V), <.td("mg/l")),
-          <.tr(td("SRT", "nit"), <.td(srtNit(N)), <.td("day")),
-
-          <.tr(<.td(^.colSpan := 3, <.b("Kết quả tính toán:"))),
-          <.tr(td("P", "SS,nit"), <.td(p_ssNit(N)), <.td("g/day"))
+        def p_ssNit_25b(N: Double) = dataTbl(
+          tr("P", "SS,nit", p_ssNit(N), "g/day"),
+          tr("X", "nit", x_nit(N), "mg/l"),
+          tr("V", V, "mg/l"),
+          tr("SRT", "nit", srtNit(N), "day")
         )
 
         val p_ssManhTeBao = ae.fd * ae.kd_ * X * V
-        val p_ssManhTeBao_25c = table(
-          <.tr(<.td(^.colSpan := 3, <.b("Dữ liệu:"))),
-          <.tr(<.td("X"), <.td(X), <.td("mg/l")),
-          <.tr(<.td("V"), <.td(V), <.td("mg/l")),
-          <.tr(td("f", "d"), <.td(ae.fd), <.td()),
-          <.tr(td("k", "d"), <.td(ae.kd_), Ngay1),
-
-          <.tr(<.td(^.colSpan := 3, <.b("Kết quả tính toán:"))),
-          <.tr(td("P", "SS,manhTeBao"), <.td(p_ssManhTeBao), <.td("g/day"))
+        val p_ssManhTeBao_25c = dataTbl(
+          tr("P", "SS,manhTeBao", p_ssManhTeBao, "g/day"),
+          tr("X", X, "mg/l"),
+          tr("V", V, "mg/l"),
+          tr("f", "d", ae.fd),
+          tr("k", "d", ae.kd_, Day1)
         )
 
         val p_ssNbVss = X_nbV * V / pool.hrtDay
-        val p_ssNbVss_25d = table(
-          <.tr(<.td(^.colSpan := 3, <.b("Dữ liệu:"))),
-          <.tr(td("X", "nb,v"), <.td(X_nbV), <.td("mg/l")),
-          <.tr(<.td("V"), <.td(V), <.td("mg/l")),
-          <.tr(<.td("HRT"), <.td(pool.hrt), <.td("hour")),
-
-          <.tr(<.td(^.colSpan := 3, <.b("Kết quả tính toán:"))),
-          <.tr(td("P", "SS,nbVSS"), <.td(p_ssNbVss), <.td("g/day"))
+        val p_ssNbVss_25d = dataTbl(
+          tr("P", "SS,nbVSS", p_ssNbVss, "g/day"),
+          tr("X", "nb,v", X_nbV, "mg/l"),
+          tr("V", V, "mg/l"),
+          tr("HRT", pool.hrt, "hour")
         )
 
         def p_ss(N: Double) = p_ssBod + p_ssNit(N) + p_ssManhTeBao + p_ssNbVss
         def p_ssBio(N: Double) = p_ss(N) - p_ssNbVss //=..
 
         def calcN(N: Double) = d.direct.d.streamIn.tkn - d.direct.d.streamOut.n - .12 * p_ssBio(N) / q_v
-        def N_26(N: Double) = table(
-          <.tr(<.td(^.colSpan := 3, <.b("Dữ liệu:"))),
-          <.tr(<.td("TN"), <.td(d.direct.d.streamIn.tkn), <.td("mg/l")),
-          <.tr(td("N", "r"), <.td(d.direct.d.streamOut.n), <.td("mg/l")),
-          <.tr(td("P", "SS,bio"), <.td(p_ssBio(N)), <.td("g/day")),
-          <.tr(td("Q", "v"), <.td(q_v), <.td("m3/day")),
-
-          <.tr(<.td(^.colSpan := 3, <.b("Kết quả tính toán:"))),
-          <.tr(<.td("N"), <.td(calcN(N)), <.td("mg/l"))
+        def N_26(N: Double) = dataTbl(
+          tr("N", calcN(N), "mg/l"),
+          tr("TN", d.direct.d.streamIn.tkn, "mg/l"),
+          tr("N", "r", d.direct.d.streamOut.n, "mg/l"),
+          tr("P", "SS,bio", p_ssBio(N), "g/day"),
+          tr("Q", "v", q_v, "m3/day")
         )
 
         /** Tính ratio N/ TN:
-          * 1. Giả định = 0.5 */
+          * 1. Giả định = 0.5 ... */
         def calcNRatio(epsilon: Double, maxLoop: Int): Double = {
           @tailrec
           def calc(rmin: Double, rmax: Double, loop: Int): Double = {
@@ -252,8 +218,51 @@ object DirectPage {
           calc(0, 1, 0)
         }
 
-//        val N = 24.2284
         val N = calcNRatio(.001, 30) * d.direct.d.streamIn.tkn
+
+        val bod_ox = q_v * (s_v - s) - d.direct.relation.value.rCO2Decay * p_ssBio(N)
+        val bod_ox_271a = dataTbl(
+          tr("BOD", "ox", bod_ox, "g/day"),
+          tr("Q", "v", q_v, "m3/day"),
+          tr("S", "v", s_v, "mg/l"),
+          tr("S", s, "mg/l"),
+          tr("r", "O2,phanhuy", d.direct.relation.value.rCO2Decay, "g/g"),
+          tr("P", "SS,bio", p_ssBio(N), "g/day")
+        )
+
+        val bod_ox_dnt = d.direct.relation.value.rBODDnt * N * q_v
+        val bod_ox_dnt_271b = dataTbl(
+          tr("BOD", "ox,dnt", bod_ox_dnt, "g/day"),
+          tr("r", "BOD,dnt", d.direct.relation.value.rBODDnt, "g/g"),
+          tr("N", N, "mg/l"),
+          tr("Q", "v", q_v, "m3/day")
+        )
+
+        val bod_khuthuc = if (bod_ox < bod_ox_dnt) bod_ox else bod_ox - bod_ox_dnt
+
+        val co2_khu_bod = d.direct.relation.value.yCO2 * bod_khuthuc
+        val co2_khu_bod_271d = dataTbl(
+          tr("CO2", "khu,BOD", co2_khu_bod, "g/day"),
+          tr("Y", "CO2", d.direct.relation.value.yCO2),
+          tr("BOD", "khuthuc", bod_khuthuc)
+        )
+
+        val vss_phanhuy = .85 * V * (ae.kd_ * X + nit.kd_ * x_nit(N))
+        val vss_phanhuy_272a = dataTbl(
+          tr("VSS", "phanhuy", vss_phanhuy, "g/day"),
+          tr("V", V, "mg/l"),
+          tr("X", X, "mg/l"),
+          tr("X", "nit", x_nit(N), "mg/l"),
+          tr("k", "d", ae.kd_, Day1),
+          tr("k", "d,nit", nit.kd_, Day1)
+        )
+
+        val co2_phanhuy = d.direct.relation.value.yCO2Decay * vss_phanhuy
+        val co2_phanhuy_272b = dataTbl(
+          tr("CO", "2,VSSphanhuy", co2_phanhuy, "g/day"),
+          tr("Y", "CO2,phanhuy", d.direct.relation.value.yCO2Decay),
+          tr("VSS", "phanhuy", vss_phanhuy, "g/day")
+        )
 
         Seq(
           <.h3("2. Đường biên 2 - Hệ xử lý hiếu khí"),
@@ -286,7 +295,7 @@ object DirectPage {
           mu_24a(N),
           <.h5(s"b. Tính `SRT_(nit) = 1/mu_(nit) = ${srtNit(N)}`(day)".teX),
           <.h5(s"c. Tính `X_(nit)`".teX),
-          Xnit_24c(N),
+          x_nit_24c(N),
 
           <.h4("2.5. Tính lượng bùn tạo ra"),
           <.div("Công thức tính: `P_(SS) = (X_(tong,SS) * V) / (SRT) = P_(SS,BOD) + P_(SS,nit) + P_(SS,manhtebao) + P_(SS,nbVSS)`".teX),
@@ -307,7 +316,29 @@ object DirectPage {
 
           <.h4("2.6. Tính nồng độ Nito bị ô xi hóa trong bể xử lý sinh học"),
           <.div("Công thức tính: `N = TN_v - N_r - (0.12 * P_(SS,bio)) / Q_v`".teX),
-          N_26(N)
+          N_26(N),
+
+          <.h4("2.7. Tính lượng khí CO2 sinh ra trong bể hiếu khí"),
+          <.h5("2.7.1 Tính lượng CO2 sinh ra do khử BOD"),
+          <.div("a. Lượng BOD bị oxi hóa"),
+          <.div("Công thức tính: `BOD_(ox) = Q_v * (S_v - S) - r_(O2,phanhuy) * (P_(SS) - Q_v * X_(nb,v) )`".teX),
+          bod_ox_271a,
+          <.div("b. Lượng BOD bị khử trong quá trình denitrat hóa"),
+          <.div("Công thức tính: `BOD_(o x,dnt) = r_(BOD,dnt) * N * Q_v`".teX),
+          bod_ox_dnt_271b,
+          <.div(s"c. Lượng BOD bị khử thực = $bod_khuthuc (g/day)"),
+          <.div("d. Lượng phát thải CO2 do khử BOD"),
+          <.div("Công thức tính: `CO_(2,khuBOD) = Y_(CO2) * (BOD_(o x) - BOD_(o x,dnt))`".teX),
+          co2_khu_bod_271d,
+
+          <.h5("2.7.2 Lượng CO2 do phân hủy nội bào sinh khối"),
+          <.div("a. Lượng sinh khối  phân hủy nội bào"),
+          <.div("Công thức tính: `VSS_(phanhuy) = 0.85 * V * (k_d * X + k_(d,nit) * X_(nit))`".teX),
+          vss_phanhuy_272a,
+          <.div("b. Lượng CO2 do phân hủy nội bào sinh khối"),
+          <.div("Công thức tính: `CO_(2,phanhuy) = Y_(CO2,phanhuy) * VSS_(phanhuy)`".teX),
+          co2_phanhuy_272b
+
         )
       }
 
@@ -315,10 +346,10 @@ object DirectPage {
         <.h3("1. Đường biên 1 - Bể lắng sơ cấp"),
         <.h4("1.1. Lượng BOD bị khử trong bể lắng sơ cấp"),
         <.div("Công thức tính: `BOD_(khu,bl) = Pr_(bl,BOD) * Q_(o,v) * S_(o,v)`".teX),
-        tbl1_1(),
+        tbl1_1,
         <.h4("1.2. Lượng SS bị khử trong bể lắng sơ cấp"),
         <.div("Công thức tính: `SS_(khu,bl) = Pr_(bl,SS) * Q_(o,v) * S_(o,v)`".teX),
-        tbl1_2(),
+        tbl1_2,
         p2Aerobic
       )
     }

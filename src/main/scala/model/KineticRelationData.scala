@@ -21,4 +21,9 @@ object WaterType extends Enumeration {
 }
 
 import KineticRelationData._
-case class KineticRelationData(tpe: WaterType.Value, domestic: Data, industrial: Data)
+case class KineticRelationData(tpe: WaterType.Value, domestic: Data, industrial: Data) {
+  val value = tpe match {
+    case WaterType.Domestic => domestic
+    case WaterType.Industrial => industrial
+  }
+}

@@ -1,6 +1,7 @@
 package ghg
 
 import japgolly.scalajs.react._
+import japgolly.scalajs.react.vdom.TagMod
 import model.R
 import monocle._
 import org.scalajs.dom.html
@@ -34,6 +35,11 @@ object Utils {
   @inline def td(n: String, sub: String) = <.td(n, <.sub(sub))
   def td(n: String, sub: String, sup: String) = <.td(n, <.sup(sup), <.sub(^.marginLeft := "-10px", sub))
 
+  @inline def tr(symbol: TagMod, data: Double) = <.tr(<.td(symbol), <.td(data), <.td())
+  @inline def tr(symbol: TagMod, data: Double, unit: TagMod) = <.tr(<.td(symbol), <.td(data), <.td(unit))
+  @inline def tr(symbol: String, sub: String, data: Double) = <.tr(td(symbol, sub), <.td(data), <.td())
+  @inline def tr(symbol: String, sub: String, data: Double, unit: TagMod) = <.tr(td(symbol, sub), <.td(data), <.td(unit))
+
   def input[D](lens: Lens[D, Double],
                validator: String => Boolean = _.decimal)
               (implicit d: D, dispatch: D => Callback) =
@@ -49,6 +55,7 @@ object Utils {
                         (implicit d: D, dispatch: D => Callback) =
     <.td(input(lens, validator)(d, dispatch))
 
+  def Day1 = <.span("day", <.sup("-1"))
   def Ngay1 = <.td("day", <.sup("-1"))
   def ThongSo = <.td(<.b("Thông số"))
   def KyHieu = <.td(<.b("Ký hiệu"))
