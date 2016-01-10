@@ -86,8 +86,39 @@ object KineticCoefficientPage {
 
       def anaerobicTbl(implicit d: Anaerobic) = {
         @inline implicit def dispatch: Anaerobic => Callback = P.my.dispatch
-        table(
-          <.tr()
+        Seq(
+          <.div("Nhiệt độ bể yếm khí t_an °C: ", input(Anaerobic.t_an)),
+          <.div("Nhiệt độ bể phân hủy bùn t_dr °C: ", input(Anaerobic.t_dr)),
+          table(
+            <.tr(
+              td2("Thông số"),
+              td2("Đơn vị"),
+              <.td(^.colSpan := 2, <.b("Giá trị tiêu chuẩn ở 20°C")), //25
+              td2("Giá trị ở nhiện độ t_an °C"),
+              td2("Giá trị ở nhiện độ t_dr °C")
+            ),
+            <.tr(Khoang, GiaTri),
+            <.tr(<.td("μ", <.sub("m,an"), ", μ", <.sub("m,dr")), Ngay1,
+              <.td(Anaerobic.M.range.text),
+              tdInput(Anaerobic.m ^|-> KT.vNorm, _.between(Anaerobic.M.range)),
+              <.td(d.m(d.t_an)),<.td(d.m(d.t_dr))),
+            <.tr(<.td("Y", <.sub("an"), ", Y", <.sub("dr")), <.td("mg/mg"),
+              <.td(Anaerobic.Y.range.text),
+              tdInput(Anaerobic.y, _.between(Anaerobic.Y.range)),
+              <.td(d.y),<.td(d.y)),
+            <.tr(<.td("K", <.sub("s,an"), ", K", <.sub("s,dr")), <.td("mg/l"),
+              <.td(Anaerobic.Ks.range.text),
+              tdInput(Anaerobic.ks ^|-> KT.vNorm, _.between(Anaerobic.Ks.range)),
+              <.td(d.ks(d.t_an)),<.td(d.ks(d.t_dr))),
+            <.tr(<.td("k", <.sub("d,an"), ", k", <.sub("d,dr")), Ngay1,
+              <.td(Anaerobic.Kd.range.text),
+              tdInput(Anaerobic.kd, _.between(Anaerobic.Kd.range)),
+              <.td(d.kd), <.td(d.kd)),
+            <.tr(<.td("f", <.sub("d,an"), ", f", <.sub("d,dr")), <.td(),
+              <.td(),
+              tdInput(Anaerobic.fd),
+              <.td(d.fd),<.td(d.fd))
+          )
         )
       }
 

@@ -49,10 +49,12 @@ object KineticCoefficientData {
 
   //TODO impl - không biết công thức!
   object Anaerobic {
+    val M = RNorm(R(.18, .24), .2)
     val Y = RNorm(R(.05, .1), .08)
-    val KD = RNorm(R(.02, .04), .03)
+    val Ks = RNorm(R(800, 1100), 900)
+    val Kd = RNorm(R(.02, .04), .03)
 
-    val default = Anaerobic(KT(.2, 1.06, 25), Y.norm, KT(900, 0.841371404, 25), KD.norm, .15)
+    val default = Anaerobic(KT(M.norm, 1.06, 25), Y.norm, KT(Ks.norm, 0.841371404, 25), Kd.norm, .15)
   }
 
   /** Quá trình yếm khí
@@ -61,10 +63,10 @@ object KineticCoefficientData {
     * @param y mg/mg
     * @param ks mg/l
     * @param kd day^-1
-    * @param f ?? - FIXME not use
+    * @param fd ?? - FIXME not use
     * @note Giả định m, kd cũng tuân theo công thức KT
     */
-  case class Anaerobic(m: KT, y: Double, ks: KT, kd: Double, f: Double) {
+  @Lenses case class Anaerobic(m: KT, y: Double, ks: KT, kd: Double, fd: Double, t_an: Double = 30, t_dr: Double = 30) {
     def k(t: Double) = m(t) / y
   }
 }

@@ -36,6 +36,7 @@ object DirectPage {
       val b1 = d.bien1
 
       val pPool = d.direct.d.primaryPool
+      val aPool = d.direct.d.anaerobicPool.get //FIXME
 
       val p2Aerobic = d.direct.d.aerobicPool ? { pool =>
         val b2 = d.bien2
@@ -257,7 +258,9 @@ object DirectPage {
         )
       }
 
+      val b2 = d.bien2 //fixme anaerobic
       val b3 = d.bien3
+      val ane = d.direct.coef.anaerobic
       <.div(
         <.h3("1. Đường biên 1 - Bể lắng sơ cấp"),
         <.h4("1.1. Lượng BOD bị khử trong bể lắng sơ cấp"),
@@ -287,7 +290,55 @@ object DirectPage {
           tr("P", "SS", d.p_ss, "g/day")
         ),
         <.h4("3.2. Lưu lượng bùn vào bể phân hủy"),
-        <.div(s"Công thức tính: `Q_(xa) = Q_(ratio) * Q_v = ${b3.q_xa}`".teX)
+        <.h5("a. Tính lưu lượng bùn xả ở bể hiếu khí"),
+        <.div(s"`Q_(xa) = Q_(ratio) * Q_v = ${b3.q_xa}`(m3/day)".teX),
+        <.h5("b. Tính lưu lượng bùn vào bể phân hủy"),
+        <.div(s"`Q_(v,dr) = Q_(bl) + Q_(xa) = ${pPool.q} + ${b3.q_xa} = ${b3.q_v_dr}`".teX),
+
+        <.h4("3.3. Tính nồng độ cơ chất vào bể phân hủy"),
+        <.div(s"`Công thức tính: S_v^(dr) = (BOD_(khu,bl) + Q_(xa) * S) / Q_(v,dr)`".teX),
+        dataTbl(
+          tr(<.span("S", <.sub("v"), <.sup("dr")), b3.s_v_dr, "mg/l"),
+          tr("BOD", "khu,bl", b1.bod_khuBl, "g/day"),
+          tr("Q", "xa", b3.q_xa, "m3/day"),
+          tr("Q", "v,dr", b3.q_v_dr, "m3/day"),
+          tr("S", b2.s, "mg/l")
+        ),
+
+        <.h4("3.4. Tính nồng độ cơ chất dòng ra bể phân hủy"),
+        <.div("Công thức tính: `S^(dr) = (K_s^(dr) * (1 + K_d^(dr) * SRT^(dr)))/(SRT^(dr) * (Y^(dr) * k^(dr) - k_d^(dr)) - 1)`".teX),
+        dataTbl(
+          tr("S", "dr", b3.s_dr, "mg/l"),
+          tr("K", "S,dr", ane.ks(ane.t_dr), "mg/l"),
+          tr("k", "d,dr", ane.kd, Day1),
+          tr("Y", "dr", ane.y, "mg/mg"),
+          tr("k", "dr", ane.k(ane.t_dr)),
+          tr("SRT", "dr", aPool.srt, "day")
+        ),
+
+        <.h4("3.5. Tổng lượng bùn sinh học trong bể phân hủy"),
+        <.h5("a. Tính lượng bùn do khử BOD trong bể phân hủy"),
+        <.div("Công thức tính: `S_(SS,BOD,dr) = (Q_(v,dr) * Y_(dr) * (S_(v,dr) - S_(dr))) / (1 + k_(d,dr) * SRT_(dr))`".teX),
+        dataTbl(
+          tr("P", "SS,BOD,dr", b3.p_ssBodDr, "g/day"),
+          tr("Y", "dr", ane.y, "mg/mg"),
+          tr("k", "d,dr", ane.kd, Day1),
+          tr("SRT", "dr", aPool.srt, "day"),
+          tr("S", "v,dr", b3.s_v_dr, "mg/l"),
+          tr("S", "dr", b3.s_dr, "mg/l"),
+          tr("Q", "v,dr", b3.q_v_dr, "m3/day")
+        ),
+        <.h5("b. Tính lượng bùn do phân hủy mảnh tế bào trong bể phân hủy"),
+        <.div("Công thức tính: `P_(SS,manhTeBao,dr) = f_(d,dr) * k_(d,dr) * SRT_(dr) * P_(SS,BOD,dr)`".teX),
+        dataTbl(
+          tr("P", "SS,manhTeBao,dr", b3.p_ssManhTeBaoDr, "g/day"),
+          tr("f", "d,dr", ane.fd),
+          tr("k", "d,dr", ane.kd, Day1),
+          tr("SRT", "dr", aPool.srt, "day"),
+          tr("P", "SS,BOD,dr", b3.p_ssBodDr, "g/day")
+        ),
+        <.h5("c. Lượng bùn sinh học trong bể phân hủy"),
+        <.div(s"`P_(SS,bio,dr) = P_(SS,BOD,dr) + P_(SS,manhTeBao,dr) = ${b3.p_ssBodDr} + ${b3.p_ssManhTeBaoDr} = ${b3.p_ssBioDr}`(g/day)".teX)
 
       )
     }

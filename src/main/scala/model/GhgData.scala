@@ -125,7 +125,23 @@ case class GhgData(info: InfoData, indirect: IndirectData, direct: DirectData) {
     val q_xa_ae = direct.d.aerobicPool.fold(0D)(p => p.qxRatio * b2.q_v)
     val q_xa_ane = 0 //fixme
     val q_xa = q_xa_ae + q_xa_ane
-    Bien3Output(p_vss_dr, q_xa)
+
+    val pPool = direct.d.primaryPool
+    val q_v_dr = pPool.q + q_xa
+
+    val s_v_dr = (b1.bod_khuBl + q_xa * b2.s) / q_v_dr
+
+    val ane = direct.coef.anaerobic
+    val aPool = direct.d.anaerobicPool.get //FIXME
+    val s_dr = ane.ks(ane.t_dr) * (1 + ane.kd * aPool.srt) / (aPool.srt * (ane.y * ane.k(ane.t_dr) - ane.kd) - 1)
+
+    val p_ssBodDr = if (s_v_dr < s_dr) 0D else q_v_dr * ane.y * (s_v_dr - s_dr) / (1 + ane.kd * aPool.srt)
+
+    val p_ssManhTeBaoDr = ane.fd * ane.kd * aPool.srt * p_ssBodDr
+
+    val p_ssBioDr = p_ssBodDr + p_ssManhTeBaoDr
+
+    Bien3Output(p_vss_dr, q_xa, q_v_dr, s_v_dr, s_dr, p_ssBodDr, p_ssManhTeBaoDr, p_ssBioDr)
   }
 }
 
@@ -173,4 +189,11 @@ case class Bien2Output(s: Double,
                       )
 
 case class Bien3Output(p_vss_dr: Double,
-                       q_xa: Double)
+                       q_xa: Double,
+                       q_v_dr: Double,
+                       s_v_dr: Double,
+                       s_dr: Double,
+                       p_ssBodDr: Double,
+                       p_ssManhTeBaoDr: Double,
+                       p_ssBioDr: Double
+                      )
