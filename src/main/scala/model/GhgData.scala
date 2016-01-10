@@ -120,6 +120,8 @@ case class GhgData(info: InfoData, indirect: IndirectData, direct: DirectData) {
   lazy val bien3: Bien3Output = {
     val b1 = bien1
     val b2 = bien2
+    val relation = direct.relation.value
+
     val p_vss_dr = b1.ss_khuBl + b2.p_ss
 
     val q_xa_ae = direct.d.aerobicPool.fold(0D)(p => p.qxRatio * b2.q_v)
@@ -133,6 +135,7 @@ case class GhgData(info: InfoData, indirect: IndirectData, direct: DirectData) {
 
     val ane = direct.coef.anaerobic
     val aPool = direct.d.anaerobicPool.get //FIXME
+    val dPool = direct.d.decayPool
     val s_dr = ane.ks(ane.t_dr) * (1 + ane.kd * aPool.srt) / (aPool.srt * (ane.y * ane.k(ane.t_dr) - ane.kd) - 1)
 
     val p_ssBodDr = if (s_v_dr < s_dr) 0D else q_v_dr * ane.y * (s_v_dr - s_dr) / (1 + ane.kd * aPool.srt)
@@ -141,7 +144,29 @@ case class GhgData(info: InfoData, indirect: IndirectData, direct: DirectData) {
 
     val p_ssBioDr = p_ssBodDr + p_ssManhTeBaoDr
 
-    Bien3Output(p_vss_dr, q_xa, q_v_dr, s_v_dr, s_dr, p_ssBodDr, p_ssManhTeBaoDr, p_ssBioDr)
+    val bod_khu_dr = q_v_dr * (s_v_dr - s_dr) - 1.42 * p_ssBioDr match {
+      case x if x < 0 => 0
+      case x => x
+    }
+
+    val x_dr = (p_ssBodDr + p_vss_dr) / q_v_dr
+
+    val v_dr = dPool.hrtDay * q_v_dr
+
+    val vss_decay_dr = v_dr * ane.kd * x_dr
+    val co2_bePhanHuy = relation.yCO2Dr * bod_khu_dr + relation.yCO2DrDecay * vss_decay_dr
+    val ch4_bePhanHuy = relation.yCH4Dr * bod_khu_dr + relation.yCH4DrDecay * vss_decay_dr
+    val ch4_panHuy_thuHoi = .95 * ch4_bePhanHuy
+    val ch4_panHuy_roRi = .5 * ch4_bePhanHuy
+    val co2_phanHuyMetan = relation.yCH4Combusion * ch4_panHuy_thuHoi + 25 * ch4_panHuy_roRi
+    val co2_phanHuyTotal = co2_bePhanHuy + co2_phanHuyMetan
+
+    val knk_direct = b2.co2_quaTrinhHieuKhi + b2.co2_n2o + co2_phanHuyTotal
+
+    Bien3Output(
+      p_vss_dr, q_xa, q_v_dr, s_v_dr, s_dr, p_ssBodDr, p_ssManhTeBaoDr, p_ssBioDr, bod_khu_dr, x_dr,
+      v_dr, vss_decay_dr, co2_bePhanHuy, ch4_bePhanHuy, ch4_panHuy_thuHoi, ch4_panHuy_roRi,
+      co2_phanHuyMetan, co2_phanHuyTotal, knk_direct)
   }
 }
 
@@ -195,5 +220,16 @@ case class Bien3Output(p_vss_dr: Double,
                        s_dr: Double,
                        p_ssBodDr: Double,
                        p_ssManhTeBaoDr: Double,
-                       p_ssBioDr: Double
+                       p_ssBioDr: Double,
+                       bod_khu_dr: Double,
+                       x_dr: Double,
+                       v_dr: Double,
+                       vss_decay_dr: Double,
+                       co2_bePhanHuy: Double,
+                       ch4_bePhanHuy: Double,
+                       ch4_panHuy_thuHoi: Double,
+                       ch4_panHuy_roRi: Double,
+                       co2_phanHuyMetan: Double,
+                       co2_phanHuyTotal: Double,
+                       knk_direct: Double
                       )

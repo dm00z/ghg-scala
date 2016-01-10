@@ -37,12 +37,12 @@ object DirectPage {
 
       val pPool = d.direct.d.primaryPool
       val aPool = d.direct.d.anaerobicPool.get //FIXME
+      val relation = d.direct.relation.value
 
       val p2Aerobic = d.direct.d.aerobicPool ? { pool =>
         val b2 = d.bien2
         val ae = d.direct.coef.aerobic
         val nit = d.direct.coef.nitrate
-        val relation = d.direct.relation.value
         Seq(
           <.h3("2. Đường biên 2 - Hệ xử lý hiếu khí"),
           <.h4("2.1. Tính toán nồng độ cơ chất trong bể hiếu khí"),
@@ -338,8 +338,75 @@ object DirectPage {
           tr("P", "SS,BOD,dr", b3.p_ssBodDr, "g/day")
         ),
         <.h5("c. Lượng bùn sinh học trong bể phân hủy"),
-        <.div(s"`P_(SS,bio,dr) = P_(SS,BOD,dr) + P_(SS,manhTeBao,dr) = ${b3.p_ssBodDr} + ${b3.p_ssManhTeBaoDr} = ${b3.p_ssBioDr}`(g/day)".teX)
+        <.div(s"`P_(SS,bio,dr) = P_(SS,BOD,dr) + P_(SS,manhTeBao,dr) = ${b3.p_ssBodDr} + ${b3.p_ssManhTeBaoDr} = ${b3.p_ssBioDr}`(g/day)".teX),
 
+        <.h4("3.6. Lượng BOD bị khử trong bể phân hủy"),
+        <.div("Công thức tính: `BOD_(khu,dr) = Q_(v,dr) * (S_(v,dr) - S_(dr)) - 1.42 * P_(SS,bio,dr)`".teX),
+        dataTbl(
+          tr("BOD", "khu,dr", b3.bod_khu_dr, "g/day"),
+          tr("Q", "v,dr", b3.q_v_dr, "m3/day"),
+          tr("S", "v,dr", b3.s_v_dr, "mg/l"),
+          tr("S", "dr", b3.s_dr, "mg/l"),
+          tr("P", "SS,bio,dr", b3.p_ssBioDr, "g/day")
+        ),
+        <.h4("3.7. Nồng độ sinh khối trong bể phân hủy"),
+        <.div("Công thức tính: `X_(dr) = (P_(SS,BOD,dr) + P_(VSS,dr)) / Q_(v,dr)`".teX),
+        dataTbl(
+          tr("X", "dr", b3.x_dr, "mg/l"),
+          tr("P", "SS,BOD,dr", b3.p_ssBodDr, "g/day"),
+          tr("P", "VSS,dr", b3.p_vss_dr, "g/day"),
+          tr("Q", "v,dr", b3.q_v_dr, "m3/day")
+        ),
+        <.h4("3.8. Sinh khối phân hủy nội bào trong bể phân hủy"),
+        <.h5("a. Thể tích bể phân hủy yếm khí"),
+        <.div(s"`V_(dr) = HRT_(dr) * Q_(v,dr) = ${b3.v_dr}`(m3)".teX),
+        <.h5("b. Sinh khối phân hủy nội bào trong bể phân hủy"),
+        <.div(s"Công thức tính: `VSS_(decay,dr) = V_(dr) * kd_(dr) * X_(dr)`".teX),
+        dataTbl(
+          tr("VSS", "decay,dr", b3.vss_decay_dr, "g/day"),
+          tr("V", "dr", b3.v_dr, "m3"),
+          tr("k", "d,dr", ane.kd, Day1),
+          tr("X", "dr", b3.x_dr, "mg/l")
+        ),
+        <.h4("3.9. Lượng khí nhà kính phát sinh từ bể phân hủy yếm khí"),
+        <.h5("a. Lượng khí CO2 từ bể phân hủy yếm khí"),
+        <.div(s"Công thức tính: `CO_(2,bePhanHuy) = Y_(CO_2,dr) * BOD_(khu,dr) + Y_(CO_2,phanHuy,dr) * VSS_(phanHuy,dr)`".teX),
+        dataTbl(
+          tr("CO", "2,bePhanHuy", b3.co2_bePhanHuy, "g/day"),
+          tr("Y", "CO2,dr", relation.yCO2Dr),
+          tr("BOD", "khu,dr", b3.bod_khu_dr, "g/day"),
+          tr("Y", "CO2,phanHuy,dr", relation.yCO2DrDecay),
+          tr("VSS", "decay,dr", b3.vss_decay_dr, "g/day")
+        ),
+        <.h5("b. Lượng khí CH4 từ bể phân hủy yếm khí"),
+        <.h5("b.1. Lượng khí CH4 phát sinh"),
+        <.div(s"Công thức tính: `CH_(4,bePhanHuy) = Y_(CH_4,dr) * BOD_(khu,dr) + Y_(CH_4,phanHuy,dr) * VSS_(phanHuy,dr)`".teX),
+        dataTbl(
+          tr("CH", "4,bePhanHuy", b3.ch4_bePhanHuy, "g/day"),
+          tr("Y", "CH4,dr", relation.yCH4Dr),
+          tr("BOD", "khu,dr", b3.bod_khu_dr, "g/day"),
+          tr("Y", "CH4,phanHuy,dr", relation.yCH4DrDecay),
+          tr("VSS", "decay,dr", b3.vss_decay_dr, "g/day")
+        ),
+        <.h5(s"b.2. Lượng khí CH4 thu hồi = ${b3.ch4_panHuy_thuHoi}(g/day)"),
+        <.h5(s"b.3. Lượng khí CH4 rò rỉ = ${b3.ch4_panHuy_roRi}(g/day)"),
+        <.h5("b.4. Lượng khí CO2 tương đương của khí CH4"),
+        <.div(s"Công thức tính: `C0_(2,phanHuyMetan) = Y_(CH_4,dot) * CH_(4,phanHuyThuHoi) + 25 * CH_(4,phanHuyRoRi) = ${b3.co2_phanHuyMetan}`(g/day)".teX),
+        <.h5("c. Tổng lượng KNK phát sinh từ bể phân hủy yếm khí"),
+        table(
+          tr("CO", "2,bePhanHuy", b3.co2_bePhanHuy, "g/day"),
+          tr("CO", "2,phanHuyMetan", b3.co2_phanHuyMetan, "g/day"),
+          tr("Tổng CO", "2,bePhanHuy", b3.co2_phanHuyTotal, "g/day"),
+          tr("Tổng CO", "2,bePhanHuy", b3.co2_phanHuyTotal / 1000, "kg/day")
+        ),
+        <.h3("4. Tổng lượng KNK phát sinh từ hệ xử lý hiếu khí"),
+        table(
+          tr("CO", "2,quaTrinhHieuKhi", b2.co2_quaTrinhHieuKhi, "g/day"),
+          tr("CO", "2,N2OphatThai", b2.co2_n2o, "g/day"),
+          tr("Tổng CO", "2,bePhanHuy", b3.co2_phanHuyTotal, "g/day"),
+          tr("KNK", "trực_tiếp", b3.knk_direct, "g/day"),
+          tr("KNK", "trực_tiếp", b3.knk_direct / 1000, "kg/day")
+        )
       )
     }
   }

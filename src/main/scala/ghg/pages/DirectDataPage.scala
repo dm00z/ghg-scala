@@ -96,7 +96,7 @@ object DirectDataPage {
             tdInput(PoolData.hrt),
             <.td("Thời gian lưu thủy lực")
           ),
-          <.tr(
+          if (tpe == "decay") EmptyTag else <.tr(
             <.td("Q_ratio"), <.td(),
             tdInput(PoolData.qxRatio),
             <.td("Tỉ lệ `Q_(xa) / Q_v`".teX)
