@@ -133,7 +133,7 @@ object KineticCoefficientPage {
           "m" -> d.m(t),
           "kd" -> d.kd(t),
           "k" -> d.k(t)
-        )).toJsArray,
+        )).toJsArray, false,
         ChartSerie("m", "green"),
         ChartSerie("kd", "blue"),
         ChartSerie("k", "red")
@@ -152,7 +152,7 @@ object KineticCoefficientPage {
           "kd" -> d.kd(t),
           "k" -> d.k(t),
           "kn" -> d.kn(t)
-        )).toJsArray,
+        )).toJsArray, false,
         ChartSerie("m", "green"),
         ChartSerie("kd", "blue"),
         ChartSerie("k", "red"),
