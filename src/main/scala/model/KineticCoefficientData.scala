@@ -68,6 +68,8 @@ object KineticCoefficientData {
     */
   @Lenses case class Anaerobic(m: KT, y: Double, ks: KT, kd: Double, fd: Double, t_an: Double = 30, t_dr: Double = 30) {
     def k(t: Double) = m(t) / y
+//    @inline def ks_ = ks(t_an)
+
   }
 }
 

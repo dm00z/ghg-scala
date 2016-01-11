@@ -12,7 +12,7 @@ object DirectPage {
 
   case class Backend($: BackendScope[Props, _]) {
     def render(d: Props) = {
-      val b2 = d.bien2 //fixme anaerobic
+      val b2 = d.bien2Ae //fixme anaerobic
       val b3 = d.bien3
 
       def d_t(t: Double) = d.copy(
@@ -34,7 +34,7 @@ object DirectPage {
       <.div(
         <.h2("Tổng lượng KNK phát sinh từ hệ xử lý hiếu khí"),
         table(
-          tr("CO", "2,quaTrinhHieuKhi", b2.co2_quaTrinhHieuKhi, "g/day"),
+          tr("CO", "2,quaTrinhHieuKhi", b2.co2_quaTrinh, "g/day"),
           tr("CO", "2,N2OphatThai", b2.co2_n2o, "g/day"),
           tr("Tổng CO", "2,bePhanHuy", b3.co2_phanHuyTotal, "g/day"),
           tr("KNK", "trực_tiếp", b3.knk_direct, "g/day"),
