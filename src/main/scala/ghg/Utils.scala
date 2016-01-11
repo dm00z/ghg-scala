@@ -80,4 +80,23 @@ object Utils {
   implicit final class OptionEx[T](val o: Option[T]) extends AnyVal {
     def ?(f: T => TagMod): TagMod = o.fold(EmptyTag)(f)
   }
+
+  def dataTbl(result: TagMod, dataRows: TagMod*) =
+    table(
+      <.tr(<.td(^.colSpan := 3, <.b("Dữ liệu:"))),
+      dataRows,
+      <.tr(<.td(^.colSpan := 3, <.b("Kết quả tính toán:"))),
+      result
+    )
+
+  def dataTbl(numResult: Int, rows: TagMod*) =
+    rows.splitAt(numResult) match {
+      case (results, dataRows) =>
+        table(
+          <.tr(<.td(^.colSpan := 3, <.b("Dữ liệu:"))),
+          dataRows,
+          <.tr(<.td(^.colSpan := 3, <.b("Kết quả tính toán:"))),
+          results
+        )
+    }
 }
