@@ -5,7 +5,7 @@ import diode.react.ModelProxy
 import ghg.components.AppHeader
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
-import model.{GhgData, InfoData}
+import model.{TechMethod, GhgData, InfoData}
 import ghg.Utils._
 
 object InfoPage {
@@ -32,6 +32,20 @@ object InfoPage {
             onChange = (e: ReactEventI) => Callback {
               powerRef.setErrorText(if (e.target.value ># 0) "" else "power phải là số > 0")
             })()
+        ),
+        <.div(
+          <.label("Công nghệ xử lý: "),
+          <.select(
+            ^.onChange ==> { e: ReactEventI =>
+              P.dispatch(P.value.copy(tech = TechMethod(e.target.value.toInt)))
+            },
+            TechMethod.values.map { m =>
+              if (m == P.value.tech)
+                <.option(m.toString, ^.value := m.id, ^.selected := "selected")
+              else
+                <.option(m.toString, ^.value := m.id)
+            }
+          )
         )
       )
   }

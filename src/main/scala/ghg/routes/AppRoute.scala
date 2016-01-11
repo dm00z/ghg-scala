@@ -42,6 +42,6 @@ object AppRoutes {
   val all: List[AppRoute] = List(
     Info,
     Indirect, Electric, Gas, Material,
-    Direct, KineticRelation, KineticCoefficient, DirectData, Aerobic, Anaerobic
+    Direct, KineticRelation, KineticCoefficient, DirectData, Anaerobic, Aerobic
   )
 }

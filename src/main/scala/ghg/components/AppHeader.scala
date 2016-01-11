@@ -4,7 +4,7 @@ import chandu0101.scalajs.react.components.materialui._
 import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
-import model.Plant
+import model.{SampleData, Plant}
 import scala.scalajs.js.Dynamic.{literal => jsObj}
 
 object AppHeader {
@@ -22,6 +22,21 @@ object AppHeader {
       val f = P.plant()
       <.div(
         <.h1("Tính toán phát thải khí nhà kính từ hệ thống xử lý nước thải"),
+        if (P.readonly) EmptyTag else <.div(
+          <.label("Tải dữ liệu: "),
+          <.select(
+            <.option("Nhà máy xử lý nước thải sinh hoạt Yên Sở",
+              ^.value := "yen_so", ^.selected := "selected"),
+            <.option("Nhà máy xử lý nước thải công ty Giấy Bãi Bằng",
+              ^.value := "bai_bang"),
+            ^.onChange ==> { e: ReactEventI =>
+              e.target.value match {
+                case "yen_so" => P.plant.dispatch(SampleData.dataYenSo)
+                case "bai_bang" => P.plant.dispatch(SampleData.dataBaiBang)
+              }
+            }
+          )
+        ),
         <.div(<.label("Loại nước thải: "),
           if(P.readonly) f.tpe
           else MuiTextField(value = f.tpe, style = txtStyle, onChange = {e: ReactEventI => P.plant.dispatch(P.plant().copy(tpe = e.target.value))})()),

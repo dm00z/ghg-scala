@@ -24,7 +24,7 @@ object AppRouter {
     <.div(r.render(),
       <.div(^.textAlign := "center", ^.key := "footer")(
         <.hr(),
-        <.p("Dự án: ???. Nguyễn Vân Anh")))
+        <.p("Nguyễn Vân Anh")))
   }
 
   val router = Router(BaseUrl.fromWindowOrigin_/, config)
