@@ -14,10 +14,7 @@ object InfoPage {
   case class Backend($: BackendScope[Props, _]) {
     private var powerRef: MuiTextFieldM = _
 
-    def unmount(P: Props) = P.dispatch {
-      println(powerRef.getValue())
-      P.value.copy(power = powerRef.getValue() >| 0)
-    }
+    def unmount(P: Props) = P.dispatch(P.value.copy(power = powerRef.getValue() >| 0))
 
     def render(P: Props) =
       <.div(
