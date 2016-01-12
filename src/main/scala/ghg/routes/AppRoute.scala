@@ -33,12 +33,12 @@ object AppRoutes {
   object DirectData          extends AppRoute("c. Dữ liệu", "direct-data", DirectDataPage.apply,
     "Tính toán phát thải khí nhà kính trực tiếp",
     "Thông số dòng vào")
-  object Aerobic             extends AppRoute("d. Hệ hiếu khí", "aerobic", AerobicPage.apply,
-    "Tính toán phát thải khí nhà kính trực tiếp",
-    "Tính toán hệ hiếu khí")
-  object Anaerobic           extends AppRoute("e. Hệ yếm khí", "anaerobic", AnaerobicPage.apply,
+  object Anaerobic           extends AppRoute("d. Hệ yếm khí", "anaerobic", AnaerobicPage.apply,
     "Tính toán phát thải khí nhà kính trực tiếp",
     "Tính toán hệ yếm khí")
+  object Aerobic             extends AppRoute("e. Hệ hiếu khí", "aerobic", AerobicPage.apply,
+    "Tính toán phát thải khí nhà kính trực tiếp",
+    "Tính toán hệ hiếu khí")
 
   val all: List[AppRoute] = List(
     Info,
