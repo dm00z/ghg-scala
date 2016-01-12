@@ -7,10 +7,7 @@ import ElectricData.{CountryPowerStruct, CalcMethod, PowerSupply, D1, D2, D3}
 
 object SampleData {
   //Nước thải Sinh hoạt - Hiếu khí Yên Sở
-  val dataYenSo = {
-    val testAnaerobicPool = PoolData(40, 20, 15)
-    val testAerobicPool = PoolData(22, 5, 5)
-
+  val dataYenSo =
     GhgData(
       InfoData(
         Plant(
@@ -60,8 +57,8 @@ object SampleData {
           StreamInData(45, 34, 51),
           PrimaryPoolData(.30, .40, 0),
           PoolData(30, 20, 5),
-          Some(testAnaerobicPool),
-          Some(testAerobicPool)
+          None,
+          Some(PoolData(22, 5, 5))
         ),
         KineticCoefficientData(
           KineticCoefficientData.Aerobic.yenSo,
@@ -71,11 +68,8 @@ object SampleData {
         KineticRelationData.dataDomestic
       )
     )
-  }
-  val dataBaiBang = {
-    val testAnaerobicPool = PoolData(30, 20, 8, .1)
-    val testAerobicPool = PoolData(25, 10, 8) //None
 
+  val dataBaiBang =
     GhgData(
       InfoData(
         Plant(
@@ -125,8 +119,8 @@ object SampleData {
           StreamInData(550, 30, 1100),
           PrimaryPoolData(.3, .65, 100),
           PoolData(30, 20, 5),
-          Some(testAnaerobicPool),
-          Some(testAerobicPool)
+          Some(PoolData(30, 20, 8, .1)),
+          None
         ),
         KineticCoefficientData(
           KineticCoefficientData.Aerobic.default,
@@ -136,7 +130,6 @@ object SampleData {
         KineticRelationData.dataIndustrial
       )
     )
-  }
 
   var all = Map(
     "yen_so" -> dataYenSo,
