@@ -8,15 +8,15 @@ import tex.TeX._
 import ghg.Utils._
 
 object Bien3 {
-  type Props = GhgData
+  case class Props(d: GhgData, isAerobic: Boolean)
   case class Backend($: BackendScope[Props, _]) {
-    def render(d: Props) = {
+    def render(props: Props) = {
+      val d = props.d
       val b1 = d.bien1
       val pPool = d.direct.d.primaryPool
-      val aPool = d.direct.d.anaerobicPool.get //FIXME
+      val dPool = d.direct.d.decayPool
       val relation = d.direct.relation.value
-      val b2 = d.bien2Ae
-      val b3 = d.bien3
+      val (b2, b3) = if(props.isAerobic) (d.bien2Ae, d.bien3) else (d.bien2Ana, d.bien3Ana)
       val ane = d.direct.coef.anaerobic
 
       <.div(
@@ -26,7 +26,7 @@ object Bien3 {
         dataTbl(
           tr("P", "VSS,dr", b3.p_vss_dr, "g/day"),
           tr("SS", "khu,bl", b1.ss_khuBl, "g/day"),
-          tr("P", "SS", d.p_ss, "g/day")
+          tr("P", "SS", b2.p_ss, "g/day")
         ),
         <.h4("3.2. Lưu lượng bùn vào bể phân hủy"),
         <.h5("a. Tính lưu lượng bùn xả ở bể hiếu khí"),
@@ -52,7 +52,7 @@ object Bien3 {
           tr("k", "d,dr", ane.kd, Day1),
           tr("Y", "dr", ane.y, "mg/mg"),
           tr("k", "dr", ane.k(ane.t_dr)),
-          tr("SRT", "dr", aPool.srt, "day")
+          tr("SRT", "dr", dPool.srt, "day")
         ),
 
         <.h4("3.5. Tổng lượng bùn sinh học trong bể phân hủy"),
@@ -62,7 +62,7 @@ object Bien3 {
           tr("P", "SS,BOD,dr", b3.p_ssBodDr, "g/day"),
           tr("Y", "dr", ane.y, "mg/mg"),
           tr("k", "d,dr", ane.kd, Day1),
-          tr("SRT", "dr", aPool.srt, "day"),
+          tr("SRT", "dr", dPool.srt, "day"),
           tr("S", "v,dr", b3.s_v_dr, "mg/l"),
           tr("S", "dr", b3.s_dr, "mg/l"),
           tr("Q", "v,dr", b3.q_v_dr, "m3/day")
@@ -73,7 +73,7 @@ object Bien3 {
           tr("P", "SS,manhTeBao,dr", b3.p_ssManhTeBaoDr, "g/day"),
           tr("f", "d,dr", ane.fd),
           tr("k", "d,dr", ane.kd, Day1),
-          tr("SRT", "dr", aPool.srt, "day"),
+          tr("SRT", "dr", dPool.srt, "day"),
           tr("P", "SS,BOD,dr", b3.p_ssBodDr, "g/day")
         ),
         <.h5("c. Lượng bùn sinh học trong bể phân hủy"),
@@ -127,16 +127,18 @@ object Bien3 {
           tr("Y", "CH4,phanHuy,dr", relation.yCH4DrDecay),
           tr("VSS", "decay,dr", b3.vss_decay_dr, "g/day")
         ),
-        <.h5(s"b.2. Lượng khí CH4 thu hồi = ${b3.ch4_panHuy_thuHoi}(g/day)"),
-        <.h5(s"b.3. Lượng khí CH4 rò rỉ = ${b3.ch4_panHuy_roRi}(g/day)"),
+        <.h5(s"b.2. Lượng khí CH4 thu hồi = ${b3.ch4_phanHuy_thuHoi}(g/day)"),
+        <.h5(s"b.3. Lượng khí CH4 rò rỉ = ${b3.ch4_phanHuy_roRi}(g/day)"),
         <.h5("b.4. Lượng khí CO2 tương đương của khí CH4"),
-        <.div(s"Công thức tính: `C0_(2,phanHuyMetan) = Y_(CH_4,dot) * CH_(4,phanHuyThuHoi) + 25 * CH_(4,phanHuyRoRi) = ${b3.co2_phanHuyMetan}`(g/day)".teX),
-        <.h5("c. Tổng lượng KNK phát sinh từ bể phân hủy yếm khí"),
-        table(
-          tr("CO", "2,bePhanHuy", b3.co2_bePhanHuy, "g/day"),
-          tr("CO", "2,phanHuyMetan", b3.co2_phanHuyMetan, "g/day"),
-          tr("Tổng CO", "2,bePhanHuy", b3.co2_phanHuyTotal, "g/day"),
-          tr("Tổng CO", "2,bePhanHuy", b3.co2_phanHuyTotal / 1000, "kg/day")
+        <.div(s"Công thức tính: `C0_(2,phanHuyMe tan) = Y_(CH_4,d ot) * CH_(4,phanHuyThuHoi) + 25 * CH_(4,phanHuyRoRi) = ${b3.co2_phanHuyMetan}`(g/day)".teX),
+        if(! props.isAerobic) EmptyTag else Seq(
+          <.h5("c. Tổng lượng KNK phát sinh từ bể phân hủy yếm khí"),
+          table(
+            tr("CO", "2,bePhanHuy", b3.co2_bePhanHuy, "g/day"),
+            tr("CO", "2,phanHuyMetan", b3.co2_phanHuyMetan, "g/day"),
+            tr("Tổng CO", "2,bePhanHuy", b3.co2_phanHuyTotal, "g/day"),
+            tr("Tổng CO", "2,bePhanHuy", b3.co2_phanHuyTotal / 1000, "kg/day")
+          )
         )
       )
     }
@@ -146,5 +148,5 @@ object Bien3 {
     .renderBackend[Backend]
     .build
 
-  def apply(d: GhgData) = component(d)
+  def apply(props: Props) = component(props)
 }

@@ -5,7 +5,7 @@ import ElectricData.CalcMethod
 import diode.react.ReactConnector
 
 object AppCircuit extends Circuit[GhgData] with ReactConnector[GhgData]{
-  protected var model = SampleData.dataYenSo
+  protected var model = SampleData.data
 
   private val infoHandler = new ActionHandler(zoomRW(_.info)((d, v) => d.copy(info = v))) {
     def handle = {

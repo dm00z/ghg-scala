@@ -25,15 +25,15 @@ object AppHeader {
         if (P.readonly) EmptyTag else <.div(
           <.label("Tải dữ liệu: "),
           <.select(
-            <.option("Nhà máy xử lý nước thải sinh hoạt Yên Sở",
-              ^.value := "yen_so", ^.selected := "selected"),
-            <.option("Nhà máy xử lý nước thải công ty Giấy Bãi Bằng",
-              ^.value := "bai_bang"),
+            SampleData.all.map {
+              case (k, d) if k == SampleData.selected =>
+                <.option(d.info.f.name, ^.value := k, ^.selected := "selected")
+              case (k, d) =>
+                <.option(d.info.f.name, ^.value := k)
+            },
             ^.onChange ==> { e: ReactEventI =>
-              e.target.value match {
-                case "yen_so" => P.plant.dispatch(SampleData.dataYenSo)
-                case "bai_bang" => P.plant.dispatch(SampleData.dataBaiBang)
-              }
+              SampleData.selected = e.target.value
+              P.plant.dispatch(SampleData.data)
             }
           )
         ),

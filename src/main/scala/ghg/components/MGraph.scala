@@ -12,7 +12,7 @@ object MGraph {
             large: Boolean,
             chartSerie: ChartSerie*) = {
     val otherProps = js.Dynamic.literal(
-      width = if (large) 320 else 280,
+      width = if (large) 420 else 280,
       height = 260,
       margins = js.Dynamic.literal(
         top = 20, bottom = 20, right = 34,

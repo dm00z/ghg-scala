@@ -7,7 +7,7 @@ import ElectricData.{CountryPowerStruct, CalcMethod, PowerSupply, D1, D2, D3}
 
 object SampleData {
   //Nước thải Sinh hoạt - Hiếu khí Yên Sở
-  lazy val dataYenSo = {
+  val dataYenSo = {
     val testAnaerobicPool = PoolData(40, 20, 15)
     val testAerobicPool = PoolData(22, 5, 5)
 
@@ -94,9 +94,9 @@ object SampleData {
       )
     )
   }
-  lazy val dataBaiBang = {
-    val testAnaerobicPool = PoolData(40, 20, 15)
-    val testAerobicPool = PoolData(25, 10, 8)
+  val dataBaiBang = {
+    val testAnaerobicPool = PoolData(30, 20, 8, .1)
+    val testAerobicPool = PoolData(25, 10, 8) //None
 
     GhgData(
       InfoData(
@@ -144,9 +144,9 @@ object SampleData {
       ),
       DirectData(
         DirectTable(
-          StreamInData(350, 30, 1000),
-          PrimaryPoolData(.25, .40, 150),
-          PoolData(30, 20, 20),
+          StreamInData(550, 30, 1100),
+          PrimaryPoolData(.3, .65, 100),
+          PoolData(30, 20, 5),
           Some(testAnaerobicPool),
           Some(testAerobicPool)
         ),
@@ -181,4 +181,11 @@ object SampleData {
       )
     )
   }
+
+  var all = Map(
+    "yen_so" -> dataYenSo,
+    "bai_bang" -> dataBaiBang
+  )
+  var selected = "yen_so"
+  @inline def data = all(selected)
 }

@@ -20,7 +20,7 @@ object Bien1 {
           tr("BOD", "khu,bl", b1.bod_khuBl, "g/day"), //Lượng `BOD_5` bị khử trong bể lắng sơ cấp (g/day)
           tr("Q", "o,v", d.info.power, "m3/day"), //Công suất dòng vào ban đầu
           tr("S", "o,v", b1.s_ov, "mg/l"), //Nồng độ `BOD_5` dòng vào ban đầu
-          tr("Pr", "bl,BOD", b1.pr_blBod, "%") //Phần trăm khư `BOD_5` trong bể lắng sơ cấp
+          tr("Pr", "bl,BOD", b1.pr_blBod) //Phần trăm khư `BOD_5` trong bể lắng sơ cấp
         ),
         <.h4("1.2. Lượng SS bị khử trong bể lắng sơ cấp"),
         <.div("Công thức tính: `SS_(khu,bl) = Pr_(bl,SS) * Q_(o,v) * S_(o,v)`".teX),

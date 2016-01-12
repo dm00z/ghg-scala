@@ -12,7 +12,7 @@ object AnaerobicPage {
       <.div(
         Bien1(d),
         Bien2Anaerobic(d),
-        Bien3(d)
+        Bien3(Bien3.Props(d, false))
       )
     }.build
 

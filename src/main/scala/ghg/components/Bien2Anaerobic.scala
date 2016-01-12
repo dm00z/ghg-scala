@@ -104,7 +104,7 @@ object Bien2Anaerobic {
 //        ),
 
         <.h4("2.5. Tính lượng bùn tạo ra"), //???2.4
-        <.div("Công thức tính: `P_(SS) = (X_(tong,SS) * V) / (SRT) = P_(SS,BOD) + P_(SS,manhtebao) + P_(SS,nbVSS)`".teX),
+        <.div("Công thức tính: `P_(SS) = (X_(t ong,SS) * V) / (SRT) = P_(SS,BOD) + P_(SS,manhtebao) + P_(SS,nbVSS)`".teX),
         <.h5("a. Lượng bùn tạo ra do khử BOD"),
         <.div("Công thức tính: `P_(SS,BOD) = (X * V) / (SRT)`".teX),
         dataTbl(

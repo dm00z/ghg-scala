@@ -1,0 +1,90 @@
+{
+  "info": {
+    "f": {
+      "tpe": "Nước thải sinh hoạt",
+      "name": "Nhà máy xử lý nước thải sinh hoạt Yên Sở",
+      "addr": "Hà Nội"
+    },
+    "power": 120000
+  },
+  "indirect": {
+    "electric": {
+      "powerStruct": {
+        "country": "Việt Nam",
+        "ref": "Báo cáo thường niên của EVN năm 2013",
+        "supplies": [
+          { "PFi": 48.78,
+            "supply": {
+              "tpe": "Thủy điện",
+              "EFi": 10,
+              "EFiRange": [16, 410],
+              "ref": "Rasha and Hammad, 2000"
+          }},
+          { "PFi": 0,
+            "supply": {
+              "tpe": "Hạt nhân",
+              "EFi": 9,
+              "EFiRange": [9, 30],
+              "ref": "Andesta et al., 1998"
+          }},
+          { "PFi": 23.07,
+            "supply": {
+              "tpe": "Than",
+              "EFi": 877,
+              "EFiRange": [860, 1290],
+              "ref": "IPCC,2001"
+          }},
+          { "PFi": 0,
+            "supply": {
+              "tpe": "Khí tự nhiên",
+              "EFi": 640,
+              "EFiRange": [460, 1234],
+              "ref": ""
+          }},
+          { "PFi": 0.43,
+            "supply": {
+              "tpe": "Sinh học, gió, thủy triều",
+              "EFi": 11,
+              "EFiRange": [11, 279],
+              "ref": ""
+          }},
+          { "PFi": 27.72,
+            "supply": {
+              "tpe": "Nhiên liệu khác",
+              "EFi": 604,
+              "EFiRange": [600, 890],
+              "ref": "IPCC,2001"
+          }}
+        ]
+      },
+      "method": 0,
+      "_1": {
+        "ratio": 0.12
+      },
+      "_2": {
+        "rows": []
+      },
+      "_3": {
+        "rows": [],
+        "ratio": 0.5
+      }
+    },
+    "gas": {
+      "powers": [],
+      "gas": {
+        "ref": "MS: 9/070514. Nguồn: Picard, 1999",
+        "rows": [
+          { "step": "Sản xuất khí tự nhiên",
+            "rows": []
+          }
+
+        ]
+      },
+      "gwp": {}
+    },
+    "material": {}
+  },
+  "direct": {
+
+  }
+}

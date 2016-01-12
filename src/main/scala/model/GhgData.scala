@@ -162,18 +162,22 @@ case class GhgData(info: InfoData, indirect: IndirectData, direct: DirectData) {
       co2_quaTrinhHieuKhi, n2o, co2_n2o)
   }
 
-  lazy val p_ss = if (direct.d.aerobicPool.isEmpty) ??? else bien2Ae.p_ss
+  lazy val bien3: Bien3Output = calcBien3(true)
+  lazy val bien3Ana: Bien3Output = calcBien3(false)
 
-  lazy val bien3: Bien3Output = {
+  private def calcBien3(isAerobic: Boolean): Bien3Output = {
     val b1 = bien1
-    val b2 = bien2Ae
+    val b2 = if (isAerobic) bien2Ae else bien2Ana
     val relation = direct.relation.value
 
     val p_vss_dr = b1.ss_khuBl + b2.p_ss
 
-    val q_xa_ae = direct.d.aerobicPool.fold(0D)(p => p.qxRatio * b2.q_v)
-    val q_xa_ane = 0 //fixme
-    val q_xa = q_xa_ae + q_xa_ane
+    val pool = if (isAerobic) direct.d.aerobicPool.get else direct.d.anaerobicPool.get
+
+//    val q_xa_ae = direct.d.aerobicPool.fold(0D)(p => p.qxRatio * b2.q_v)
+//    val q_xa_ane = 0 //fixme
+//    val q_xa = q_xa_ae + q_xa_ane
+    val q_xa = pool.qxRatio * b2.q_v
 
     val pPool = direct.d.primaryPool
     val q_v_dr = pPool.q + q_xa
@@ -181,13 +185,12 @@ case class GhgData(info: InfoData, indirect: IndirectData, direct: DirectData) {
     val s_v_dr = (b1.bod_khuBl + q_xa * b2.s) / q_v_dr
 
     val ane = direct.coef.anaerobic
-    val aPool = direct.d.anaerobicPool.get //FIXME
     val dPool = direct.d.decayPool
-    val s_dr = ane.ks(ane.t_dr) * (1 + ane.kd * aPool.srt) / (aPool.srt * (ane.y * ane.k(ane.t_dr) - ane.kd) - 1)
+    val s_dr = ane.ks(ane.t_dr) * (1 + ane.kd * dPool.srt) / (dPool.srt * (ane.y * ane.k(ane.t_dr) - ane.kd) - 1)
 
-    val p_ssBodDr = if (s_v_dr < s_dr) 0D else q_v_dr * ane.y * (s_v_dr - s_dr) / (1 + ane.kd * aPool.srt)
+    val p_ssBodDr = if (s_v_dr < s_dr) 0D else q_v_dr * ane.y * (s_v_dr - s_dr) / (1 + ane.kd * dPool.srt)
 
-    val p_ssManhTeBaoDr = ane.fd * ane.kd * aPool.srt * p_ssBodDr
+    val p_ssManhTeBaoDr = ane.fd * ane.kd * dPool.srt * p_ssBodDr
 
     val p_ssBioDr = p_ssBodDr + p_ssManhTeBaoDr
 
@@ -203,16 +206,16 @@ case class GhgData(info: InfoData, indirect: IndirectData, direct: DirectData) {
     val vss_decay_dr = v_dr * ane.kd * x_dr
     val co2_bePhanHuy = relation.yCO2Dr * bod_khu_dr + relation.yCO2DrDecay * vss_decay_dr
     val ch4_bePhanHuy = relation.yCH4Dr * bod_khu_dr + relation.yCH4DrDecay * vss_decay_dr
-    val ch4_panHuy_thuHoi = .95 * ch4_bePhanHuy
-    val ch4_panHuy_roRi = .5 * ch4_bePhanHuy
-    val co2_phanHuyMetan = relation.yCH4Combusion * ch4_panHuy_thuHoi + 25 * ch4_panHuy_roRi
+    val ch4_phanHuy_thuHoi = .95 * (ch4_bePhanHuy + b2.ch4_beYemKhi)
+    val ch4_phanHuy_roRi = .5 * (ch4_bePhanHuy + b2.ch4_beYemKhi)
+    val co2_phanHuyMetan = relation.yCH4Combusion * ch4_phanHuy_thuHoi + 25 * ch4_phanHuy_roRi
     val co2_phanHuyTotal = co2_bePhanHuy + co2_phanHuyMetan
 
     val knk_direct = b2.co2_quaTrinh + b2.co2_n2o + co2_phanHuyTotal
 
     Bien3Output(
       p_vss_dr, q_xa, q_v_dr, s_v_dr, s_dr, p_ssBodDr, p_ssManhTeBaoDr, p_ssBioDr, bod_khu_dr, x_dr,
-      v_dr, vss_decay_dr, co2_bePhanHuy, ch4_bePhanHuy, ch4_panHuy_thuHoi, ch4_panHuy_roRi,
+      v_dr, vss_decay_dr, co2_bePhanHuy, ch4_bePhanHuy, ch4_phanHuy_thuHoi, ch4_phanHuy_roRi,
       co2_phanHuyMetan, co2_phanHuyTotal, knk_direct)
   }
 }
@@ -278,8 +281,8 @@ case class Bien3Output(p_vss_dr: Double,
                        vss_decay_dr: Double,
                        co2_bePhanHuy: Double,
                        ch4_bePhanHuy: Double,
-                       ch4_panHuy_thuHoi: Double,
-                       ch4_panHuy_roRi: Double,
+                       ch4_phanHuy_thuHoi: Double,
+                       ch4_phanHuy_roRi: Double,
                        co2_phanHuyMetan: Double,
                        co2_phanHuyTotal: Double,
                        knk_direct: Double
