@@ -67,6 +67,7 @@ object AppCircuit extends Circuit[GhgData] with ReactConnector[GhgData]{
   private val ghgHandler = new ActionHandler(zoomRW(d => d)((d, v) => v)) {
     def handle = {
       case x: GhgData => updated(x)
+      case x: MaterialData => updated(value.copy(indirect = value.indirect.copy(material = x)))
     }
   }
 

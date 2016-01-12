@@ -1,5 +1,7 @@
 package model
 
+import monocle.macros.Lenses
+
 object MaterialData {
   object Ratio {
     val Methanol = 1.54
@@ -19,11 +21,12 @@ object MaterialData {
     val names = List("Methanol", "Kiềm","Ferric chloride (FeCl3 .6H2O)", "Javen", "Polimer")
   }
 }
-case class MaterialData(methanol: Double = 0,
-                        alkali: Double = 0,
-                        fe: Double = 0,
+@Lenses case class MaterialData(methanol: Double = 0,
+                        alkali: Double = 1800,
+                        fe: Double = 6000,
                         ja: Double = 0,
-                        po: Double = 0) {
-  def all = List(methanol, alkali, fe, ja, po)
+                        po: Double = 180) {
+  val all = List(methanol, alkali, fe, ja, po)
+  def ghg = MaterialData.Ratio.all.zip(all).map { case (r, v) => r * v }.sum
 }
 
