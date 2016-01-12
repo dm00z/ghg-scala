@@ -5,13 +5,12 @@ import ghg.components.MGraph
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import model.KineticCoefficientData.Nitrate.MT
-import model.{KineticCoefficientData, GhgData}
+import model.{TechMethod, KineticCoefficientData, GhgData}
 import reactd3.ChartSerie
 import scala.scalajs.js
 import tex.TeX._
 import ghg.Utils._
 import KineticCoefficientData._
-
 
 object KineticCoefficientPage {
   type Props = ModelProxy[GhgData]
@@ -24,6 +23,7 @@ object KineticCoefficientPage {
   case class Backend($: BackendScope[Props, _]) {
     def render(P: Props) = {
       def aerobicTbl(implicit d: Aerobic) = {
+        import scala.scalajs.js.JSNumberOps._
         @inline implicit def dispatch: Aerobic => Callback = P.my.dispatch
 
         val tbl = table(
@@ -38,19 +38,19 @@ object KineticCoefficientPage {
           <.tr(<.td(Muy), Ngay1, <.td(),
             tdInput(Aerobic.m ^|-> KT.vNorm),
             tdInput(Aerobic.m ^|-> KT.coeff),
-            <.td(d.m_)),
+            <.td(d.m_.toFixed(3))),
           <.tr(<.td("Y"), <.td("mg/mg"), <.td(Aerobic.Y.range.text),
             tdInput(Aerobic.y ^|-> KT.vNorm, _.between(Aerobic.Y.range)),
             tdInput(Aerobic.y ^|-> KT.coeff),
-            <.td(d.y_)),
+            <.td(d.y_.toFixed(3))),
           <.tr(td("K", "S"), <.td("mg/l"), <.td(Aerobic.Ks.range.text),
             tdInput(Aerobic.ks ^|-> KT.vNorm, _.between(Aerobic.Ks.range)),
-            <.td(), <.td(d.ks_)
+            <.td(), <.td(d.ks_.toFixed(3))
           ),
           <.tr(td("k", "d"), Ngay1, <.td(Aerobic.Kd.range.text),
             tdInput(Aerobic.kd ^|-> KT.vNorm, _.between(Aerobic.Kd.range)),
             tdInput(Aerobic.kd ^|-> KT.coeff),
-            <.td(d.kd_)),
+            <.td(d.kd_.toFixed(3))),
           <.tr(td("f", "d"), <.td(), <.td(), <.td(), <.td(), tdInput(Aerobic.fd))
         )
 
@@ -58,6 +58,7 @@ object KineticCoefficientPage {
       }
 
       def nitratTbl(implicit d: Nitrate) = {
+        import scala.scalajs.js.JSNumberOps._
         @inline implicit def dispatch: Nitrate => Callback = P.my.dispatch
         val tbl = table(
           <.tr(
@@ -70,21 +71,22 @@ object KineticCoefficientPage {
           <.tr(td("μ", "m,nit"), Ngay1,
             <.td(Nitrate.M.range.text),
             tdInput(Nitrate.m ^|-> MT.vNorm, _.between(Nitrate.M.range)),
-            <.td(d.m_)),
+            <.td(d.m_.toFixed(3))),
           <.tr(td("Y", "nit"), <.td("mg/mg"),
             <.td(Nitrate.Y.range.text),
             tdInput(Nitrate.y ^|-> KT.vNorm, _.between(Nitrate.Y.range)),
-            <.td(d.y_)),
+            <.td(d.y_.toFixed(3))),
           <.tr(td("k", "d,nit"), Ngay1,
             <.td(Nitrate.Kd.range.text),
             tdInput(Nitrate.kd ^|-> KT.vNorm, _.between(Nitrate.Kd.range)),
-            <.td(d.kd_))
+            <.td(d.kd_.toFixed(3)))
         )
 
         Seq(<.div("Nhiệt độ t°C: ", input(Nitrate.t)), tbl)
       }
 
       def anaerobicTbl(implicit d: Anaerobic) = {
+        import scala.scalajs.js.JSNumberOps._
         @inline implicit def dispatch: Anaerobic => Callback = P.my.dispatch
         Seq(
           <.div("Nhiệt độ bể yếm khí t_an °C: ", input(Anaerobic.t_an)),
@@ -101,7 +103,7 @@ object KineticCoefficientPage {
             <.tr(<.td("μ", <.sub("m,an"), ", μ", <.sub("m,dr")), Ngay1,
               <.td(Anaerobic.M.range.text),
               tdInput(Anaerobic.m ^|-> KT.vNorm, _.between(Anaerobic.M.range)),
-              <.td(d.m(d.t_an)),<.td(d.m(d.t_dr))),
+              <.td(d.m(d.t_an).toFixed(3)),<.td(d.m(d.t_dr).toFixed(3))),
             <.tr(<.td("Y", <.sub("an"), ", Y", <.sub("dr")), <.td("mg/mg"),
               <.td(Anaerobic.Y.range.text),
               tdInput(Anaerobic.y, _.between(Anaerobic.Y.range)),
@@ -109,7 +111,7 @@ object KineticCoefficientPage {
             <.tr(<.td("K", <.sub("s,an"), ", K", <.sub("s,dr")), <.td("mg/l"),
               <.td(Anaerobic.Ks.range.text),
               tdInput(Anaerobic.ks ^|-> KT.vNorm, _.between(Anaerobic.Ks.range)),
-              <.td(d.ks(d.t_an)),<.td(d.ks(d.t_dr))),
+              <.td(d.ks(d.t_an).toFixed(3)),<.td(d.ks(d.t_dr).toFixed(3))),
             <.tr(<.td("k", <.sub("d,an"), ", k", <.sub("d,dr")), Ngay1,
               <.td(Anaerobic.Kd.range.text),
               tdInput(Anaerobic.kd, _.between(Anaerobic.Kd.range)),
@@ -163,16 +165,20 @@ object KineticCoefficientPage {
 
       )
 
+      val tech = P().info.tech
       val p = P.my()
 
       <.div(
-        <.h3("1. Quá trình hiếu khí"),
-        aerobicTbl(p.aerobic),
-        aerobicGraph(p.aerobic),
-        <.h3("2. Quá trình nitrat và khử nitrat"),
-        nitratTbl(p.nitrate),
-        nitratGraph(p.nitrate),
-//        <.h3("3. Quá trình yếm khí"), TODO impl
+        if (tech == TechMethod.An) EmptyTag
+        else Seq[TagMod](
+          <.h3("Quá trình hiếu khí"),
+          aerobicTbl(p.aerobic),
+          aerobicGraph(p.aerobic),
+          <.h3("Quá trình nitrat và khử nitrat"),
+          nitratTbl(p.nitrate),
+          nitratGraph(p.nitrate)
+        ),
+        <.h3("Quá trình yếm khí"),
         anaerobicTbl(p.anaerobic),
         anaerobicGraph(p.anaerobic)
       )
