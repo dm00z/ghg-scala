@@ -67,6 +67,22 @@ object Utils {
                         (implicit d: D, dispatch: D => Callback) =
     <.td(input(lens, validator)(d, dispatch))
 
+  def tdStrInput[D](lens: Lens[D,String])(implicit d: D, dispatch: D => Callback) =
+    <.td(<.input(
+      ^.value := lens.get(d),
+      ^.onChange ==> { e: ReactEventI =>
+        dispatch(lens.set(e.target.value)(d))
+      }
+    ))
+
+  def tdIntInput[D](lens: Lens[D,Int])(implicit d: D, dispatch: D => Callback) =
+    <.td(<.input(
+      ^.value := lens.get(d),
+      ^.onChange ==> { e: ReactEventI =>
+        dispatch(lens.set(e.target.value.toInt)(d))
+      }
+    ))
+
   def Day1 = <.span("day", <.sup("-1"))
   def Ngay1 = <.td("day", <.sup("-1"))
   def ThongSo = <.td(<.b("Thông số"))

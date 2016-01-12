@@ -6,6 +6,39 @@ import GasRatioTable.{Group => GasGroup, Row => GasRow}
 import ElectricData.{CountryPowerStruct, CalcMethod, PowerSupply, D1, D2, D3}
 
 object SampleData {
+  val sampleElectricD2 = D2(List(
+    D2.Row("01/01/15", "31/01/15", 176800),
+    D2.Row("01/02/15", "29/02/15", 152600),
+    D2.Row("01/03/15", "31/03/15", 166600),
+    D2.Row("01/04/15", "30/04/15", 138800),
+    D2.Row("01/05/15", "31/05/15", 154600),
+    D2.Row("01/06/15", "30/06/15", 167200),
+    D2.Row("01/07/15", "31/07/15", 172000),
+    D2.Row("01/08/15", "31/08/15", 165000),
+    D2.Row("01/09/15", "30/09/15", 170000),
+    D2.Row("01/10/15", "31/10/15", 168000),
+    D2.Row("01/11/15", "30/11/15", 158000),
+    D2.Row("01/12/15", "31/12/15", 145000)
+  ))
+
+  val sampleElectricD3 = D3(List(
+    D3.Row("Máy tách rác trống quay", 4, 1, 24),
+    D3.Row("Bơm bể gom", 7.1, 4, 12),
+    D3.Row("Bơm bể điều hoà", 11, 3, 12),
+    D3.Row("Máy khuấy PAC", 0.75, 2, 6),
+    D3.Row("Máy khuấy Polymer", 0.4, 4, 6),
+    D3.Row("Bơm định lượng phèn nhôm/PAC", 0.4, 2, 24),
+    D3.Row("Bơm định lượng Polymer", 0.4, 4, 24),
+    D3.Row("Bơm tuần hoàn DAF", 18, 2, 24),
+    D3.Row("Bơm bể trung gian", 15, 4, 12),
+    D3.Row("Máy thổi khí DAF", 2.2, 2, 24),
+    D3.Row("Động cơ gạt bọt", 0.4, 2, 24),
+    D3.Row("Bơm bùn bể bùn sau daf", 2.2, 2, 12),
+    D3.Row("Bơm tuần hoàn UASB", 11, 1, 2),
+    D3.Row("Bơm bùn máy ép bùn", 2.2, 1, 24),
+    D3.Row("Máy ép bùn", 3, 1, 24)
+  ))
+
   //Nước thải Sinh hoạt - Hiếu khí Yên Sở
   val dataYenSo =
     GhgData(
@@ -28,37 +61,8 @@ object SampleData {
               PowerSupply("Sinh học, gió, thủy triều", 11, R(11, 279), "") -> 0.43,
               PowerSupply("Nhiên liệu khác", 604, R(600, 890), "IPCC,2001") -> 27.72
             )),
-          CalcMethod.Method1,
-          D1(), D2(List(
-            D2.Row("01/01/15", "31/01/15", 176800),
-            D2.Row("01/02/15", "29/02/15", 152600),
-            D2.Row("01/03/15", "31/03/15", 166600),
-            D2.Row("01/04/15", "30/04/15", 138800),
-            D2.Row("01/05/15", "31/05/15", 154600),
-            D2.Row("01/06/15", "30/06/15", 167200),
-            D2.Row("01/07/15", "31/07/15", 172000),
-            D2.Row("01/08/15", "31/08/15", 165000),
-            D2.Row("01/09/15", "30/09/15", 170000),
-            D2.Row("01/10/15", "31/10/15", 168000),
-            D2.Row("01/11/15", "30/11/15", 158000),
-            D2.Row("01/12/15", "31/12/15", 145000)
-          )), D3(List(
-            D3.Row("Máy tách rác trống quay", 4, 1, 24),
-            D3.Row("Bơm bể gom", 7.1, 4, 12),
-            D3.Row("Bơm bể điều hoà", 11, 3, 12),
-            D3.Row("Máy khuấy PAC", 0.75, 2, 6),
-            D3.Row("Máy khuấy Polymer", 0.4, 4, 6),
-            D3.Row("Bơm định lượng phèn nhôm/PAC", 0.4, 2, 24),
-            D3.Row("Bơm định lượng Polymer", 0.4, 4, 24),
-            D3.Row("Bơm tuần hoàn DAF", 18, 2, 24),
-            D3.Row("Bơm bể trung gian", 15, 4, 12),
-            D3.Row("Máy thổi khí DAF", 2.2, 2, 24),
-            D3.Row("Động cơ gạt bọt", 0.4, 2, 24),
-            D3.Row("Bơm bùn bể bùn sau daf", 2.2, 2, 12),
-            D3.Row("Bơm tuần hoàn UASB", 11, 1, 2),
-            D3.Row("Bơm bùn máy ép bùn", 2.2, 1, 4),
-            D3.Row("Máy ép bùn", 3, 1, 4)
-          ))
+          CalcMethod.Method3,
+          D1(), sampleElectricD2, sampleElectricD3
         ),
         GasData(Nil,
           GasRatioTable("MS: 9/070514. Nguồn: Picard, 1999", Seq(
@@ -120,7 +124,7 @@ object SampleData {
               PowerSupply("Nhiên liệu khác", 604, R(600, 890), "IPCC,2001") -> 27.72
             )),
           CalcMethod.Method1,
-          D1(), D2(Nil), D3(Nil)
+          D1(), sampleElectricD2, sampleElectricD3
         ),
         GasData(Nil,
           GasRatioTable("MS: 9/070514. Nguồn: Picard, 1999", Seq(

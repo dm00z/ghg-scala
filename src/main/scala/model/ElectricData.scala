@@ -39,16 +39,16 @@ object ElectricData {
   }
 
   object D3 {
-    case class Row(device: String, kw: Double, quantity: Int, workHoursPerDay: Int) {
+    @Lenses case class Row(device: String, kw: Double, quantity: Int, workHoursPerDay: Double) {
       def operateMode = if (workHoursPerDay < 24) "Gián đoạn" else "Liên tục"
       def kwhPerDay = kw * quantity * workHoursPerDay
     }
-    val RatioOther = RNorm(R(0, 1), .1)
+    val RatioOther = RNorm(R(.5, 1), .5)
     val EtieuThu = RNorm(R(0, 1), .85)
   }
-  case class D3(rows: List[D3.Row], ratioOther: Double = D3.RatioOther.norm, etieuThu: Double = D3.EtieuThu.norm) {
+  @Lenses case class D3(rows: List[D3.Row], ratioOther: Double = D3.RatioOther.norm, etieuThu: Double = D3.EtieuThu.norm) {
     lazy val powerCalc = rows.map(_.kwhPerDay).sum
-    def powerOther = ratioOther * powerCalc
+    def powerOther = powerCalc * ratioOther / 100
     def powerTheory = powerOther + powerCalc
     def power = powerTheory * etieuThu
   }

@@ -19,6 +19,7 @@ object AppCircuit extends Circuit[GhgData] with ReactConnector[GhgData]{
     def handle = {
       case x: ElectricData.D1 => updated(value.copy(_1 = x))
       case x: ElectricData.D2 => updated(value.copy(_2 = x))
+      case x: ElectricData.D3 => updated(value.copy(_3 = x))
       case x: CalcMethod.Value => updated(value.copy(method = x))
     }
   }
