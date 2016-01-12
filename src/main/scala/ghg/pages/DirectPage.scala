@@ -14,8 +14,8 @@ object DirectPage {
     def graph(r: Range, f: Double => GhgData) = MGraph(
       <.div(^.marginTop := 10.px,
         <.span(^.color := "green", ^.marginLeft := 44.px, "CO", <.sub("2"), "(bể sinh học)"),
-        <.span(^.color := "blue", ^.marginLeft := 220.px, "CO", <.sub("2"), "(bể phân hủy)"),
-        <.span(^.color := "red", ^.marginLeft := 190.px, "KNK", <.sub("trực_tiếp"))
+        <.span(^.color := "blue", ^.marginLeft := 320.px, "CO", <.sub("2"), "(bể phân hủy)"),
+        <.span(^.color := "red", ^.marginLeft := 290.px, "KNK", <.sub("trực_tiếp"))
       ),
       r.map { t =>
         val d = f(t)
