@@ -48,12 +48,18 @@ object AppHeader {
             },
             ^.onChange ==> { e: ReactEventI =>
               val fNew = f.copy(tpe = WaterType(e.target.value.toInt))
-              P.d.dispatch(fNew)
               val relationNew = fNew.tpe match {
                 case WaterType.Domestic => KineticRelationData.dataDomestic
                 case WaterType.Industrial => KineticRelationData.dataIndustrial
               }
-              P.d.dispatch(relationNew)
+//              P.d.dispatch(fNew)
+//              P.d.dispatch(relationNew)
+              val d = P.d()
+              val dNew = d.copy(
+                info = d.info.copy(f = fNew),
+                direct = d.direct.copy(relation = relationNew)
+              )
+              P.d.dispatch(dNew)
             }
           )),
         <.div(<.label("Tên nhà máy: "),
