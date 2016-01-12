@@ -1,10 +1,10 @@
 package ghg
 
 import japgolly.scalajs.react._
-import japgolly.scalajs.react.vdom.TagMod
 import model.R
 import monocle._
 import org.scalajs.dom.html
+import scala.scalajs.js.JSNumberOps._
 
 object Utils {
   val decimalRegex = """^\-?[0-9]*\.?[0-9]+$"""
@@ -47,10 +47,10 @@ object Utils {
   @inline def td(n: String, sub: String) = <.td(n, <.sub(sub))
   def td(n: String, sub: String, sup: String) = <.td(n, <.sup(sup), <.sub(^.marginLeft := "-10px", sub))
 
-  @inline def tr(symbol: TagMod, data: Double) = <.tr(<.td(symbol), <.td(data), <.td())
-  @inline def tr(symbol: TagMod, data: Double, unit: TagMod) = <.tr(<.td(symbol), <.td(data), <.td(unit))
-  @inline def tr(symbol: String, sub: String, data: Double) = <.tr(td(symbol, sub), <.td(data), <.td())
-  @inline def tr(symbol: String, sub: String, data: Double, unit: TagMod) = <.tr(td(symbol, sub), <.td(data), <.td(unit))
+  @inline def tr(symbol: TagMod, data: Double) = <.tr(<.td(symbol), <.td(data.toFixed(3)), <.td())
+  @inline def tr(symbol: TagMod, data: Double, unit: TagMod) = <.tr(<.td(symbol), <.td(data.toFixed(3)), <.td(unit))
+  @inline def tr(symbol: String, sub: String, data: Double) = <.tr(td(symbol, sub), <.td(data.toFixed(3)), <.td())
+  @inline def tr(symbol: String, sub: String, data: Double, unit: TagMod) = <.tr(td(symbol, sub), <.td(data.toFixed(3)), <.td(unit))
 
   def input[D](lens: Lens[D, Double],
                validator: String => Boolean = _.decimal)
