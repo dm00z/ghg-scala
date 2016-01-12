@@ -1,7 +1,7 @@
 package model
 
 import diode.{ActionHandler, Circuit}
-import ElectricData.CalcMethod
+import model.ElectricData.{CountryPowerStruct, CalcMethod}
 import diode.react.ReactConnector
 
 object AppCircuit extends Circuit[GhgData] with ReactConnector[GhgData]{
@@ -21,6 +21,7 @@ object AppCircuit extends Circuit[GhgData] with ReactConnector[GhgData]{
       case x: ElectricData.D2 => updated(value.copy(_2 = x))
       case x: ElectricData.D3 => updated(value.copy(_3 = x))
       case x: CalcMethod.Value => updated(value.copy(method = x))
+      case x: CountryPowerStruct => updated(value.copy(powerStruct = x))
     }
   }
 

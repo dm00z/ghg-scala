@@ -54,12 +54,12 @@ object SampleData {
           powerStruct = CountryPowerStruct(
             "Việt Nam", "Báo cáo thường niên của EVN năm 2013",
             Seq(
-              PowerSupply("Thủy điện", 10, R(16, 410), "Rasha and Hammad, 2000") -> 48.78,
-              PowerSupply("Hạt nhân", 9, R(9, 30), "Andesta et al., 1998") -> 0,
-              PowerSupply("Than", 877, R(860, 1290), "IPCC,2001") -> 23.07,
-              PowerSupply("Khí tự nhiên", 640, R(460, 1234), "") -> 0,
-              PowerSupply("Sinh học, gió, thủy triều", 11, R(11, 279), "") -> 0.43,
-              PowerSupply("Nhiên liệu khác", 604, R(600, 890), "IPCC,2001") -> 27.72
+              PowerSupply("Thủy điện", 10, R(16, 410), 48.78, "Rasha and Hammad, 2000"),
+              PowerSupply("Hạt nhân", 9, R(9, 30), 0, "Andesta et al., 1998"),
+              PowerSupply("Than", 877, R(860, 1290), 23.07, "IPCC,2001"),
+              PowerSupply("Khí tự nhiên", 640, R(460, 1234), 0, ""),
+              PowerSupply("Sinh học, gió, thủy triều", 11, R(11, 279), 0.43, ""),
+              PowerSupply("Nhiên liệu khác", 604, R(600, 890), 27.72, "IPCC,2001")
             )),
           CalcMethod.Method3,
           D1(), sampleElectricD2, sampleElectricD3
@@ -116,12 +116,12 @@ object SampleData {
           powerStruct = CountryPowerStruct(
             "Việt Nam", "Báo cáo thường niên của EVN năm 2013",
             Seq(
-              PowerSupply("Thủy điện", 10, R(16, 410), "Rasha and Hammad, 2000") -> 48.78,
-              PowerSupply("Hạt nhân", 9, R(9, 30), "Andesta et al., 1998") -> 0,
-              PowerSupply("Than", 877, R(860, 1290), "IPCC,2001") -> 23.07,
-              PowerSupply("Khí tự nhiên", 640, R(460, 1234), "") -> 0,
-              PowerSupply("Sinh học, gió, thủy triều", 11, R(11, 279), "") -> 0.43,
-              PowerSupply("Nhiên liệu khác", 604, R(600, 890), "IPCC,2001") -> 27.72
+              PowerSupply("Thủy điện", 10, R(16, 410), 48.78, "Rasha and Hammad, 2000"),
+              PowerSupply("Hạt nhân", 9, R(9, 30), 0, "Andesta et al., 1998"),
+              PowerSupply("Than", 877, R(860, 1290), 23.07, "IPCC,2001"),
+              PowerSupply("Khí tự nhiên", 640, R(460, 1234), 0, ""),
+              PowerSupply("Sinh học, gió, thủy triều", 11, R(11, 279), 0.43, ""),
+              PowerSupply("Nhiên liệu khác", 604, R(600, 890), 27.72, "IPCC,2001")
             )),
           CalcMethod.Method1,
           D1(), sampleElectricD2, sampleElectricD3

@@ -53,11 +53,13 @@ object ElectricData {
     def power = powerTheory * etieuThu
   }
 
-  case class PowerSupply(tpe: String, EFi: Int, EFiRange: R[Int], ref: String)
+  @Lenses case class PowerSupply(tpe: String, EFi: Int, EFiRange: R[Int], PFi: Double, ref: String) {
+    val mul = EFi * PFi / 100
+  }
   /** supplies(x) = PFi of x (a Supply) */
-  case class CountryPowerStruct(country: String, ref: String, supplies: Seq[(PowerSupply, Double)]) {
+  @Lenses case class CountryPowerStruct(country: String, ref: String, supplies: Seq[PowerSupply]) {
     /** = sum(EFi * PFi) */
-    def totalRatio = supplies.map { case (s, pfi) => s.EFi * pfi }.sum
+    val totalRatio = supplies.map(_.mul).sum
   }
 }
 

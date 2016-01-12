@@ -19,6 +19,8 @@ case class GhgData(info: InfoData, indirect: IndirectData, direct: DirectData) {
     }
   }
 
+  def ghgElectric = electricPower * indirect.electric.powerStruct.totalRatio / 1000 //kg
+
   lazy val bien1: Bien1Output = {
     val pPool = direct.d.primaryPool
 
