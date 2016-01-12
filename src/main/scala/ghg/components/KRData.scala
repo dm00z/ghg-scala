@@ -3,8 +3,7 @@ package ghg.components
 import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
-import model.{KineticRelationData => Data}
-import model.WaterType
+import model.{KineticRelationData => Data, GhgData}
 
 /** KineticRelation.Data component */
 object KRData {
@@ -82,5 +81,5 @@ object KRData {
     .renderBackend[Backend]
     .build
 
-  def apply(d: ModelProxy[Data]) = component(d)
+  def apply(d: ModelProxy[GhgData]) = component(d.zoom(_.direct.relation))
 }

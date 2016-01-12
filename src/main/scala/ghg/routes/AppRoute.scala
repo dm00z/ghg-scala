@@ -1,6 +1,7 @@
 package ghg.routes
 
 import diode.react.ModelProxy
+import ghg.components.KRData
 import ghg.pages._
 import japgolly.scalajs.react.ReactElement
 import model.GhgData
@@ -23,7 +24,7 @@ object AppRoutes {
     "Phát thải KNK từ sử dụng hóa chất")
 
   object Direct   extends AppRoute("3. Trực tiếp", "direct", DirectPage.apply, "Tính toán phát thải khí nhà kính trực tiếp")
-  object KineticRelation     extends AppRoute("a. Quan hệ động học", "kinetic-relation", KineticRelationPage.apply,
+  object KineticRelation     extends AppRoute("a. Quan hệ động học", "kinetic-relation", KRData.apply,
     "Tính toán phát thải khí nhà kính trực tiếp",
     "Thông số quan hệ động học của các quá trình")
   object KineticCoefficient  extends AppRoute("b. Hệ số động học", "kinetic-coefficient", KineticCoefficientPage.apply,
