@@ -7,7 +7,6 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import model.{TechMethod, GhgData}
 import ghg.Utils._
 import reactd3.ChartSerie
-
 import scala.scalajs.js
 
 object DirectPage {

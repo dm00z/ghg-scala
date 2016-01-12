@@ -52,8 +52,6 @@ object AppHeader {
                 case WaterType.Domestic => KineticRelationData.dataDomestic
                 case WaterType.Industrial => KineticRelationData.dataIndustrial
               }
-//              P.d.dispatch(fNew)
-//              P.d.dispatch(relationNew)
               val d = P.d()
               val dNew = d.copy(
                 info = d.info.copy(f = fNew),

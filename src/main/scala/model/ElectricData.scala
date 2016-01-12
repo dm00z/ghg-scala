@@ -2,7 +2,7 @@ package model
 
 import model.ElectricData.CountryPowerStruct
 import monocle.macros.Lenses
-import org.widok.moment.Date
+import org.widok.moment.{Moment, Date}
 
 object ElectricData {
   object CalcMethod extends Enumeration {
@@ -21,8 +21,12 @@ object ElectricData {
 
   object D2 {
     @Lenses case class Row(from: Date, to: Date, kwh: Double) {
-      def days = to.diff(from, "days", asFloat = true)
+      def days = to.diff(from, "days", asFloat = true) + 1
       def average = kwh / days
+    }
+    object Row {
+      def apply(from: String, to: String, kwh: Double): Row =
+        Row(Moment(from, "DD/MM/YYYY"), Moment(to, "DD/MM/YY"), kwh)
     }
   }
   /** dates.length must == kwh.length + 1 */
@@ -39,11 +43,14 @@ object ElectricData {
       def operateMode = if (workHoursPerDay < 24) "Gián đoạn" else "Liên tục"
       def kwhPerDay = kw * quantity * workHoursPerDay
     }
-    val Ratio = RNorm(R(0, 1), .5)
+    val RatioOther = RNorm(R(0, 1), .1)
+    val EtieuThu = RNorm(R(0, 1), .85)
   }
-  case class D3(rows: List[D3.Row], ratio: Double = D3.Ratio.norm) {
-    def powerCalc = rows.map(_.kwhPerDay).sum
-    def power = ratio * powerCalc
+  case class D3(rows: List[D3.Row], ratioOther: Double = D3.RatioOther.norm, etieuThu: Double = D3.EtieuThu.norm) {
+    lazy val powerCalc = rows.map(_.kwhPerDay).sum
+    def powerOther = ratioOther * powerCalc
+    def powerTheory = powerOther + powerCalc
+    def power = powerTheory * etieuThu
   }
 
   case class PowerSupply(tpe: String, EFi: Int, EFiRange: R[Int], ref: String)

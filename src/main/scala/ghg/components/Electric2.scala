@@ -10,6 +10,7 @@ import model.GhgData
 import org.widok.moment.Moment
 import scala.scalajs.js
 import scala.scalajs.js.UndefOr
+import scala.scalajs.js.JSNumberOps._
 
 object Electric2 {
   type Props = ModelProxy[GhgData]
@@ -17,6 +18,8 @@ object Electric2 {
   implicit final class PropsEx(val p: Props) extends AnyVal {
     @inline def my = p.zoom(_.indirect.electric._2)
   }
+
+  private val dateFormater = (d: js.Date) => Moment(d).format("DD/MM/YYYY")
 
   case class Backend($: BackendScope[Props, _]) {
     def render(P: Props) = {
@@ -34,16 +37,18 @@ object Electric2 {
             onDismiss = Callback.empty, onShow = Callback.empty,
             autoOk = true,
             defaultDate = r.from.toDate(),
+            formatDate = dateFormater,
             onChange = { (_: UndefOr[Nothing], d: js.Date) => dispatch(r.copy(from = Moment(d))) }
           )()),
           <.td(MuiDatePicker(
             autoOk = true,
             defaultDate = r.to.toDate(),
+            formatDate = dateFormater,
             onChange = { (_: UndefOr[Nothing], d: js.Date) => dispatch(r.copy(to = Moment(d))) }
           )()),
           <.td(r.days),
           tdInput(D2.Row.kwh),
-          <.td(r.average)
+          <.td(r.average.toFixed(3))
         )
       }
 
@@ -51,7 +56,7 @@ object Electric2 {
         table(<.th("Từ ngày"), <.th("Đến ngày"), <.th("Số ngày"), <.th("Tiêu thụ (kwh)"), <.th("Trung bình (kwh/day)"))(
           rows :+ <.tr(
             <.td(^.colSpan := 4, <.b("Tổng cộng")),
-            <.td(my.power)
+            <.td(my.power.toFixed(3))
           ): _*
         ),
         <.button(^.onClick ==> { e: ReactMouseEvent =>
