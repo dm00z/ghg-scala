@@ -4,9 +4,13 @@ import japgolly.scalajs.react._
 import model.R
 import monocle._
 import org.scalajs.dom.html
+import org.widok.moment.Moment
+import scala.scalajs.js
 import scala.scalajs.js.JSNumberOps._
 
 object Utils {
+  val dateFormater = (d: js.Date) => Moment(d).format("DD/MM/YYYY")
+
   val decimalRegex = """^\-?[0-9]*\.?[0-9]+$"""
   implicit final class StringValidator(val v: String) extends AnyVal {
     @inline def decimal = v matches decimalRegex

@@ -19,8 +19,6 @@ object Electric2 {
     @inline def my = p.zoom(_.indirect.electric._2)
   }
 
-  private val dateFormater = (d: js.Date) => Moment(d).format("DD/MM/YYYY")
-
   case class Backend($: BackendScope[Props, _]) {
     def render(P: Props) = {
       val my = P.my()

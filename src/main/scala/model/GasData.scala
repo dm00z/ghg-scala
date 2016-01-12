@@ -1,11 +1,16 @@
 package model
 
-import org.widok.moment.Date
+import monocle.macros.Lenses
+import org.widok.moment.{Moment, Date}
 
 object GasData {
-  case class PowerRow(from: Date, to: Date, m3: Double) {
-    def days = to.diff(from, "days", asFloat = true)
+  @Lenses case class PowerRow(from: Date, to: Date, m3: Double) {
+    def days = to.diff(from, "days", asFloat = true) + 1
     def average = m3 / days
+  }
+  object PowerRow {
+    def apply(from: String, to: String, m3: Double): PowerRow =
+      PowerRow(Moment(from, "DD/MM/YYYY"), Moment(to, "DD/MM/YY"), m3)
   }
 
   object GasRatioTable {

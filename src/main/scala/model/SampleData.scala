@@ -39,6 +39,21 @@ object SampleData {
     D3.Row("Máy ép bùn", 3, 1, 24)
   ))
 
+  val sampleGas = List(
+    GasData.PowerRow("01/01/15", "31/01/15", 25667.109),
+    GasData.PowerRow("01/02/15", "29/02/15", 26353.334),
+    GasData.PowerRow("01/03/15", "31/03/15", 21165.693),
+    GasData.PowerRow("01/04/15", "30/04/15", 10372.461),
+    GasData.PowerRow("01/05/15", "31/05/15", 1869.470),
+    GasData.PowerRow("01/06/15", "30/06/15", 534.604),
+    GasData.PowerRow("01/07/15", "31/07/15", 24890.514),
+    GasData.PowerRow("01/08/15", "31/08/15", 7929.723),
+    GasData.PowerRow("01/09/15", "30/09/15", 13300.922),
+    GasData.PowerRow("01/10/15", "31/10/15", 25339.529),
+    GasData.PowerRow("01/11/15", "30/11/15", 13300.922),
+    GasData.PowerRow("01/12/15", "31/12/15", 25339.529)
+  )
+
   //Nước thải Sinh hoạt - Hiếu khí Yên Sở
   val dataYenSo =
     GhgData(
@@ -64,7 +79,7 @@ object SampleData {
           CalcMethod.Method3,
           D1(), sampleElectricD2, sampleElectricD3
         ),
-        GasData(Nil,
+        GasData(sampleGas,
           GasRatioTable("MS: 9/070514. Nguồn: Picard, 1999", Seq(
             GasGroup("Sản xuất khí tự nhiên", Seq(GasRow(1.9, 2.1, .000022))),
             GasGroup("Chế biến khí tự nhiên", Seq(GasRow(.0021, .072, 0))),
@@ -126,7 +141,7 @@ object SampleData {
           CalcMethod.Method1,
           D1(), sampleElectricD2, sampleElectricD3
         ),
-        GasData(Nil,
+        GasData(sampleGas,
           GasRatioTable("MS: 9/070514. Nguồn: Picard, 1999", Seq(
             GasGroup("Sản xuất khí tự nhiên", Seq(GasRow(1.9, 2.1, .000022))),
             GasGroup("Chế biến khí tự nhiên", Seq(GasRow(.0021, .072, 0))),

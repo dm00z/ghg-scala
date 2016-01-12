@@ -25,6 +25,13 @@ object AppCircuit extends Circuit[GhgData] with ReactConnector[GhgData]{
     }
   }
 
+  private val gasRw = zoomRW(_.indirect.gas)((d,v) => d.copy(indirect = d.indirect.copy(gas = v)))
+  private val gasHandler = new ActionHandler(gasRw) {
+    def handle = {
+      case x: GasData => updated(x)
+    }
+  }
+
   private val krRw = zoomRW(_.direct.relation)((d, v) => d.copy(direct = d.direct.copy(relation = v)))
   private val krHandler = new ActionHandler(krRw) {
     def handle = {
@@ -61,5 +68,5 @@ object AppCircuit extends Circuit[GhgData] with ReactConnector[GhgData]{
   }
 
   protected val actionHandler = combineHandlers(
-    infoHandler, electricHandler, krHandler, coefHandler, directDataHandler, ghgHandler)
+    infoHandler, electricHandler, gasHandler, krHandler, coefHandler, directDataHandler, ghgHandler)
 }
