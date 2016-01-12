@@ -4,7 +4,7 @@ import chandu0101.scalajs.react.components.materialui._
 import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
-import model.{SampleData, Plant}
+import model.{WaterType, SampleData, Plant}
 import scala.scalajs.js.Dynamic.{literal => jsObj}
 
 object AppHeader {
@@ -38,8 +38,19 @@ object AppHeader {
           )
         ),
         <.div(<.label("Loại nước thải: "),
-          if(P.readonly) f.tpe
-          else MuiTextField(value = f.tpe, style = txtStyle, onChange = {e: ReactEventI => P.plant.dispatch(P.plant().copy(tpe = e.target.value))})()),
+          if(P.readonly) f.tpe.toString
+          else <.select(
+            WaterType.values.map { tpe =>
+              if (tpe == f.tpe)
+                <.option(tpe.toString, ^.value := tpe.id, ^.selected := "selected")
+              else
+                <.option(tpe.toString, ^.value := tpe.id)
+            },
+            ^.onChange ==> { e: ReactEventI =>
+              val plant = P.plant().copy(tpe = WaterType(e.target.value.toInt))
+              P.plant.dispatch(plant)
+            }
+          )),
         <.div(<.label("Tên nhà máy: "),
           if(P.readonly) f.name
           else MuiTextField(value = f.name, style = txtStyle, onChange = { e: ReactEventI => P.plant.dispatch(P.plant().copy(name = e.target.value))})()),

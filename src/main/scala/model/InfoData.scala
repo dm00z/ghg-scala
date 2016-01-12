@@ -1,6 +1,6 @@
 package model
 
-case class Plant(tpe: String, name: String, addr: String)
+case class Plant(tpe: WaterType.Value, name: String, addr: String)
 
 object TechMethod extends Enumeration {
   val An = Value("Yếm khí")

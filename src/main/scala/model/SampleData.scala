@@ -14,7 +14,7 @@ object SampleData {
     GhgData(
       InfoData(
         Plant(
-          "Nước thải sinh hoạt",
+          WaterType.Domestic,
           "Nhà máy xử lý nước thải sinh hoạt Yên Sở",
           "Hà Nội"),
         120000, TechMethod.Ae
@@ -101,7 +101,7 @@ object SampleData {
     GhgData(
       InfoData(
         Plant(
-          "Nước thải công nghiệp",
+          WaterType.Industrial,
           "Nhà máy xử lý nước thải cho công ty Giấy Bãi Bằng",
           "Thị trấn Phong Châu, huyện Phù Ninh, tỉnh Phú Thọ"),
         8000, TechMethod.An
@@ -157,7 +157,7 @@ object SampleData {
         ),
         KineticRelationData(
           WaterType.Industrial,
-          KineticRelationData.Data( //sinh hoạt - chưa dùng
+          KineticRelationData.Data( //sinh hoạt
             0.33, 0.422, 0, 0.4,
             1.56, 0, 1.42,
             0.28, 0.235, 0.035, 0.108,
