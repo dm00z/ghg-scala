@@ -27,5 +27,5 @@ object AppRouter {
         <.p("Nguyễn Vân Anh")))
   }
 
-  val router = Router(BaseUrl.fromWindowOrigin_/, config)
+  val router = Router(BaseUrl.until_#, config)
 }
