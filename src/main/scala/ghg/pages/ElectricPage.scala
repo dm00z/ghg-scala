@@ -69,7 +69,7 @@ object ElectricPage {
             <.td()
           ) :_*
         ),
-        <.h2(s"C. Phát thải KNK từ điện năng = ${P().ghgElectric.toFixed(3)} (kg", <.sub("CO2-td"), "/day)")
+        <.h2(s"C. Phát thải KNK từ tiêu thụ điện năng = ${P().ghgElectric.toFixed(3)} (kg", <.sub("CO2-td"), "/day)")
       )
     }
   }

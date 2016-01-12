@@ -10,7 +10,7 @@ import org.widok.moment.Moment
 import scala.scalajs.js
 import scala.scalajs.js.JSNumberOps._
 import scala.scalajs.js.UndefOr
-import model.GasData.PowerRow
+import model.GasData.{GWP, GasRatio, PowerRow}
 
 /**
   * TODO A. Công suất tiêu thụ khí tự nhiên (hiện tại không impl - tương ứng với nhà máy không dùng khí tự nhiên)
@@ -25,12 +25,12 @@ object GasPage {
     def render(P: Props) = {
       val my = P.my()
 
-      val rows = my.powers.zipWithIndex.map { case (r, i) =>
+      val powerRows = my.powers.zipWithIndex.map { case (r, i) =>
         implicit val rImplicit: PowerRow = r
         implicit val dispatch: PowerRow => Callback = d => {
           my.powers.splitAt(i) match {
-            case (r1, _ :: r2) => P.my.dispatch(my.copy(powers = (r1 :+ d) ++ r2))
-            case (r1, Nil) => P.my.dispatch(my.copy(powers = r1 :+ d))
+            case (r1, _ :: r2) => P.dispatch(my.copy(powers = (r1 :+ d) ++ r2))
+            case (r1, Nil) => P.dispatch(my.copy(powers = r1 :+ d))
           }
         }
         <.tr(
@@ -53,11 +53,16 @@ object GasPage {
         )
       }
 
+      implicit val gasRatio: GasRatio = my.gas
+      implicit val gwp: GWP = my.gwp
+      implicit val gasDispatch: GasRatio => Callback = P.dispatch
+      implicit val gwpDispatch: GWP => Callback = P.dispatch
+
       <.div(
         <.h2("A. Công suất tiêu thụ khí tự nhiên"),
         <.div("Nhập dữ liệu thực tế"),
         table(<.th("Từ ngày"), <.th("Đến ngày"), <.th("Số ngày"), <.th("Tiêu thụ (m3)"), <.th("Trung bình (m3/day)"))(
-          rows :+ <.tr(
+          powerRows :+ <.tr(
             <.td(^.colSpan := 4, <.b("Tổng cộng")),
             <.td(my.power.toFixed(3))
           ): _*
@@ -65,8 +70,37 @@ object GasPage {
         <.button(^.onClick ==> { e: ReactMouseEvent =>
           val today = Moment().startOf("d")
           P.dispatch(my.copy(powers = my.powers :+ PowerRow(today.subtract(1, "d"), today, 0)))
-        }, "Thêm")
+        }, "Thêm"),
 
+        <.h2("B. Bảng hệ số khí"),
+        table(
+          <.th(),
+          <.th("Hệ số phát thải (g CO2 / m3 khí)"),
+          <.th("Khả năng gây ấm toàn cầu GWP")
+        )(
+          <.tr(
+            td("CO", "2"),
+            tdInput(GasRatio.co2),
+            tdInput(GWP.co2)
+          ),
+          <.tr(
+            td("CH", "4"),
+            tdInput(GasRatio.ch4),
+            tdInput(GWP.ch4)
+          ),
+          <.tr(
+            <.td("N", <.sub("2"), "O"),
+            tdInput(GasRatio.n2o),
+            tdInput(GWP.n2o)
+          ),
+          <.tr(
+            <.td("Tài liệu tham khảo"),
+            <.td(gasRatio.ref),
+            <.td(gwp.ref)
+          )
+        ),
+
+        <.h2(s"C. Phát thải KNK từ tiêu thụ khí tự nhiên = ${my.ghg.toFixed(3)} (kg", <.sub("CO2-td"), "/day)")
       )
     }
   }

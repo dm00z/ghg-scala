@@ -3,6 +3,7 @@ package model
 import diode.{ActionHandler, Circuit}
 import model.ElectricData.{CountryPowerStruct, CalcMethod}
 import diode.react.ReactConnector
+import model.GasData.{GWP, GasRatio}
 
 object AppCircuit extends Circuit[GhgData] with ReactConnector[GhgData]{
   protected var model = SampleData.data
@@ -29,6 +30,8 @@ object AppCircuit extends Circuit[GhgData] with ReactConnector[GhgData]{
   private val gasHandler = new ActionHandler(gasRw) {
     def handle = {
       case x: GasData => updated(x)
+      case x: GasRatio => updated(value.copy(gas = x))
+      case x: GWP => updated(value.copy(gwp = x))
     }
   }
 

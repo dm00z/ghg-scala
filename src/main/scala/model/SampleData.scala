@@ -1,8 +1,7 @@
 package model
 
 import DirectTable.{PoolData, PrimaryPoolData, StreamInData}
-import GasData.{GasRatioTable, GWP}, GWP.{Row => GWPRow}
-import GasRatioTable.{Group => GasGroup, Row => GasRow}
+import model.GasData.{GasRatio, GWP}
 import ElectricData.{CountryPowerStruct, CalcMethod, PowerSupply, D1, D2, D3}
 
 object SampleData {
@@ -54,9 +53,27 @@ object SampleData {
     GasData.PowerRow("01/12/15", "31/12/15", 25339.529)
   )
 
+//  val gasRatioTable = GasRatioTable("MS: 9/070514. Nguồn: Picard, 1999", Seq(
+//    GasGroup("Sản xuất khí tự nhiên", Seq(GasRow(1.9, 2.1, .000022))),
+//    GasGroup("Chế biến khí tự nhiên", Seq(GasRow(.0021, .072, 0))),
+//    GasGroup("Vận chuyển khí tự nhiên", Seq(
+//      GasRow(7.2, 110, 0, "Cô đặc"),
+//      GasRow(430, 0, 0, "Hóa lỏng")
+//    )),
+//    GasGroup("Sản xuất dầu nhiên liệu", Seq(GasRow(68000, 1800, .64))),
+//    GasGroup("Vận chuyển dầu nhiên liệu", Seq(
+//      GasRow(.49, 5.4, 0, "Đường ống"),
+//      GasRow(2.3, 25, 0, "Xe chở dầu")
+//    ))))
+
+//  val gwp = GWP("Nguồn: IPCC, 2006", 1, Seq(
+//    20 ->  GWPRow(1, 72, 275),
+//    100 -> GWPRow(1, 25, 296),
+//    500 -> GWPRow(1, 7.6, 165)
+//  ))
+
   //Nước thải Sinh hoạt - Hiếu khí Yên Sở
-  val dataYenSo =
-    GhgData(
+  val dataYenSo = GhgData(
       InfoData(
         Plant(
           WaterType.Domestic,
@@ -80,23 +97,8 @@ object SampleData {
           D1(), sampleElectricD2, sampleElectricD3
         ),
         GasData(sampleGas,
-          GasRatioTable("MS: 9/070514. Nguồn: Picard, 1999", Seq(
-            GasGroup("Sản xuất khí tự nhiên", Seq(GasRow(1.9, 2.1, .000022))),
-            GasGroup("Chế biến khí tự nhiên", Seq(GasRow(.0021, .072, 0))),
-            GasGroup("Vận chuyển khí tự nhiên", Seq(
-              GasRow(7.2, 110, 0, "Cô đặc"),
-              GasRow(430, 0, 0, "Hóa lỏng")
-            )),
-            GasGroup("Sản xuất dầu nhiên liệu", Seq(GasRow(68000, 1800, .64))),
-            GasGroup("Vận chuyển dầu nhiên liệu", Seq(
-              GasRow(.49, 5.4, 0, "Đường ống"),
-              GasRow(2.3, 25, 0, "Xe chở dầu")
-            )))),
-          GWP("Nguồn: IPCC, 2006", 1, Seq(
-            20 ->  GWPRow(1, 72, 275),
-            100 -> GWPRow(1, 25, 296),
-            500 -> GWPRow(1, 7.6, 165)
-          ))
+          GasRatio("Nguồn: Picard, 1999", 431.9, 2.1, 0.000022),
+          GWP("Nguồn: IPCC, 2006", 1, 25, 296)
         ),
         MaterialData()
       ),
@@ -117,8 +119,7 @@ object SampleData {
       )
     )
 
-  val dataBaiBang =
-    GhgData(
+  val dataBaiBang = GhgData(
       InfoData(
         Plant(
           WaterType.Industrial,
@@ -142,23 +143,8 @@ object SampleData {
           D1(), sampleElectricD2, sampleElectricD3
         ),
         GasData(sampleGas,
-          GasRatioTable("MS: 9/070514. Nguồn: Picard, 1999", Seq(
-            GasGroup("Sản xuất khí tự nhiên", Seq(GasRow(1.9, 2.1, .000022))),
-            GasGroup("Chế biến khí tự nhiên", Seq(GasRow(.0021, .072, 0))),
-            GasGroup("Vận chuyển khí tự nhiên", Seq(
-              GasRow(7.2, 110, 0, "Cô đặc"),
-              GasRow(430, 0, 0, "Hóa lỏng")
-            )),
-            GasGroup("Sản xuất dầu nhiên liệu", Seq(GasRow(68000, 1800, .64))),
-            GasGroup("Vận chuyển dầu nhiên liệu", Seq(
-              GasRow(.49, 5.4, 0, "Đường ống"),
-              GasRow(2.3, 25, 0, "Xe chở dầu")
-            )))),
-          GWP("Nguồn: IPCC, 2006", 1, Seq(
-            20 ->  GWPRow(1, 72, 275),
-            100 -> GWPRow(1, 25, 296),
-            500 -> GWPRow(1, 7.6, 165)
-          ))
+          GasRatio("Nguồn: Picard, 1999", 431.9, 2.1, 0.000022),
+          GWP("Nguồn: IPCC, 2006", 1, 25, 296)
         ),
         MaterialData()
       ),
