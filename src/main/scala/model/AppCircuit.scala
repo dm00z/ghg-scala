@@ -25,10 +25,8 @@ object AppCircuit extends Circuit[GhgData] with ReactConnector[GhgData]{
 
   private val krRw = zoomRW(_.direct.relation)((d, v) => d.copy(direct = d.direct.copy(relation = v)))
   private val krHandler = new ActionHandler(krRw) {
-    import KineticRelationData.Data
     def handle = {
-      case (WaterType.Domestic, x: Data) => updated(value.copy(domestic = x))
-      case (WaterType.Industrial, x: Data) => updated(value.copy(industrial = x))
+      case x: KineticRelationData => updated(x)
     }
   }
 

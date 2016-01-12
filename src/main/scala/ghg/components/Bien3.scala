@@ -15,7 +15,7 @@ object Bien3 {
       val b1 = d.bien1
       val pPool = d.direct.d.primaryPool
       val dPool = d.direct.d.decayPool
-      val relation = d.direct.relation.value
+      val relation = d.direct.relation
       val (b2, b3) = if(props.isAerobic) (d.bien2Ae, d.bien3) else (d.bien2Ana, d.bien3Ana)
       val ane = d.direct.coef.anaerobic
 

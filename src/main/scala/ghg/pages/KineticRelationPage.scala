@@ -7,6 +7,7 @@ import japgolly.scalajs.react.{BackendScope, ReactComponentB}
 import model.{WaterType, GhgData}
 import scala.scalajs.js.|
 
+//TODO remove
 object KineticRelationPage {
   type Props = ModelProxy[GhgData]
   implicit final class PropsEx(val p: Props) extends AnyVal {
@@ -15,16 +16,7 @@ object KineticRelationPage {
 
   case class Backend($: BackendScope[Props, _]) {
     def render(P: Props) = {
-      import WaterType._
-      val my = P.my()
-      MuiTabs(value = my.tpe.id.toString: String | Double)(
-        MuiTab(value = Domestic.id.toString, label = Domestic.toString)(
-          KRData(P.my.zoom(_.domestic), Domestic)
-        ),
-        MuiTab(value = Industrial.id.toString, label = Industrial.toString)(
-          KRData(P.my.zoom(_.industrial), Industrial)
-        )
-      )
+      KRData(P.my)
     }
   }
 

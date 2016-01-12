@@ -69,7 +69,7 @@ case class GhgData(info: InfoData, indirect: IndirectData, direct: DirectData) {
     val p_ss = p_ssBod + p_ssManhTeBao + p_ssNbVss
     val p_ssBio = p_ss - p_ssNbVss //=..
 
-    val relation = direct.relation.value
+    val relation = direct.relation
     //bod_khu
     val bod_khu_an = q_v * (s_v - s) - relation.rCO2Decay * p_ssBio
     val co2_khu_bod = relation.yCO2An * bod_khu_an
@@ -142,7 +142,7 @@ case class GhgData(info: InfoData, indirect: IndirectData, direct: DirectData) {
 
     val N = calcNRatio(.001, 30) * direct.d.streamIn.tkn
 
-    val relation = direct.relation.value
+    val relation = direct.relation
     val bod_ox = q_v * (s_v - s) - relation.rCO2Decay * p_ssBio(N)
     val bod_ox_dnt = relation.rBODDnt * N * q_v
     val bod_khuThuc = if (bod_ox < bod_ox_dnt) bod_ox else bod_ox - bod_ox_dnt
@@ -168,7 +168,7 @@ case class GhgData(info: InfoData, indirect: IndirectData, direct: DirectData) {
   private def calcBien3(isAerobic: Boolean): Bien3Output = {
     val b1 = bien1
     val b2 = if (isAerobic) bien2Ae else bien2Ana
-    val relation = direct.relation.value
+    val relation = direct.relation
 
     val p_vss_dr = b1.ss_khuBl + b2.p_ss
 

@@ -4,7 +4,7 @@ import chandu0101.scalajs.react.components.materialui._
 import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
-import model.{WaterType, SampleData, Plant}
+import model.{GhgData, WaterType, SampleData, KineticRelationData}
 import scala.scalajs.js.Dynamic.{literal => jsObj}
 
 object AppHeader {
@@ -15,11 +15,11 @@ object AppHeader {
     .renderBackend[Backend]
     .build
 
-  case class Props(plant: ModelProxy[Plant], group: String, subGroup: Option[String], readonly: Boolean = true)
+  case class Props(d: ModelProxy[GhgData], group: String, subGroup: Option[String], readonly: Boolean = true)
 
   class Backend($: BackendScope[Props, _]) {
     def render(P: Props) = {
-      val f = P.plant()
+      val f = P.d().info.f
       <.div(
         <.h1("Tính toán phát thải khí nhà kính từ hệ thống xử lý nước thải"),
         if (P.readonly) EmptyTag else <.div(
@@ -33,7 +33,7 @@ object AppHeader {
             },
             ^.onChange ==> { e: ReactEventI =>
               SampleData.selected = e.target.value
-              P.plant.dispatch(SampleData.data)
+              P.d.dispatch(SampleData.data)
             }
           )
         ),
@@ -47,16 +47,21 @@ object AppHeader {
                 <.option(tpe.toString, ^.value := tpe.id)
             },
             ^.onChange ==> { e: ReactEventI =>
-              val plant = P.plant().copy(tpe = WaterType(e.target.value.toInt))
-              P.plant.dispatch(plant)
+              val fNew = f.copy(tpe = WaterType(e.target.value.toInt))
+              P.d.dispatch(fNew)
+              val relationNew = fNew.tpe match {
+                case WaterType.Domestic => KineticRelationData.dataDomestic
+                case WaterType.Industrial => KineticRelationData.dataIndustrial
+              }
+              P.d.dispatch(relationNew)
             }
           )),
         <.div(<.label("Tên nhà máy: "),
           if(P.readonly) f.name
-          else MuiTextField(value = f.name, style = txtStyle, onChange = { e: ReactEventI => P.plant.dispatch(P.plant().copy(name = e.target.value))})()),
+          else MuiTextField(value = f.name, style = txtStyle, onChange = { e: ReactEventI => P.d.dispatch(f.copy(name = e.target.value))})()),
         <.div(<.label("Địa điểm: "),
           if(P.readonly) f.addr
-          else MuiTextField(value = f.addr, style = txtStyle, onChange = {e: ReactEventI => P.plant.dispatch(P.plant().copy(addr = e.target.value))})()),
+          else MuiTextField(value = f.addr, style = txtStyle, onChange = {e: ReactEventI => P.d.dispatch(f.copy(addr = e.target.value))})()),
         <.div(<.label("Hạng mục: "), P.group),
         P.subGroup.fold(EmptyTag)(v => <.div(<.label("Tiểu mục: "), v))
       )

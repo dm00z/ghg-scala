@@ -15,7 +15,7 @@ object Bien2Anaerobic {
       val b1 = d.bien1
       val b2 = d.bien2Ana
       val pPool = d.direct.d.primaryPool
-      val relation = d.direct.relation.value
+      val relation = d.direct.relation
 
       val ana = d.direct.coef.anaerobic
       val nit = d.direct.coef.nitrate

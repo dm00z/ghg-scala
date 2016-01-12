@@ -28,7 +28,7 @@ object GhgPage {
         <.div(Style.nav, LeftNav(AppRoutes.all, P.selectedPage, P.ctrl)),
         <.div(Style.content,
           AppHeader.component(AppHeader.Props(
-            P.proxy.zoom(_.info.f), P.selectedPage.group, Option(P.selectedPage.subGroup), P.selectedPage != AppRoutes.Info
+            P.proxy, P.selectedPage.group, Option(P.selectedPage.subGroup), P.selectedPage != AppRoutes.Info
           )),
           P.selectedPage.render(P.proxy)
         )
@@ -38,7 +38,6 @@ object GhgPage {
 
   val component = ReactComponentB[Props]("GhgPage")
     .renderBackend[Backend]
-//    .configureSpec(ThemeInstaller.installMuiContext())
     .build
 
   case class Props(proxy: ModelProxy[GhgData], selectedPage: AppRoute, ctrl: RouterCtl[AppRoute])

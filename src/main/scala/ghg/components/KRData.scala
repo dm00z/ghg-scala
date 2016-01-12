@@ -3,19 +3,19 @@ package ghg.components
 import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
-import model.KineticRelationData.Data
+import model.{KineticRelationData => Data}
 import model.WaterType
 
 /** KineticRelation.Data component */
 object KRData {
-  case class Props(d: ModelProxy[Data], tpe: WaterType.Value)
+  type Props = ModelProxy[Data]
 
   case class Backend($: BackendScope[Props, _]) {
     import ghg.Utils._
 
     def render(P: Props) = {
-      implicit val p: Data = P.d()
-      implicit val dispatch: Data => Callback = d => P.d.dispatch(P.tpe -> d)
+      implicit val p: Data = P()
+      implicit val dispatch: Data => Callback = d => P.dispatch(d)
 
       <.div(
         <.h3("1. Quá trình hiếu khí"),
@@ -82,5 +82,5 @@ object KRData {
     .renderBackend[Backend]
     .build
 
-  def apply(d: ModelProxy[Data], tpe: WaterType.Value) = component(Props(d, tpe))
+  def apply(d: ModelProxy[Data]) = component(d)
 }
