@@ -31,7 +31,7 @@ object DirectDataPage {
             <.td("Nồng độ cơ chất dòng vào hệ thống")
           ),
           <.tr(td("TN", "v"), <.td("mg/l"),
-            tdInput(StreamInData.tkn),
+            tdInput(StreamInData.tn),
             <.td()
           ),
           <.tr(<.td("TSS"), <.td("mg/l"),

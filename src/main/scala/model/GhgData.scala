@@ -121,14 +121,14 @@ case class GhgData(info: InfoData, indirect: IndirectData, direct: DirectData) {
     def p_ssNit(N: Double) = x_nit(N) * V / srtNit(N)
     def p_ss(N: Double) =p_ssBod + p_ssNit(N) + p_ssManhTeBao + p_ssNbVss
     def p_ssBio(N: Double) = p_ss(N) - p_ssNbVss //=..
-    def calcN(N: Double) = direct.d.streamIn.tkn - direct.d.streamOut.n - .12 * p_ssBio(N) / q_v
+    def calcN(N: Double) = direct.d.streamIn.tn - direct.d.streamOut.n - .12 * p_ssBio(N) / q_v
     /** Tính ratio N/ TN */
     def calcNRatio(epsilon: Double, maxLoop: Int): Double = {
       @tailrec
       def calc(rmin: Double, rmax: Double, loop: Int): Double = {
         val len = rmax - rmin
         val r = (rmin + rmax) / 2
-        val n0 = r * direct.d.streamIn.tkn
+        val n0 = r * direct.d.streamIn.tn
         val n = calcN(n0)
         if (loop >= maxLoop || Math.abs(n - n0) < epsilon) {
           r
@@ -140,7 +140,7 @@ case class GhgData(info: InfoData, indirect: IndirectData, direct: DirectData) {
       calc(0, 1, 0)
     }
 
-    val N = calcNRatio(.001, 30) * direct.d.streamIn.tkn
+    val N = calcNRatio(.001, 30) * direct.d.streamIn.tn
 
     val relation = direct.relation
     val bod_ox = q_v * (s_v - s) - relation.rCO2Decay * p_ssBio(N)
@@ -153,7 +153,7 @@ case class GhgData(info: InfoData, indirect: IndirectData, direct: DirectData) {
     val co2_tieuThuNit = relation.rCO2Nit * N * q_v
 
     val co2_quaTrinhHieuKhi = co2_khu_bod + co2_phanhuy + co2_dnt - co2_tieuThuNit
-    val n2o = q_v * direct.d.streamIn.tkn * Bien2Output.r_n2o
+    val n2o = q_v * direct.d.streamIn.tn * Bien2Output.r_n2o
     val co2_n2o = 296 * n2o //fixme hardcode
 
     Bien2Output(s, q_v, s_v, X, ss_v, vss_v, X_nbV, X_nb, V, p_ssBod, p_ssManhTeBao, p_ssNbVss,

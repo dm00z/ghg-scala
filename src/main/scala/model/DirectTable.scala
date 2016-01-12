@@ -8,9 +8,9 @@ object DirectTable {
     *
     * @note q: Double = 8000 (m3/day) is taken from InfoData
     * @param s mg/l
-    * @param tkn mg/l
+    * @param tn mg/l
     * @param tss mg/l */
-  @Lenses case class StreamInData(s: Double, tkn: Double, tss: Double)
+  @Lenses case class StreamInData(s: Double, tn: Double, tss: Double)
 
   /** Thông số bể xử lý sơ cấp
     * Tài liệu tham khảo 	Metcalf and Eddy (2002)

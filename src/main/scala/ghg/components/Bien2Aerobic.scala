@@ -84,7 +84,7 @@ object Bien2Aerobic {
         <.div("Công thức tính: `mu_(nit) = ( (mu_(m,nit) * N) / (K_N + N) ) * ( (DO) / (K_(DO) + DO) ) - k_(d,nit)`".teX),
         dataTbl(
           tr("μ", "nit", b2.m_nit, Day1),
-          tr("TN", d.direct.d.streamIn.tkn, "mg/l"),
+          tr("TN", d.direct.d.streamIn.tn, "mg/l"),
           tr("μ", "m,nit", nit.m_),
           tr("K", "N", nit.kn_),
           tr("k", "d,nit", nit.kd_, Day1),
@@ -145,7 +145,7 @@ object Bien2Aerobic {
         <.div("Công thức tính: `N = TN_v - N_r - (0.12 * P_(SS,bio)) / Q_v`".teX),
         dataTbl(
           tr("N", b2.Ncalc, "mg/l"),
-          tr("TN", d.direct.d.streamIn.tkn, "mg/l"),
+          tr("TN", d.direct.d.streamIn.tn, "mg/l"),
           tr("N", "r", d.direct.d.streamOut.n, "mg/l"),
           tr("P", "SS,bio", b2.p_ssBio, "g/day"),
           tr("Q", "v", b2.q_v, "m3/day")
@@ -229,7 +229,7 @@ object Bien2Aerobic {
           tr(<.span("N", <.sub("2"), "O"), b2.n2o, "g/day"),
           tr("CO", "2,N2OphatThai", b2.co2_n2o, "g/day"),
           tr("Q", "v", b2.q_v, "m3/day"),
-          tr("TN", "v", d.direct.d.streamIn.tkn, "mg/l"),
+          tr("TN", "v", d.direct.d.streamIn.tn, "mg/l"),
           tr("R", "N2O", Bien2Output.r_n2o)
         )
       )
