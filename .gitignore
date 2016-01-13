@@ -10,3 +10,5 @@ project/boot/
 /.idea/modules.xml
 npm-debug.log
 /bower_components/
+/cache/
+/release/
