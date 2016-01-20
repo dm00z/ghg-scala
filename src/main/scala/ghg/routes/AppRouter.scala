@@ -24,7 +24,10 @@ object AppRouter {
     <.div(r.render(),
       <.div(^.textAlign := "center", ^.key := "footer")(
         <.hr(),
-        <.p("Nguyễn Vân Anh")))
+        <.p(^.fontWeight := "bold", "Nguyễn Vân Anh"),
+        <.p("Tác giả: Nguyễn Thị Vân Anh | Chuyên gia: TS. Nguyễn Đức Toàn, PGS.TS. Đặng Xuân Hiển | Lập trình: Bùi Việt Thành")
+      )
+    )
   }
 
   val router = Router(BaseUrl.until_#, config)

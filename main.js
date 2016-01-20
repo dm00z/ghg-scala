@@ -1,8 +1,8 @@
-var app = require('app');  // Module to control application life.
-var BrowserWindow = require('browser-window');  // Module to create native browser window.
-
-var Menu = require('menu');
-var template = [
+const electron = require('electron'),
+    app = electron.app,  // Module to control application life.
+    Menu = electron.Menu,
+    BrowserWindow = electron.BrowserWindow;
+const template = [
     {
         label: 'View',
         submenu: [
@@ -20,6 +20,30 @@ var template = [
                 click: function(item, focusedWindow) {
                     if (focusedWindow)
                         focusedWindow.reload();
+                }
+            },
+            {
+                label: 'Zoom in',
+                accelerator: 'CmdOrCtrl+=',
+                click: function(item, focusedWindow) {
+                    if (focusedWindow)
+                        focusedWindow.webContents.executeJavaScript('webFrame.setZoomLevel(webFrame.getZoomLevel() + 1);');
+                }
+            },
+            {
+                label: 'Zoom out',
+                accelerator: 'CmdOrCtrl+-',
+                click: function(item, focusedWindow) {
+                    if (focusedWindow)
+                        focusedWindow.webContents.executeJavaScript('webFrame.setZoomLevel(webFrame.getZoomLevel() - 1);');
+                }
+            },
+            {
+                label: 'Reset zoom level',
+                accelerator: 'CmdOrCtrl+0',
+                click: function(item, focusedWindow) {
+                    if (focusedWindow)
+                        focusedWindow.webContents.executeJavaScript('webFrame.setZoomLevel(0);');
                 }
             },
             {
@@ -61,7 +85,8 @@ var template = [
         ]
     }
 ];
-var menu = Menu.buildFromTemplate(template);
+
+const menu = Menu.buildFromTemplate(template);
 Menu.setApplicationMenu(menu);
 
 // Report crashes to our server.

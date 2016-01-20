@@ -9,9 +9,9 @@ gulp.task('electron', function() {
             packageJson: packageJson,
             release: './release',
             cache: './cache',
-            version: 'v0.36.3',
+            version: 'v0.36.4',
             packaging: false,
-            platforms: ['win32-ia32'],
+            platforms: ['win32-ia32'], // 'win32-x64'
             platformResources: {
                 win: {
                     "version-string": packageJson.version,

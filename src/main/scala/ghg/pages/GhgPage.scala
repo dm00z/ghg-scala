@@ -15,7 +15,10 @@ object GhgPage {
     val container = style(
       display.flex,
       minHeight(600.px))
-    val nav = style(width(190.px))
+    val nav = style(
+      width(190.px),
+      backgroundColor(lightblue)
+    )
     val content = style(
       padding(10.px),
       borderLeft :=! "1px solid rgb(223, 220, 220)",

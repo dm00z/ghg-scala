@@ -21,6 +21,8 @@ object AppHeader {
     def render(P: Props) = {
       val f = P.d().info.f
       <.div(
+        if(P.readonly) ^.backgroundColor := "lightcyan" else EmptyTag,
+        ^.marginTop := "-30px",
         <.h1("Tính toán phát thải khí nhà kính từ hệ thống xử lý nước thải"),
         if (P.readonly) EmptyTag else <.div(
           <.label("Tải dữ liệu: "),
