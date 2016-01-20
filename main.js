@@ -2,6 +2,16 @@ const electron = require('electron'),
     app = electron.app,  // Module to control application life.
     Menu = electron.Menu,
     BrowserWindow = electron.BrowserWindow;
+
+function zoom(win, i) {
+    if (!win) return;
+
+    var level = i == 0 ? 0 : i == 1 ? 'webFrame.getZoomLevel() + 1' : 'webFrame.getZoomLevel() - 1';
+    var js = 'webFrame || webFrame = require("electron").webFrame;' +
+        'webFrame.setZoomLevel(' + level + ');';
+    win.webContents.executeJavaScript(js);
+}
+
 const template = [
     {
         label: 'View',
@@ -25,26 +35,17 @@ const template = [
             {
                 label: 'Zoom in',
                 accelerator: 'CmdOrCtrl+=',
-                click: function(item, focusedWindow) {
-                    if (focusedWindow)
-                        focusedWindow.webContents.executeJavaScript('webFrame.setZoomLevel(webFrame.getZoomLevel() + 1);');
-                }
+                click: (item, focusedWindow) => zoom(focusedWindow, 1)
             },
             {
                 label: 'Zoom out',
                 accelerator: 'CmdOrCtrl+-',
-                click: function(item, focusedWindow) {
-                    if (focusedWindow)
-                        focusedWindow.webContents.executeJavaScript('webFrame.setZoomLevel(webFrame.getZoomLevel() - 1);');
-                }
+                click: (item, focusedWindow) => zoom(focusedWindow, -1)
             },
             {
                 label: 'Reset zoom level',
                 accelerator: 'CmdOrCtrl+0',
-                click: function(item, focusedWindow) {
-                    if (focusedWindow)
-                        focusedWindow.webContents.executeJavaScript('webFrame.setZoomLevel(0);');
-                }
+                click: (item, focusedWindow) => zoom(focusedWindow, 0)
             },
             {
                 label: 'Toggle Full Screen',

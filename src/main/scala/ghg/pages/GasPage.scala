@@ -22,6 +22,11 @@ object GasPage {
   }
 
   case class Backend($: BackendScope[Props, _]) {
+    private def newRow() = {
+      val today = Moment().startOf("d")
+      PowerRow(today.subtract(1, "d"), today, 0)
+    }
+
     def render(P: Props) = {
       val my = P.my()
 
@@ -33,7 +38,27 @@ object GasPage {
             case (r1, Nil) => P.dispatch(my.copy(powers = r1 :+ d))
           }
         }
+
+        def addRow(e: ReactMouseEvent) = {
+          val powers = my.powers.splitAt(i) match {
+            case (r1, r2) => (r1 :+ newRow()) ++ r2
+          }
+          P.dispatch(my.copy(powers = powers))
+        }
+
+        def removeRow(e: ReactMouseEvent) = {
+          val powers = my.powers.toBuffer
+          powers.remove(i)
+          P.dispatch(my.copy(powers = powers.toSeq))
+        }
+
         <.tr(
+          <.td(
+            <.i(^.onClick ==> addRow,
+              ^.cursor.pointer, ^.cls := "material-icons", "add_circle"),
+            <.i(^.onClick ==> removeRow,
+              ^.cursor.pointer, ^.cls := "material-icons", "remove_circle")
+          ),
           <.td(MuiDatePicker(
             onDismiss = Callback.empty, onShow = Callback.empty,
             autoOk = true,
@@ -58,19 +83,21 @@ object GasPage {
       implicit val gasDispatch: GasRatio => Callback = P.dispatch
       implicit val gwpDispatch: GWP => Callback = P.dispatch
 
+      @inline def addRow(e: ReactMouseEvent) = P.dispatch(my.copy(powers = my.powers :+ newRow()))
+
       <.div(
         <.h2("A. Công suất tiêu thụ khí tự nhiên"),
         <.div("Nhập dữ liệu thực tế"),
-        table(<.th("Từ ngày"), <.th("Đến ngày"), <.th("Số ngày"), <.th("Tiêu thụ (m3)"), <.th("Trung bình (m3/day)"))(
+        table(<.th(), <.th("Từ ngày"), <.th("Đến ngày"), <.th("Số ngày"), <.th("Tiêu thụ (m3)"), <.th("Trung bình (m3/day)"))(
           powerRows :+ <.tr(
+            <.td(
+              <.i(^.onClick ==> addRow,
+                ^.cursor.pointer, ^.cls := "material-icons", "add_circle"
+              )),
             <.td(^.colSpan := 4, <.b("Tổng cộng")),
             <.td(my.power.toFixed(3))
           ): _*
         ),
-        <.button(^.onClick ==> { e: ReactMouseEvent =>
-          val today = Moment().startOf("d")
-          P.dispatch(my.copy(powers = my.powers :+ PowerRow(today.subtract(1, "d"), today, 0)))
-        }, "Thêm"),
 
         <.h2("B. Bảng hệ số khí"),
         table(
