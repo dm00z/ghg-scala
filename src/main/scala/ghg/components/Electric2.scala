@@ -20,6 +20,11 @@ object Electric2 {
   }
 
   case class Backend($: BackendScope[Props, _]) {
+    private def newRow() = {
+      val today = Moment().startOf("d")
+      D2.Row(today.subtract(1, "d"), today, 0)
+    }
+
     def render(P: Props) = {
       val my = P.my()
       val rows = my.rows.zipWithIndex.map { case (r, i) =>
@@ -30,7 +35,27 @@ object Electric2 {
             case (r1, Nil) => P.my.dispatch(my.copy(rows = r1 :+ d))
           }
         }
+
+        def addRow(e: ReactMouseEvent) = {
+          val r = my.rows.splitAt(i) match {
+            case (r1, r2) => (r1 :+ newRow()) ++ r2
+          }
+          P.dispatch(my.copy(rows = r))
+        }
+
+        def removeRow(e: ReactMouseEvent) = {
+          val r = my.rows.toBuffer
+          r.remove(i)
+          P.dispatch(my.copy(rows = r.toList))
+        }
+
         <.tr(
+          <.td(
+            <.i(^.onClick ==> addRow,
+              ^.cursor.pointer, ^.cls := "material-icons", "add_circle"),
+            <.i(^.onClick ==> removeRow,
+              ^.cursor.pointer, ^.cls := "material-icons", "remove_circle")
+          ),
           <.td(MuiDatePicker(
             onDismiss = Callback.empty, onShow = Callback.empty,
             autoOk = true,
@@ -50,17 +75,19 @@ object Electric2 {
         )
       }
 
+      @inline def addRow(e: ReactMouseEvent) = P.dispatch(my.copy(rows = my.rows :+ newRow()))
+
       <.div(
-        table(<.th("Từ ngày"), <.th("Đến ngày"), <.th("Số ngày"), <.th("Tiêu thụ (kwh)"), <.th("Trung bình (kwh/day)"))(
+        table(<.th(), <.th("Từ ngày"), <.th("Đến ngày"), <.th("Số ngày"), <.th("Tiêu thụ (kwh)"), <.th("Trung bình (kwh/day)"))(
           rows :+ <.tr(
+            <.td(
+              <.i(^.onClick ==> addRow,
+                ^.cursor.pointer, ^.cls := "material-icons", "add_circle"
+              )),
             <.td(^.colSpan := 4, <.b("Tổng cộng")),
             <.td(my.power.toFixed(3))
           ): _*
-        ),
-        <.button(^.onClick ==> { e: ReactMouseEvent =>
-          val today = Moment().startOf("d")
-          P.my.dispatch(my.copy(rows = my.rows :+ D2.Row(today.subtract(1, "d"), today, 0)))
-        }, "Thêm")
+        )
       )
     }
   }
