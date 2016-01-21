@@ -24,7 +24,9 @@ browse http://localhost:8090/
 
 # Dist guide
 ```
-electron .
+sbt fullOptJS
+webpack --config webpack.config.prod.js
+gulp electron
 ```
 
 # TODO

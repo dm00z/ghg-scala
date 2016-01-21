@@ -7,7 +7,7 @@ function zoom(win, i) {
     if (!win) return;
 
     var level = i == 0 ? 0 : i == 1 ? 'webFrame.getZoomLevel() + 1' : 'webFrame.getZoomLevel() - 1';
-    var js = 'webFrame || webFrame = require("electron").webFrame;' +
+    var js = 'if(typeof webFrame === "undefined") webFrame = require("electron").webFrame;' +
         'webFrame.setZoomLevel(' + level + ');';
     win.webContents.executeJavaScript(js);
 }

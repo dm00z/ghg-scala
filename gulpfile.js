@@ -10,6 +10,7 @@ gulp.task('electron', function() {
             release: './release',
             cache: './cache',
             version: 'v0.36.4',
+            asar: true,
             packaging: false,
             platforms: ['win32-ia32'], // 'win32-x64'
             platformResources: {
