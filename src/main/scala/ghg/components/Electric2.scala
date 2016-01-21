@@ -20,11 +20,6 @@ object Electric2 {
   }
 
   case class Backend($: BackendScope[Props, _]) {
-    private def newRow() = {
-      val today = Moment().startOf("d")
-      D2.Row(today.subtract(1, "d"), today, 0)
-    }
-
     def render(P: Props) = {
       val my = P.my()
       val rows = my.rows.zipWithIndex.map { case (r, i) =>
@@ -38,7 +33,7 @@ object Electric2 {
 
         def addRow(e: ReactMouseEvent) = {
           val r = my.rows.splitAt(i) match {
-            case (r1, r2) => (r1 :+ newRow()) ++ r2
+            case (r1, r2) => (r1 :+ D2.Row()) ++ r2
           }
           P.dispatch(my.copy(rows = r))
         }
@@ -75,7 +70,7 @@ object Electric2 {
         )
       }
 
-      @inline def addRow(e: ReactMouseEvent) = P.dispatch(my.copy(rows = my.rows :+ newRow()))
+      @inline def addRow(e: ReactMouseEvent) = P.dispatch(my.copy(rows = my.rows :+ D2.Row()))
 
       <.div(
         table(<.th(), <.th("Từ ngày"), <.th("Đến ngày"), <.th("Số ngày"), <.th("Tiêu thụ (kwh)"), <.th("Trung bình (kwh/day)"))(

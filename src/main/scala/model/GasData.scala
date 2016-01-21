@@ -11,6 +11,11 @@ object GasData {
   object PowerRow {
     def apply(from: String, to: String, m3: Double): PowerRow =
       PowerRow(Moment(from, "DD/MM/YYYY"), Moment(to, "DD/MM/YY"), m3)
+
+    def apply(): PowerRow = {
+      val today = Moment().startOf("d")
+      PowerRow(today.subtract(1, "d"), today, 0)
+    }
   }
 
 //  object GasRatioTable {

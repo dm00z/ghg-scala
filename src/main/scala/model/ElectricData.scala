@@ -27,6 +27,11 @@ object ElectricData {
     object Row {
       def apply(from: String, to: String, kwh: Double): Row =
         Row(Moment(from, "DD/MM/YYYY"), Moment(to, "DD/MM/YY"), kwh)
+
+      def apply(): Row = {
+        val today = Moment().startOf("d")
+        Row(today.subtract(1, "d"), today, 0)
+      }
     }
   }
   /** dates.length must == kwh.length + 1 */
@@ -43,6 +48,8 @@ object ElectricData {
       def operateMode = if (workHoursPerDay < 24) "Gián đoạn" else "Liên tục"
       def kwhPerDay = kw * quantity * workHoursPerDay
     }
+    object Row { def apply(): Row = Row("", 0, 1, 0) }
+
     val RatioOther = RNorm(R(.5, 1), .5)
     val EtieuThu = RNorm(R(0, 1), .85)
   }

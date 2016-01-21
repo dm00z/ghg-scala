@@ -22,11 +22,6 @@ object GasPage {
   }
 
   case class Backend($: BackendScope[Props, _]) {
-    private def newRow() = {
-      val today = Moment().startOf("d")
-      PowerRow(today.subtract(1, "d"), today, 0)
-    }
-
     def render(P: Props) = {
       val my = P.my()
 
@@ -41,7 +36,7 @@ object GasPage {
 
         def addRow(e: ReactMouseEvent) = {
           val powers = my.powers.splitAt(i) match {
-            case (r1, r2) => (r1 :+ newRow()) ++ r2
+            case (r1, r2) => (r1 :+ PowerRow()) ++ r2
           }
           P.dispatch(my.copy(powers = powers))
         }
@@ -83,7 +78,7 @@ object GasPage {
       implicit val gasDispatch: GasRatio => Callback = P.dispatch
       implicit val gwpDispatch: GWP => Callback = P.dispatch
 
-      @inline def addRow(e: ReactMouseEvent) = P.dispatch(my.copy(powers = my.powers :+ newRow()))
+      @inline def addRow(e: ReactMouseEvent) = P.dispatch(my.copy(powers = my.powers :+ PowerRow()))
 
       <.div(
         <.h2("A. Công suất tiêu thụ khí tự nhiên"),

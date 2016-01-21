@@ -28,7 +28,26 @@ object Electric3 {
           }
         }
 
+        def addRow(e: ReactMouseEvent) = {
+          val r = my.rows.splitAt(i) match {
+            case (r1, r2) => (r1 :+ D3.Row()) ++ r2
+          }
+          P.dispatch(my.copy(rows = r))
+        }
+
+        def removeRow(e: ReactMouseEvent) = {
+          val r = my.rows.toBuffer
+          r.remove(i)
+          P.dispatch(my.copy(rows = r.toList))
+        }
+
         <.tr(<.td(i + 1),
+          <.td(
+            <.i(^.onClick ==> addRow,
+              ^.cursor.pointer, ^.cls := "material-icons", "add_circle"),
+            <.i(^.onClick ==> removeRow,
+              ^.cursor.pointer, ^.cls := "material-icons", "remove_circle")
+          ),
           tdStrInput(D3.Row.device),
           tdInput(D3.Row.kw),
           tdIntInput(D3.Row.quantity),
@@ -39,12 +58,18 @@ object Electric3 {
 
       implicit val dispatch: D3 => Callback = P.my.dispatch
 
+      @inline def addRow(e: ReactMouseEvent) = P.dispatch(my.copy(rows = my.rows :+ D3.Row()))
+
       <.div(
         table(
-          <.th("TT"), <.th("Thiết bị"), <.th("CS lắp đặt (kw)"), <.th("Số lượng"),
+          <.th("TT"), <.th(), <.th("Thiết bị"), <.th("CS lắp đặt (kw)"), <.th("Số lượng"),
           <.th("Số giờ làm việc / ngày"), <.th("Công suất tiêu thụ điện năng (kwh/day)")
         )(rows ++ List(
           <.tr(<.td(rows.length + 1),
+            <.td(
+              <.i(^.onClick ==> addRow,
+                ^.cursor.pointer, ^.cls := "material-icons", "add_circle"
+              )),
             <.td("Điện chiếu sáng + khác"),
             <.td(^.colSpan := 2, "Ước tính chiếm 0.5-1.0% chi phí điện năng sản xuất"),
             tdInput(D3.ratioOther, _.between(D3.RatioOther.range)),
