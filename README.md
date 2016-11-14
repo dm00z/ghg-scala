@@ -5,11 +5,11 @@
 1. install node.js
 2. run:
 ```
-npm install -g electron-prebuilt webpack webpack-dev-server
+npm install -g electron-prebuilt webpack webpack-dev-server bower
 npm install
+bower install
 sbt ~fastOptJS
 ```
-
 //npm start
 
 ```
@@ -26,7 +26,7 @@ browse http://localhost:8090/
 ```
 sbt fullOptJS
 webpack --config webpack.config.prod.js
-gulp electron
+gulp
 ```
 
 # TODO

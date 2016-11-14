@@ -13,6 +13,9 @@ npm-debug.log
 /cache/
 /release/
 
+app/
+.electron-cache/
+
 # OSX
 .DS_Store
 .DS_Store?
