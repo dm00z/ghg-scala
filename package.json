@@ -14,9 +14,11 @@
   },
   "devDependencies": {
     "css-loader": "^0.23.1",
+    "del": "^2.2.2",
     "file-loader": "^0.8.5",
     "gulp": "^3.9.0",
-    "gulp-electron": "0.0.10",
+    "gulp-awesome-electron": "^1.2.2",
+    "run-sequence": "^1.2.2",
     "source-map-support": "^0.4.0",
     "style-loader": "^0.13.0",
     "url-loader": "^0.5.7",

@@ -38,7 +38,7 @@ val Vdiode = "0.3.0"
 val Vmonocle = "1.2.0"
 libraryDependencies ++= Seq(
 //  "com.lihaoyi" %%% "upickle" % "0.3.6",
-  "org.singlespaced" %%% "scalajs-d3" % "0.2.0-SNAPSHOT",
+  "org.singlespaced" %%% "scalajs-d3" % "0.2.0",
   "com.github.japgolly.fork.monocle" %%% "monocle-macro" % Vmonocle,
   "io.github.widok" %%% "scala-js-momentjs" % VsMoment,
   "me.chrons" %%% "diode-react" % Vdiode,
