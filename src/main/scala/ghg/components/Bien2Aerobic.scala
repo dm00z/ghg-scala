@@ -223,15 +223,8 @@ object Bien2Aerobic {
              = CO_(2,khuBOD) + CO_(2,VSSphanHuy) + CO_(2,dnt) - CO_(2,tieuThuNit)
              = ${b2.co2_quaTrinh}%,.2f`(g/day)""".teX),
 
-        <.h5("2.7.6 Lượng khí N2O phát sinh trong quá trình nitrat và khử nitrat"),
-        <.div("Công thức tính: `N_2O = Q_v * TN_v * R_(N_2O)`".teX),
-        dataTbl(2,
-          tr(<.span("N", <.sub("2"), "O"), b2.n2o, "g/day"),
-          tr("CO", "2,N2OphatThai", b2.co2_n2o, "g/day"),
-          tr("Q", "v", b2.q_v, "m3/day"),
-          tr("TN", "v", d.direct.d.streamIn.tn, "mg/l"),
-          tr("R", "N2O", Bien2Output.r_n2o)
-        )
+        <.h5("2.7.6 Tỷ lệ phát thải CO2 trong bể hiếu khí"),
+        <.div(f"Tỷ lệ phát thải `M_(CO2)/Q: ${b2.tyLePhatThai}%,.2f`".teX)
       )
     })
   }

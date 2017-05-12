@@ -20,6 +20,7 @@ persistLauncher in Compile := true
 persistLauncher in Test := false
 
 scalaJSOptimizerOptions in fastOptJS ~= { _.withDisableOptimizer(true) }
+//scalaJSOptimizerOptions ~= { _.withDisableOptimizer(true) }
 
 // copy  javascript files to js folder,that are generated using fastOptJS/fullOptJS
 Seq(fullOptJS, fastOptJS, packageJSDependencies, packageScalaJSLauncher, packageMinifiedJSDependencies)
@@ -38,7 +39,7 @@ val Vdiode = "0.3.0"
 val Vmonocle = "1.2.0"
 libraryDependencies ++= Seq(
 //  "com.lihaoyi" %%% "upickle" % "0.3.6",
-  "org.singlespaced" %%% "scalajs-d3" % "0.2.0-SNAPSHOT",
+  "org.singlespaced" %%% "scalajs-d3" % "0.2.0",
   "com.github.japgolly.fork.monocle" %%% "monocle-macro" % Vmonocle,
   "io.github.widok" %%% "scala-js-momentjs" % VsMoment,
   "me.chrons" %%% "diode-react" % Vdiode,
@@ -50,5 +51,5 @@ dependencyOverrides ++= Set(
   "com.github.japgolly.scalacss"      %%% "core" % VsCss,
   "com.github.japgolly.scalajs-react" %%% "core" % VsReact
 )
-
-addCompilerPlugin(compilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full))
+resolvers += Resolver.sonatypeRepo("releases")
+addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full)

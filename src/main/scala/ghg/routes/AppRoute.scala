@@ -16,12 +16,12 @@ object AppRoutes {
   object Electric extends AppRoute("a. Điện", "electric", ElectricPage.apply,
     "Tính toán phát thải khí nhà kính gián tiếp",
     "Phát thải KNK từ tiêu thụ điện năng")
-  object Gas      extends AppRoute("b. Nhiên liêu", "gas", GasPage.apply,
-    "Tính toán phát thải khí nhà kính gián tiếp",
-    "Phát thải KNK từ sản xuất và vận chuyển khí tự nhiên")
-  object Material extends AppRoute("c. Nguyên Liệu", "material", MaterialPage.apply,
-    "Tính toán phát thải khí nhà kính gián tiếp",
-    "Phát thải KNK từ sử dụng hóa chất")
+  //object Gas      extends AppRoute("b. Nhiên liêu", "gas", GasPage.apply,
+  //  "Tính toán phát thải khí nhà kính gián tiếp",
+  //  "Phát thải KNK từ sản xuất và vận chuyển khí tự nhiên")
+  //object Material extends AppRoute("c. Nguyên L", "material", MaterialPage.apply,
+  //  "Tính toán phát thải khí nhà kính gián tiếp",
+  //  "Phát thải KNK từ sử dụng hóa chất")
 
   object Direct   extends AppRoute("3. Trực tiếp", "direct", DirectPage.apply, "Tính toán phát thải khí nhà kính trực tiếp")
   object KineticRelation     extends AppRoute("a. Quan hệ động học", "kinetic-relation", KRData.apply,
@@ -33,16 +33,13 @@ object AppRoutes {
   object DirectData          extends AppRoute("c. Dữ liệu", "direct-data", DirectDataPage.apply,
     "Tính toán phát thải khí nhà kính trực tiếp",
     "Thông số dòng vào")
-  object Anaerobic           extends AppRoute("d. Hệ yếm khí", "anaerobic", AnaerobicPage.apply,
-    "Tính toán phát thải khí nhà kính trực tiếp",
-    "Tính toán hệ yếm khí")
-  object Aerobic             extends AppRoute("e. Hệ hiếu khí", "aerobic", AerobicPage.apply,
+  object Aerobic             extends AppRoute("d. Hệ hiếu khí ổn định", "aerobic", AerobicPage.apply,
     "Tính toán phát thải khí nhà kính trực tiếp",
     "Tính toán hệ hiếu khí")
 
   val all: List[AppRoute] = List(
     Info,
-    Indirect, Electric, Gas, Material,
-    Direct, KineticRelation, KineticCoefficient, DirectData, Anaerobic, Aerobic
+    Indirect, Electric,
+    Direct, KineticRelation, KineticCoefficient, DirectData, Aerobic
   )
 }

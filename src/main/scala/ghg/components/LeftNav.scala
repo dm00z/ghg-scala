@@ -47,7 +47,7 @@ object LeftNav {
             Style.menuItem(if(item.subGroup == null) 0 else 1, item == P.selectedPage),
             item.name,
             P.ctrl setOnClick item
-          )
+            )
         }
       )
     }

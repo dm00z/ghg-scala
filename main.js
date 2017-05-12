@@ -87,11 +87,23 @@ const template = [
     }
 ];
 
-const menu = Menu.buildFromTemplate(template);
-Menu.setApplicationMenu(menu);
+if (process.platform === 'darwin') {
+    template[0].submenu.push(    
+        {
+            type: 'separator'
+        },
+        {
+            label: 'Quit',
+            accelerator: 'CmdOrCtrl+Q',
+            click: function() {
+                app.quit();
+            }
+        }
+    )
+}
 
 // Report crashes to our server.
-require('crash-reporter').start();
+// require('crash-reporter').start();
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is GCed.
@@ -112,6 +124,9 @@ app.on('ready', function() {
     mainWindow = new BrowserWindow();
     mainWindow.loadURL('file://' + __dirname + '/index.html');
     mainWindow.maximize();
+
+    const menu = Menu.buildFromTemplate(template);
+    Menu.setApplicationMenu(menu);
 
     // Emitted when the window is closed.
     mainWindow.on('closed', function() {

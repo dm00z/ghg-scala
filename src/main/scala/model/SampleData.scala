@@ -21,21 +21,21 @@ object SampleData {
   ))
 
   val sampleElectricD3 = D3(List(
-    D3.Row("Máy tách rác trống quay", 4, 1, 24),
-    D3.Row("Bơm bể gom", 7.1, 4, 12),
-    D3.Row("Bơm bể điều hoà", 11, 3, 12),
-    D3.Row("Máy khuấy PAC", 0.75, 2, 6),
-    D3.Row("Máy khuấy Polymer", 0.4, 4, 6),
-    D3.Row("Bơm định lượng phèn nhôm/PAC", 0.4, 2, 24),
-    D3.Row("Bơm định lượng Polymer", 0.4, 4, 24),
-    D3.Row("Bơm tuần hoàn DAF", 18, 2, 24),
-    D3.Row("Bơm bể trung gian", 15, 4, 12),
-    D3.Row("Máy thổi khí DAF", 2.2, 2, 24),
-    D3.Row("Động cơ gạt bọt", 0.4, 2, 24),
-    D3.Row("Bơm bùn bể bùn sau daf", 2.2, 2, 12),
-    D3.Row("Bơm tuần hoàn UASB", 11, 1, 2),
-    D3.Row("Bơm bùn máy ép bùn", 2.2, 1, 24),
-    D3.Row("Máy ép bùn", 3, 1, 24)
+    //D3.Row("Máy tách rác trống quay", 4, 1, 24),
+    //D3.Row("Bơm bể gom", 7.1, 4, 12),
+    //D3.Row("Bơm bể điều hoà", 11, 3, 12),
+    //D3.Row("Máy khuấy PAC", 0.75, 2, 6),
+    //D3.Row("Máy khuấy Polymer", 0.4, 4, 6),
+    //D3.Row("Bơm định lượng phèn nhôm/PAC", 0.4, 2, 24),
+    //D3.Row("Bơm định lượng Polymer", 0.4, 4, 24),
+    //D3.Row("Bơm tuần hoàn DAF", 18, 2, 24),
+    //D3.Row("Bơm bể trung gian", 15, 4, 12),
+    //D3.Row("Máy thổi khí DAF", 2.2, 2, 24),
+    //D3.Row("Động cơ gạt bọt", 0.4, 2, 24),
+    //D3.Row("Bơm bùn bể bùn sau daf", 2.2, 2, 12),
+    //D3.Row("Bơm tuần hoàn UASB", 11, 1, 2),
+    //D3.Row("Bơm bùn máy ép bùn", 2.2, 1, 24),
+    //D3.Row("Máy ép bùn", 3, 1, 24)
   ))
 
   val sampleGas = List(
@@ -79,7 +79,7 @@ object SampleData {
           WaterType.Domestic,
           "Nhà máy xử lý nước thải sinh hoạt Yên Sở",
           "Hà Nội"),
-        120000, TechMethod.Ae
+        21900, TechMethod.Ae
       ),
       IndirectData(
         ElectricData(
@@ -104,11 +104,11 @@ object SampleData {
       ),
       DirectData(
         DirectTable(
-          StreamInData(45, 34, 51),
-          PrimaryPoolData(.30, .40, 0),
-          PoolData(30, 20, 5),
+          StreamInData(136.17, 24.74, 186.33),
+          PrimaryPoolData(.56, .66, 0),
+          PoolData(10, 10, 8),
           None,
-          Some(PoolData(22, 5, 5))
+          Some(PoolData(10, 10, 8))
         ),
         KineticCoefficientData(
           KineticCoefficientData.Aerobic.yenSo,

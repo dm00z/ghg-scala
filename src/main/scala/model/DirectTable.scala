@@ -15,8 +15,8 @@ object DirectTable {
   /** Thông số bể xử lý sơ cấp
     * Tài liệu tham khảo 	Metcalf and Eddy (2002)
     *
-    * @param prBOD (%) value in rang [0,1]
-    * @param prSS (%) value in rang [0,1]
+    * @param prBOD (%) value in range [0,1]
+    * @param prSS (%) value in range [0,1]
     * @param q m3/day
     */
   @Lenses case class PrimaryPoolData(prBOD: Double, prSS: Double, q: Double)
@@ -55,4 +55,4 @@ case class DirectTable(streamIn: StreamInData, primaryPool: PrimaryPoolData,
                        decayPool: PoolData,
                        anaerobicPool: Option[DirectTable.PoolData] = None,
                        aerobicPool: Option[DirectTable.PoolData] = None,
-                       streamOut: DirectTable.StreamOutData = DirectTable.StreamOutData(22, 10, 8, 10))
+                       streamOut: DirectTable.StreamOutData = DirectTable.StreamOutData(10, 5, 2.54, 10))

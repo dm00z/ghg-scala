@@ -18,6 +18,80 @@ object DirectDataPage {
     def render(P: Props) = {
       val my = P.my
 
+      def dataTbl(tpe: String)(implicit  dataIn: StreamInData, dataOut: StreamOutData, dataPrimaryPool: PrimaryPoolData, dataPool: PoolData) = {
+        @inline implicit def dispatchIn: StreamInData => Callback = my.dispatch
+        @inline implicit def dispatchOut: StreamOutData => Callback = my.dispatch
+        @inline implicit def dispatchPriPool: PrimaryPoolData => Callback = my.dispatch
+        @inline implicit def dispatch: PoolData => Callback = pd => my.dispatch(tpe -> pd)
+
+        table(
+          <.tr(ThongSo, DonVi, GiaTri, GhiChu),
+          <.tr(td("Q", "o,v"), <.td("m3/day"),
+            <.td(P().info.power),
+            <.td("Lưu lượng dòng vào hệ thống xử lý")
+          ),
+          <.tr(td("S", "o,v"), <.td("mg/l"),
+            tdInput(StreamInData.s),
+            <.td("Nồng độ cơ chất dòng vào hệ thống")
+          ),
+          <.tr(td("TN", "v"), <.td("mg/l"),
+            tdInput(StreamInData.tn),
+            <.td()
+          ),
+          <.tr(<.td("TSS"), <.td("mg/l"),
+            tdInput(StreamInData.tss),
+            <.td()
+          ),
+          /*---------------------------------------------*/
+          <.tr(td("Pr", "bl,BOD"), <.td("*100%"),
+            tdInput(PrimaryPoolData.prBOD),
+            <.td("Tỉ lệ khử BOD5 trong bể lắng sơ cấp")
+          ),
+          <.tr(td("Pr", "bl,SS"), <.td("*100%"),
+            tdInput(PrimaryPoolData.prSS),
+            <.td("Tỉ lệ khử SS trong bể lắng sơ cấp")
+          ),
+          <.tr(td("Q", "bl"), <.td("m3/day"),
+            tdInput(PrimaryPoolData.q),
+            <.td("Lưu lượng xả bùn ở bể lắng sơ cấp")
+          ),
+          /*---------------------------------------------*/
+          <.tr(td("S", "r"), <.td("mg/l"),
+            tdInput(StreamOutData.s),
+            <.td()
+          ),
+          <.tr(td("N", "r"), <.td("mg/l"),
+            tdInput(StreamOutData.n),
+            <.td()
+          ),
+          <.tr(td("VSS", "r"), <.td("mg/l"),
+            tdInput(StreamOutData.vss),
+            <.td()
+          ),
+          /*---------------------------------------------*/
+          <.tr(<.td("Nhiệt độ"), <.td("°C"),
+            tdInput(PoolData.t),
+            <.td()
+          ),
+          <.tr(<.td("SRT"), <.td("days"),
+            tdInput(PoolData.srt),
+            <.td("Tuổi bùn")
+          ),
+          <.tr(
+            <.td("HRT"), <.td("hours"),
+            tdInput(PoolData.hrt),
+            <.td("Thời gian lưu thủy lực")
+          ),
+          if (tpe == "decay") EmptyTag else <.tr(
+            <.td("Q_ratio"), <.td(),
+            tdInput(PoolData.qxRatio),
+            <.td("Tỉ lệ `Q_(xa) / Q_v`".teX)
+          )
+        )
+
+      }
+
+
       def streamInTbl(implicit d: StreamInData) = {
         @inline implicit def dispatch: StreamInData => Callback = my.dispatch
 
@@ -45,15 +119,17 @@ object DirectDataPage {
         @inline implicit def dispatch: StreamOutData => Callback = my.dispatch
 
         table(
-          <.tr(ThongSo, DonVi, GiaTri),
           <.tr(td("S", "r"), <.td("mg/l"),
-            tdInput(StreamOutData.s)
+            tdInput(StreamOutData.s),
+            <.td()
           ),
           <.tr(td("N", "r"), <.td("mg/l"),
-            tdInput(StreamOutData.n)
+            tdInput(StreamOutData.n),
+            <.td()
           ),
           <.tr(td("VSS", "r"), <.td("mg/l"),
-            tdInput(StreamOutData.vss)
+            tdInput(StreamOutData.vss),
+            <.td()
           )
         )
       }
@@ -62,7 +138,6 @@ object DirectDataPage {
         @inline implicit def dispatch: PrimaryPoolData => Callback = my.dispatch
 
         table(
-          <.tr(ThongSo, DonVi, GiaTri, GhiChu),
           <.tr(td("Pr", "bl,BOD"), <.td("*100%"),
             tdInput(PrimaryPoolData.prBOD),
             <.td("Tỉ lệ khử BOD5 trong bể lắng sơ cấp")
@@ -82,7 +157,6 @@ object DirectDataPage {
         @inline implicit def dispatch: PoolData => Callback = pd => my.dispatch(tpe -> pd)
 
         table(
-          <.tr(ThongSo, DonVi, GiaTri, GhiChu),
           <.tr(<.td("Nhiệt độ"), <.td("°C"),
             tdInput(PoolData.t),
             <.td()
@@ -107,22 +181,17 @@ object DirectDataPage {
       val d = my()
       <.div(
         <.h3("1. Thông số dòng vào hệ thống xử lý"),
-        streamInTbl(d.streamIn),
-        <.h3("2. Thông số bể xử lý sơ cấp"),
-        <.p(<.i("Tài liệu tham khảo: Metcalf and Eddy (2002)")),
-        primaryTbl(d.primaryPool),
-        d.anaerobicPool ? (pool => Seq(
-          <.h3("3. Thông số bể yếm khí"),
-          poolTbl("ane")(pool)
-        )),
-        d.aerobicPool ? (pool => Seq(
-          <.h3("4. Thông số bể hiếu khí"),
-          poolTbl("ae")(pool)
-        )),
-        <.h3("5. Thông số bể phân hủy yếm khí"),
-        poolTbl("decay")(d.decayPool),
-        <.h3("6. Thông số dòng ra hệ thống xử lý"),
-        streamOutTbl(d.streamOut)
+          dataTbl("decay")(d.streamIn, d.streamOut, d.primaryPool, d.decayPool)
+//        streamInTbl(d.streamIn),
+//        primaryTbl(d.primaryPool),
+//        d.anaerobicPool ? (pool => Seq(
+//          poolTbl("ane")(pool)
+//        )),
+//        d.aerobicPool ? (pool => Seq(
+//          poolTbl("ae")(pool)
+//        )),
+//        poolTbl("decay")(d.decayPool),
+//        streamOutTbl(d.streamOut)
       )
     }
   }

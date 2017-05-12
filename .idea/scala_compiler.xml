@@ -1,28 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ScalaCompilerConfiguration">
-    <profile name="SBT 1" modules="root">
-      <option name="experimental" value="true" />
-      <option name="deprecationWarnings" value="true" />
-      <option name="uncheckedWarnings" value="true" />
-      <option name="featureWarnings" value="true" />
-      <option name="optimiseBytecode" value="true" />
-      <parameters>
-        <parameter value="-encoding" />
-        <parameter value="UTF-8" />
-        <parameter value="-Yopt:l:classpath" />
-        <parameter value="-Xfuture" />
-        <parameter value="-Ybackend:GenBCode" />
-        <parameter value="-Ydelambdafy:method" />
-        <parameter value="-Yinline-warnings" />
-        <parameter value="-Ywarn-dead-code" />
-        <parameter value="-Ydead-code" />
-        <parameter value="-Yclosure-elim" />
-        <parameter value="-Ywarn-unused-import" />
-        <parameter value="-Ywarn-numeric-widen" />
-      </parameters>
-    </profile>
-    <profile name="SBT 2" modules="ghg-scala">
+    <profile name="SBT 1" modules="ghg-scala">
       <option name="higherKinds" value="true" />
       <option name="existentials" value="true" />
       <option name="deprecationWarnings" value="true" />
@@ -33,20 +12,8 @@
         <parameter value="UTF-8" />
       </parameters>
       <plugins>
-        <plugin path="C:\Users\thanh\.ivy2\cache\org.scala-js\scalajs-compiler_2.11.7\jars\scalajs-compiler_2.11.7-0.6.5.jar" />
-        <plugin path="C:\Users\thanh\.ivy2\cache\org.scalamacros\paradise_2.11.7\jars\paradise_2.11.7-2.1.0.jar" />
-      </plugins>
-    </profile>
-    <profile name="SBT 3" modules="ghg">
-      <option name="deprecationWarnings" value="true" />
-      <option name="uncheckedWarnings" value="true" />
-      <option name="featureWarnings" value="true" />
-      <parameters>
-        <parameter value="-encoding" />
-        <parameter value="UTF-8" />
-      </parameters>
-      <plugins>
-        <plugin path="C:\Users\thanh\.ivy2\cache\org.scala-js\scalajs-compiler_2.11.7\jars\scalajs-compiler_2.11.7-0.6.5.jar" />
+        <plugin path="$USER_HOME$/.ivy2/cache/org.scala-js/scalajs-compiler_2.11.7/jars/scalajs-compiler_2.11.7-0.6.5.jar" />
+        <plugin path="$USER_HOME$/.ivy2/cache/org.scalamacros/paradise_2.11.7/jars/paradise_2.11.7-2.1.0.jar" />
       </plugins>
     </profile>
   </component>

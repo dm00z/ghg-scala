@@ -13,13 +13,15 @@ import scalacss.ScalaCssReact._
 object GhgPage {
   object Style extends StyleSheet.Inline { import dsl._
     val container = style(
+      fontFamily := "'Helvetica Neue',Helvetica,Arial,sans-serif",
+      fontSize(10.px),
       display.flex,
       minHeight(600.px))
     val nav = style(
       width(190.px),
       backgroundColor(lightblue)
     )
-    val content = style(
+    val content = style(      
       padding(10.px),
       borderLeft :=! "1px solid rgb(223, 220, 220)",
       flex := "1")

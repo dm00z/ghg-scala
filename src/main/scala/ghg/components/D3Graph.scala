@@ -57,15 +57,19 @@ object D3Graph {
       svgContainer.node().asInstanceOf[reactfauxdom.Element].toReact()
     }
     def render1(P: Props) = {
+      val dataExtent = js.Array(P.data.min, P.data.max)
+
       val xScale = d3.scale.linear()
         .range(js.Array(0, P.width))
 //        .range(js.Array(P.range.min, P.range.max))
-        .domain(d3.extent(P.data, (d: Double, i: Double) => i))
+        //.domain(d3.extent(P.data, (d: Double, i: Double) => i))
+        .domain(dataExtent)
 
       val yScale = d3.scale.linear()
         .range(js.Array(P.height, 0))
-        .domain(d3.extent(P.data, (d: Double, i: Double) => d))
+        //.domain(d3.extent(P.data, (d: Double, i: Double) => d))
 //      .domain(d3.extent(P.data))
+        .domain(dataExtent)
 
       val line = d3.svg.line()
         .x((d: Double, i: Int) => xScale(i))

@@ -1,6 +1,6 @@
 {
   "name": "ghg",
   "dependencies": {
-    "mathjax": "https://github.com/mathjax/MathJax.git#2.6.0-beta.2"
+    "MathJax": "~2.7.1"
   }
 }
