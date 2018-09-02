@@ -1,8 +1,9 @@
 package ghg.components
 
-import chandu0101.scalajs.react.components.materialui.{MuiTextFieldM, MuiTextField}
+import chandu0101.scalajs.react.components.materialui.{MuiTable, MuiTextField, MuiTextFieldM}
 import diode.react.ModelProxy
-import model.{GhgData, ElectricData}, ElectricData.D1
+import model.{ElectricData, GhgData}
+import ElectricData.D1
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import ghg.Utils._
@@ -24,7 +25,7 @@ object Electric1 {
           "Công suất xử lý (m3/ngày): ",
           P().info.power),
         <.div(
-          "Khoảng hệ số (kwh/m3): ", D1.Ratio.range.text, " [Ref: Cheng, 2002]"),
+          "Hệ số tiêu thụ điện năng (kwh/m3): ", D1.Ratio.range.text, " [Ref: Cheng, 2002]"),
         <.div(
           <.label("Chọn hệ số: "),
           MuiTextField(

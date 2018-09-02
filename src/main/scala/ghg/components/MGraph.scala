@@ -17,7 +17,8 @@ object MGraph {
       margins = js.Dynamic.literal(
         top = 20, bottom = 20, right = 34,
         left = if (large) 100 else 38
-      ))
+      )
+    )
 
     val charts = chartSerie.map { serie =>
       LineChart(data,

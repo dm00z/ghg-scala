@@ -1,6 +1,7 @@
 package model
 
 import model.KineticCoefficientData.Nitrate
+//import model.RungeKutta
 
 import scala.annotation.tailrec
 
@@ -24,19 +25,19 @@ case class GhgData(info: InfoData, indirect: IndirectData, direct: DirectData) {
   lazy val bien1: Bien1Output = {
     val pPool = direct.d.primaryPool
 
-    val s_ov = direct.d.streamIn.s
+    val ss_ov = direct.d.streamIn.sso
+    val pr_blSs = pPool.prSS
+    val ss_khuBl = info.power * ss_ov * pr_blSs
+
+    val s_ov = direct.d.streamIn.so
     val pr_blBod = pPool.prBOD
     val bod_khuBl = info.power * s_ov * pr_blBod
 
-    val x_ov = direct.d.streamIn.tss
-    val pr_blSs = pPool.prSS
-    val ss_khuBl = info.power * x_ov * pr_blSs
-
     Bien1Output(
-      s_ov,
+      ss_ov,
       pr_blBod,
       bod_khuBl,
-      x_ov,
+      s_ov,
       pr_blSs,
       ss_khuBl
     )
@@ -57,7 +58,7 @@ case class GhgData(info: InfoData, indirect: IndirectData, direct: DirectData) {
 
     val X = pool.srt / pool.hrtDay * ef.y * (s_v - s) / (1 + ef.kd * pool.srt)
 
-    val ss_v = b1.x_ov - b1.ss_khuBl / q_v
+    val ss_v = b1.s_ov - b1.ss_khuBl / q_v
     val vss_v = 0.85 * ss_v
 
     val X_nbV = 0 //vss_v * (1 - 60D/ 73)
@@ -103,19 +104,21 @@ case class GhgData(info: InfoData, indirect: IndirectData, direct: DirectData) {
     val pPool = direct.d.primaryPool
     val q_v = info.power - pPool.q
 
-    val s_v = direct.d.streamIn.s - b1.bod_khuBl / q_v
+    //val s_ov = b1.s_ov
+    val s_v = direct.d.streamIn.so - b1.bod_khuBl / q_v
 
-    val X = pool.srt / pool.hrtDay * ef.y_ * (s_v - s) / (1 + ef.kd_ * pool.srt)
+    val X = (pool.srt / pool.hrt) * (ef.y_ * (s_v - s)) / (1 + ef.kd_ * pool.srt)
 
-    val ss_v = b1.x_ov - b1.ss_khuBl / q_v
+    val ss_v = b1.ss_ov - b1.ss_khuBl / q_v
     val vss_v = 0.85 * ss_v
 
     val X_nbV = 0 //vss_v * (1 - 60D/ 73)
     val X_nb = ef.fd * ef.kd_ *  X * pool.srt + X_nbV * pool.srt / pool.hrtDay
 
 
-    val V = pool.hrtDay * q_v
-    val p_ssBod = X * V / pool.srt
+    //val V = pool.hrtDay * q_v
+    val V = pool.v
+    val p_XBod = X * V / pool.srt
 
     val p_ssManhTeBao = ef.fd * ef.kd_ * X * V
     val p_ssNbVss = X_nbV * V / pool.hrtDay
@@ -128,9 +131,9 @@ case class GhgData(info: InfoData, indirect: IndirectData, direct: DirectData) {
 
     def x_nit(N: Double) = srtNit / pool.hrtDay * nit.y_ * N / (1 + nit.kd_ * srtNit)
     def p_ssNit(N: Double) = x_nit(N) * V / srtNit
-    def p_ss(N: Double) =p_ssBod + p_ssNit(N) + p_ssManhTeBao + p_ssNbVss
+    def p_ss(N: Double) =p_XBod + p_ssNit(N) + p_ssManhTeBao + p_ssNbVss
     def p_ssBio(N: Double) = p_ss(N) - p_ssNbVss //=..
-    def calcN(N: Double) = direct.d.streamIn.tn - direct.d.streamOut.n - .12 * p_ssBio(N) / q_v
+    def calcN(N: Double) = direct.d.streamIn.n - direct.d.streamOut.n - .12 * p_ssBio(N) / q_v
 
     /** Tính ratio N/ TN */
     def calcNRatio(epsilon: Double, maxLoop: Int): Double = {
@@ -138,7 +141,7 @@ case class GhgData(info: InfoData, indirect: IndirectData, direct: DirectData) {
       def calc(rmin: Double, rmax: Double, loop: Int): Double = {
         val len = rmax - rmin
         val r = (rmin + rmax) / 2
-        val n0 = r * direct.d.streamIn.tn
+        val n0 = r * direct.d.streamIn.n
         val n = calcN(n0)
         if (loop >= maxLoop || Math.abs(n - n0) < epsilon) {
           r
@@ -150,10 +153,11 @@ case class GhgData(info: InfoData, indirect: IndirectData, direct: DirectData) {
       calc(0, 1, 0)
     }
 
-    val N = calcNRatio(.001, 30) * direct.d.streamIn.tn
+    val N = calcNRatio(.001, 30) * direct.d.streamIn.n
 
     val relation = direct.relation
-    val bod_ox = q_v * (s_v - s) - relation.rCO2Decay * p_ssBio(N)
+    //val bod_ox = relation.yCO2 * (q_v* (s_v - s) - relation.rCO2Decay * p_ssBio(N))
+    val bod_ox = relation.yCO2 * (q_v* (s_v - s) - relation.rCO2Decay * p_XBod)
     val bod_ox_dnt = relation.rBODDnt * N * q_v
     val bod_khuThuc = if (bod_ox < bod_ox_dnt) bod_ox else bod_ox - bod_ox_dnt
     val co2_khu_bod = relation.yCO2 * bod_khuThuc
@@ -162,13 +166,13 @@ case class GhgData(info: InfoData, indirect: IndirectData, direct: DirectData) {
     val co2_dnt =  relation.yCO2Dnt * N * q_v
     val co2_tieuThuNit = relation.rCO2Nit * N * q_v
 
-    val co2_quaTrinhHieuKhi = co2_khu_bod + co2_phanhuy + co2_dnt - co2_tieuThuNit
-    val n2o = q_v * direct.d.streamIn.tn * Bien2Output.r_n2o
+    val co2_quaTrinhHieuKhi = bod_ox + co2_phanhuy + co2_dnt - co2_tieuThuNit
+    val n2o = q_v * direct.d.streamIn.n * Bien2Output.r_n2o
     val co2_n2o = 296 * n2o //fixme hardcode
 
     val tyLePhatThai = co2_quaTrinhHieuKhi / q_v
 
-    Bien2Output(s, q_v, s_v, X, ss_v, vss_v, X_nbV, X_nb, V, p_ssBod, p_ssManhTeBao, p_ssNbVss,
+    Bien2Output(s, q_v, s_v, X, ss_v, vss_v, X_nbV, X_nb, V, p_XBod, p_ssManhTeBao, p_ssNbVss,
       N, calcN(N), m_nit(N), srtNit, x_nit(N), p_ssNit(N), p_ssBio(N), p_ss(N),
       bod_ox, bod_ox_dnt, bod_khuThuc, co2_khu_bod, vss_phanhuy, co2_phanhuy, co2_dnt, co2_tieuThuNit,
       co2_quaTrinhHieuKhi, n2o, co2_n2o, 0, tyLePhatThai)
@@ -236,14 +240,15 @@ case class GhgData(info: InfoData, indirect: IndirectData, direct: DirectData) {
   lazy val bien4: Bien4Output = {
     val b2 = bien2Ae
     val relation = direct.relation
+    val ef = direct.coef.aerobic
 
-    val bun_phanHuy = 0.6 * b2.p_ssBod
+    val bun_phanHuy = 0.6 * b2.p_XBod
     val co2_phatThai = relation.yCO2DrDecay * bun_phanHuy
     val ch4_phatThai = relation.yCH4DrDecay * bun_phanHuy
 
-    val Pr_ch4_roRi = 0.05
+
     val ch4_phanHuyThuGom = ch4_phatThai
-    val ch4_phanHuyRoRi = Pr_ch4_roRi * ch4_phanHuyThuGom
+    val ch4_phanHuyRoRi = ch4_phanHuyThuGom
 
     val y_ch4dot = relation.yCH4Combusion
     val ch4_phanHuyThuHoi = ch4_phanHuyThuGom - ch4_phanHuyRoRi
@@ -251,8 +256,27 @@ case class GhgData(info: InfoData, indirect: IndirectData, direct: DirectData) {
 
     val Pco2_bunPhanHuy = co2_phatThai + co2_phanHuyMetan
 
+    //-------------NEW
+    val P_bunSinhHoc = b2.p_XBio * 0.8
+
+    val M_co2PhanHuy = P_bunSinhHoc * relation.yCO2DrDecay
+
+    val M_ch4PhanHuy = P_bunSinhHoc * relation.yCH4DrDecay
+
+    val M_co2tdPhanHuyPhongKhong = M_co2PhanHuy + M_ch4PhanHuy * 25
+
+    val Pr_ch4_roRi = 0.05
+    val M_ch4PhanHuyRoRi = Pr_ch4_roRi * M_ch4PhanHuy
+
+    val M_ch4PhanHuyThuHoi = M_ch4PhanHuy - M_ch4PhanHuyRoRi
+
+    val M_co2tdPhanHuyMetan = relation.yCH4Combusion * M_ch4PhanHuyThuHoi + 25 * M_ch4PhanHuyRoRi
+
+    val M_co2tdPhanHuyDot = M_co2PhanHuy + M_co2tdPhanHuyMetan
+
     Bien4Output(bun_phanHuy, co2_phatThai, ch4_phatThai, ch4_phanHuyRoRi, Pr_ch4_roRi, ch4_phanHuyThuGom, y_ch4dot,
-    ch4_phanHuyThuHoi, co2_phanHuyMetan, Pco2_bunPhanHuy)
+    ch4_phanHuyThuHoi, co2_phanHuyMetan, Pco2_bunPhanHuy, P_bunSinhHoc, M_co2PhanHuy, M_ch4PhanHuy, M_co2tdPhanHuyPhongKhong,
+    M_ch4PhanHuyRoRi, M_ch4PhanHuyThuHoi, M_co2tdPhanHuyMetan, M_co2tdPhanHuyDot)
   }
 
   lazy val bien5: Bien5Output = {
@@ -262,7 +286,20 @@ case class GhgData(info: InfoData, indirect: IndirectData, direct: DirectData) {
 
     val co2_tongPhatThai = b2.co2_quaTrinh + b3.m_CO2BODra + b4.Pco2_bunPhanHuy
 
-    Bien5Output(co2_tongPhatThai)
+    val N_dongra = direct.d.streamOut.n * direct.d.primaryPool.qv
+    val EF_dongra = 0.01
+    val phatThaiGianTiep_n2o = N_dongra * EF_dongra * 44f/28f
+
+    val pop = math.round(info.power/0.12)
+    val T_hlxlnt = 0.9
+    val EF_hlxlnt = 3.2/365
+    val F_IND_COM = 1.25
+    val phatThaiTrucTiep_n2o = pop * T_hlxlnt * EF_hlxlnt * F_IND_COM
+
+    val tongPhatThai_n2o = phatThaiGianTiep_n2o + phatThaiTrucTiep_n2o
+    val phatThai_co2td_n2o = tongPhatThai_n2o * 296
+
+    Bien5Output(co2_tongPhatThai, N_dongra, EF_dongra, phatThaiGianTiep_n2o, pop, T_hlxlnt, EF_hlxlnt, F_IND_COM, phatThaiTrucTiep_n2o, tongPhatThai_n2o, phatThai_co2td_n2o)
   }
 
   lazy val bien6: Bien6Output = {
@@ -284,12 +321,94 @@ case class GhgData(info: InfoData, indirect: IndirectData, direct: DirectData) {
     Bien6Output(n_dongRa, ef_dongRa, n2o_phatThaiGianTiep, soDanSo_p, ef_htxlnt, cf, n2o_phatThaiTrucTiep,
       n2o_tongPhatThai, co2_tuongDuongNito)
   }
+
+  lazy val retrieveResult: retrieveResultOutput = {
+    val b2 = bien2Ae
+    val b4 = bien4
+    val b3 = bien3
+    val b5 = bien5
+
+    val elecPower = ghgElectric // to be changed
+
+    val M_co2_quaTrinh = b2.co2_quaTrinh
+    val M_co2tdPhanHuyDot = b4.M_co2tdPhanHuyDot
+    val M_co2BODra = b3.m_CO2BODra
+    val phatThai_co2td_n2o = b5.phatThai_co2td_n2o
+
+    val sumKNKByElecPower = elecPower
+    val sumKNKByWasteDisposal = M_co2_quaTrinh + M_co2tdPhanHuyDot + M_co2BODra + phatThai_co2td_n2o
+
+    val tyle_co2_quaTrinh = M_co2_quaTrinh/sumKNKByWasteDisposal
+    val tyle_co2tdPhanHuyDot = M_co2tdPhanHuyDot/sumKNKByWasteDisposal
+    val tyle_co2BODra = M_co2BODra/sumKNKByWasteDisposal
+    val tyle_phatThai_co2td_n2o = phatThai_co2td_n2o/sumKNKByWasteDisposal
+
+    val sumKNKAll = sumKNKByElecPower + sumKNKByWasteDisposal
+    val tyle_elecPower = sumKNKByElecPower/sumKNKAll
+    val tyle_wasteDisposal = sumKNKByWasteDisposal/sumKNKAll
+
+    retrieveResultOutput(elecPower, M_co2_quaTrinh, M_co2tdPhanHuyDot, M_co2BODra, phatThai_co2td_n2o, sumKNKByElecPower,
+      sumKNKByWasteDisposal, tyle_co2_quaTrinh, tyle_co2tdPhanHuyDot, tyle_co2BODra, tyle_phatThai_co2td_n2o, sumKNKAll,
+      tyle_elecPower, tyle_wasteDisposal)
+  }
+
+  lazy val releaseResult = {
+    val b2 = bien2Ae
+    val b3 = bien3
+    val b4 = bien4
+    val b5 = bien5
+
+
+    val elecPower = ghgElectric // to be changed
+
+    val M_co2_quaTrinh = b2.co2_quaTrinh
+    val M_co2tdPhanHuyPhongKhong = b4.M_co2tdPhanHuyPhongKhong
+    val M_co2BODra = b3.m_CO2BODra
+    val phatThai_co2td_n2o = b5.phatThai_co2td_n2o
+
+    val sumKNKByElecPower = elecPower
+    val sumKNKByWasteDisposal = M_co2_quaTrinh + M_co2tdPhanHuyPhongKhong + M_co2BODra + phatThai_co2td_n2o
+
+    val tyle_co2_quaTrinh = M_co2_quaTrinh/sumKNKByWasteDisposal
+    val tyle_co2tdPhanHuyPhongKhong = M_co2tdPhanHuyPhongKhong/sumKNKByWasteDisposal
+    val tyle_co2BODra = M_co2BODra/sumKNKByWasteDisposal
+    val tyle_phatThai_co2td_n2o = phatThai_co2td_n2o/sumKNKByWasteDisposal
+
+    val sumKNKAll = sumKNKByElecPower + sumKNKByWasteDisposal
+    val tyle_elecPower = sumKNKByElecPower/sumKNKAll
+    val tyle_wasteDisposal = sumKNKByWasteDisposal/sumKNKAll
+
+    releaseResultOutput(elecPower, M_co2_quaTrinh, M_co2tdPhanHuyPhongKhong, M_co2BODra, phatThai_co2td_n2o, sumKNKByElecPower,
+      sumKNKByWasteDisposal, tyle_co2_quaTrinh, tyle_co2tdPhanHuyPhongKhong, tyle_co2BODra, tyle_phatThai_co2td_n2o, sumKNKAll,
+      tyle_elecPower, tyle_wasteDisposal)
+  }
+
+
+//  lazy val bien2un: Bien2UnstablOutput = {
+//    val pPool = direct.d.primaryPool
+//
+//    //val solver = new RungeKutta("RK4", AdjustParameters(0, 2, .2))
+//    //val S = solver.solve(0, 2, (x: Double, y: Double) => 60/8-y/8-(2.18*x*y)/(4763*(60+y)))
+//
+//    def rk4(max: Double, f: (Double, Double) => Double): List[Double] = {
+//      def calc(h: Double,x: Double, y: Double, func: (Double, Double) => Double): Double = {
+//        val dy1 = h * func(x, y)
+//        val dy2 = h * func(x + h/2, y + dy1/2)
+//        val dy3 = h * func(x + h/2, y + dy2/2)
+//        val dy4 = h * func(x + h, y + dy3)
+//
+//        y + ((dy1 + 2 * dy2 + 2 * dy3 + dy4) / 6)
+//      }
+//
+//
+//    }
+//  }
 }
 
-case class Bien1Output(s_ov: Double,
+case class Bien1Output(ss_ov: Double,
                        pr_blBod: Double,
                        bod_khuBl: Double,
-                       x_ov: Double,
+                       s_ov: Double,
                        pr_blSs: Double,
                        ss_khuBl: Double)
 
@@ -298,38 +417,38 @@ object Bien2Output {
 }
 
 final case class Bien2Output(s: Double,
-                       q_v: Double,
-                       s_v: Double,
-                       X: Double,
-                       ss_v: Double,
-                       vss_v: Double,
-                       X_nbV: Double = 0,
-                       X_nb: Double,
-                       V: Double,
-                       p_ssBod: Double,
-                       p_ssManhTeBao: Double,
-                       p_ssNbVss: Double,
-                       N: Double,
-                       Ncalc: Double,
-                       m_nit: Double,
-                       srtNit: Double,
-                       x_nit: Double,
-                       p_ssNit: Double,
-                       p_ssBio: Double,
-                       p_ss: Double,
-                       bod_ox: Double,
-                       bod_ox_dnt: Double,
-                       bod_khuThuc: Double,
-                       co2_khu_bod: Double,
-                       vss_phanhuy: Double,
-                       co2_phanhuy: Double,
-                       co2_dnt: Double,
-                       co2_tieuThuNit: Double,
-                       co2_quaTrinh: Double, //qua trinh hieu / yem khi
-                       n2o: Double,
-                       co2_n2o: Double,
-                       ch4_beYemKhi: Double = 0,
-                       tyLePhatThai: Double
+                             q_v: Double,
+                             s_v: Double,
+                             X: Double,
+                             ss_v: Double,
+                             vss_v: Double,
+                             X_nbV: Double = 0,
+                             X_nb: Double,
+                             V: Double,
+                             p_XBod: Double,
+                             p_ssManhTeBao: Double,
+                             p_ssNbVss: Double,
+                             N: Double,
+                             Ncalc: Double,
+                             m_nit: Double,
+                             srtNit: Double,
+                             x_nit: Double,
+                             p_ssNit: Double,
+                             p_XBio: Double,
+                             p_ss: Double,
+                             bod_ox: Double,
+                             bod_ox_dnt: Double,
+                             bod_khuThuc: Double,
+                             co2_khu_bod: Double,
+                             vss_phanhuy: Double,
+                             co2_phanhuy: Double,
+                             co2_dnt: Double,
+                             co2_tieuThuNit: Double,
+                             co2_quaTrinh: Double, //qua trinh hieu / yem khi
+                             n2o: Double,
+                             co2_n2o: Double,
+                             ch4_beYemKhi: Double = 0,
+                             tyLePhatThai: Double
                       ) {
   @inline def bod_khu_an = bod_ox
 }
@@ -364,9 +483,28 @@ case class Bien4Output(bun_phanHuy: Double,
                       y_ch4dot: Double,
                       ch4_phanHuyThuHoi: Double,
                       co2_phanHuyMetan: Double,
-                      Pco2_bunPhanHuy: Double
+                      Pco2_bunPhanHuy: Double,
+                      P_bunSinhHoc: Double,
+                       M_co2PhanHuy: Double,
+                       M_ch4PhanHuy: Double,
+                       M_co2tdPhanHuyPhongKhong: Double,
+                       M_ch4PhanHuyRoRi: Double,
+                       M_ch4PhanHuyThuHoi: Double,
+                       M_co2tdPhanHuyMetan: Double,
+                       M_co2tdPhanHuyDot: Double
                       )
-case class Bien5Output(co2_tongPhatThai: Double)
+case class Bien5Output(co2_tongPhatThai: Double,
+                       N_dongra: Double,
+                       EF_dongra: Double,
+                       phatThaiGianTiep_n2o: Double,
+                       pop: Double,
+                       T_hlxlnt: Double,
+                       EF_hlxlnt: Double,
+                       F_IND_COM: Double,
+                       phatThaiTrucTiep_n2o: Double,
+                       tongPhatThai_n2o: Double,
+                       phatThai_co2td_n2o: Double
+                      )
 
 case class Bien6Output(n_dongRa: Double,
                       ef_dongRa: Double,
@@ -377,3 +515,47 @@ case class Bien6Output(n_dongRa: Double,
                       n2o_phatThaiTrucTiep: Double,
                       n2o_tongPhatThai: Double,
                       co2_tuongDuongNito: Double)
+
+case class Bien2UnstablOutput(s_v: Double,
+                             x_v: Double,
+                             hrt: Double,
+                             srt: Double,
+                             y: Double,
+                             micro_m: Double,
+                             k_s: Double,
+                             k_d: Double,
+                             S: Double,
+                             X: Double,
+                             t: Double)
+
+case class retrieveResultOutput(elecPower: Double,
+                                M_co2_quaTrinh: Double,
+                                M_co2tdPhanHuyDot: Double,
+                                M_co2BODra: Double,
+                                phatThai_co2td_n2o: Double,
+                                sumKNKByElecPower: Double,
+                                sumKNKByWasteDisposal: Double,
+                                tyle_co2_quaTrinh: Double,
+                                tyle_co2tdPhanHuyDot: Double,
+                                tyle_co2BODra: Double,
+                                tyle_phatThai_co2td_n2o: Double,
+                                sumKNKAll: Double,
+                                tyle_elecPower: Double,
+                                tyle_wasteDisposal: Double
+                               )
+
+case class releaseResultOutput(elecPower: Double,
+                                M_co2_quaTrinh: Double,
+                                M_co2tdPhanHuyPhongKhong: Double,
+                                M_co2BODra: Double,
+                                phatThai_co2td_n2o: Double,
+                                sumKNKByElecPower: Double,
+                                sumKNKByWasteDisposal: Double,
+                                tyle_co2_quaTrinh: Double,
+                                tyle_co2tdPhanHuyPhongKhong: Double,
+                                tyle_co2BODra: Double,
+                                tyle_phatThai_co2td_n2o: Double,
+                                sumKNKAll: Double,
+                                tyle_elecPower: Double,
+                                tyle_wasteDisposal: Double
+                               )

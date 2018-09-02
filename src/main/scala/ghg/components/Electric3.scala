@@ -72,16 +72,17 @@ object Electric3 {
               )),
             <.td("Điện chiếu sáng + khác"),
             <.td(^.colSpan := 2, "Ước tính chiếm 0.5-1.0% chi phí điện năng sản xuất"),
-            tdInput(D3.ratioOther, _.between(D3.RatioOther.range)),
+            tdInput(D3.ratioOther),
+            //tdInput(D3.ratioOther, _.between(D3.RatioOther.range)),
             <.td(my.powerOther.toFixed(3))
           ),
           <.tr(<.td(),
-            <.td(^.colSpan := 4, "Công suất tiêu thụ / ngày"),
+            <.td(^.colSpan := 4, "Công suất tiêu thụ / ngày"), <.td(),
             <.td(my.powerTheory.toFixed(3))
           ),
           <.tr(<.td(),
             <.td(^.colSpan := 3, "Công suất tiêu thụ thực tế / ngày"),
-            tdInput(D3.etieuThu, _.between(D3.EtieuThu.range)),
+            tdInput(D3.etieuThu, _.between(D3.EtieuThu.range)), <.td(),
             <.td(my.power.toFixed(3))
           )
         ): _*)

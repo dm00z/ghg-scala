@@ -11,13 +11,13 @@ object KineticCoefficientData {
     val Ks = RNorm(R(25, 100), 60)
     val Kd = RNorm(R(.02, .1), .1)
 
-    def default = Aerobic(KT(4, 1.06), KT(60, 1), KT(Kd.norm, 1.04), KT(Y.norm, 1))
-    def yenSo = Aerobic(KT(4, 1.06), KT(60, 1), KT(Kd.norm, 1.04), KT(.6, 1), t = 10)
+    def default = Aerobic(KT(5, 1.07), KT(60, 1), KT(Kd.norm, 1.04), KT(Y.norm, 1))
+    def yenSo = Aerobic(KT(2, 1), KT(60, 1), KT(Kd.norm, 1.1), KT(.6, 1), t = 22)
   }
   @Lenses final case class Aerobic(m: KT, ks: KT, kd: KT, y: KT, fd: Double = .1, t: Double = 25) {
-    @inline def k(t: Double) = m(t) / y(t)
+    @inline def k(t: Double) = m(t) //k
     @inline def k_ = k(t)
-    @inline def m_ = m(t)
+    //@inline def m_ = m(t)
     @inline def ks_ = ks(t)
     @inline def kd_ = kd(t)
     @inline def y_ = y(t)
@@ -26,7 +26,7 @@ object KineticCoefficientData {
   object Nitrate {
     val M = RNorm(R(.4, 2), .45)
     val Y = RNorm(R(.1, .3), .12)
-    val Kd = RNorm(R(.03, .06), .04)
+    val Kd = RNorm(R(.03, .06), .08)
 
     val Kdo = 1.3
     val DO = 2
@@ -37,7 +37,7 @@ object KineticCoefficientData {
 
     val default = Nitrate(MT(M.norm, 15), KT(Y.norm, 1), KT(Kd.norm, 1.04))
   }
-  @Lenses case class Nitrate(m: Nitrate.MT, y: KT, kd: KT, t: Double = 10) {
+  @Lenses case class Nitrate(m: Nitrate.MT, y: KT, kd: KT, t: Double = 22) {
     def kn(t: Double) = Math.pow(10, .05*t - 1.158) //fixme why not (t - tNorm)?
     def k(t: Double) = m(t) / y(t)
     @inline def k_ = k(t)

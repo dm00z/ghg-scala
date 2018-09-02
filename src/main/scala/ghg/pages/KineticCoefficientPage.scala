@@ -32,26 +32,31 @@ object KineticCoefficientPage {
             td2("Đơn vị"),
             <.td(^.colSpan := 2, <.b("Giá trị tiêu chuẩn ở 20°C")),
             td2("Hệ số nhiệt độ θ"),
-            td2("Giá trị ở nhiện độ t°C")
+            td2("Giá trị")
           ),
-          <.tr(Khoang, GiaTri),
-          <.tr(<.td(Muy), Ngay1, <.td(),
+          <.tr(),
+          <.tr(<.td("k"),
+            <.td(),
+            <.td(),
             tdInput(Aerobic.m ^|-> KT.vNorm),
             tdInput(Aerobic.m ^|-> KT.coeff),
-            <.td(d.m_.toFixed(3))),
+            <.td(d.k_.toFixed(3))),
           <.tr(<.td("Y"), <.td("mg/mg"), <.td(Aerobic.Y.range.text),
             tdInput(Aerobic.y ^|-> KT.vNorm, _.between(Aerobic.Y.range)),
             tdInput(Aerobic.y ^|-> KT.coeff),
             <.td(d.y_.toFixed(3))),
           <.tr(td("K", "S"), <.td("mg/l"), <.td(Aerobic.Ks.range.text),
             tdInput(Aerobic.ks ^|-> KT.vNorm, _.between(Aerobic.Ks.range)),
-            <.td(), <.td(d.ks_.toFixed(3))
+            <.td(),
+            <.td(d.ks_.toFixed(3))
           ),
           <.tr(td("k", "d"), Ngay1, <.td(Aerobic.Kd.range.text),
             tdInput(Aerobic.kd ^|-> KT.vNorm, _.between(Aerobic.Kd.range)),
             tdInput(Aerobic.kd ^|-> KT.coeff),
             <.td(d.kd_.toFixed(3))),
-          <.tr(td("f", "d"), <.td(), <.td(), <.td(), <.td(), tdInput(Aerobic.fd))
+          <.tr(td("f", "d"),
+            <.td(), <.td(), <.td(),
+            <.td(), tdInput(Aerobic.fd))
         )
 
         Seq(<.div("Nhiệt độ t°C: ", input(Aerobic.t)), tbl)
@@ -65,9 +70,9 @@ object KineticCoefficientPage {
             td2("Thông số"),
             td2("Đơn vị"),
             <.td(^.colSpan := 2, <.b("Giá trị tiêu chuẩn ở 20°C")),
-            td2("Giá trị ở nhiện độ t°C")
+            td2("Giá trị")
           ),
-          <.tr(Khoang, GiaTri),
+          <.tr(),
           <.tr(td("μ", "m,nit"), Ngay1,
             <.td(Nitrate.M.range.text),
             tdInput(Nitrate.m ^|-> MT.vNorm, _.between(Nitrate.M.range)),
@@ -96,8 +101,8 @@ object KineticCoefficientPage {
               td2("Thông số"),
               td2("Đơn vị"),
               <.td(^.colSpan := 2, <.b("Giá trị tiêu chuẩn ở 20°C")), //25
-              td2("Giá trị ở nhiện độ t_an °C"),
-              td2("Giá trị ở nhiện độ t_dr °C")
+              td2("Giá trị ở nhiệt độ t_an °C"),
+              td2("Giá trị ở nhiệt độ t_dr °C")
             ),
             <.tr(Khoang, GiaTri),
             <.tr(<.td("μ", <.sub("m,an"), ", μ", <.sub("m,dr")), Ngay1,
@@ -124,7 +129,7 @@ object KineticCoefficientPage {
         )
       }
 
-      def aerobicGraph(d: Aerobic) = MGraph(
+      def aerobicGraph(data: Aerobic) = MGraph(
         <.div(^.marginTop := 10.px,
           <.span(^.color := "green", ^.marginLeft := 140.px, "μ", <.sub("m")),
           <.span(^.color := "blue", ^.marginLeft := 260.px, "k", <.sub("d")),
@@ -132,9 +137,9 @@ object KineticCoefficientPage {
         ),
         (20 to 40).map(t => js.Dynamic.literal(
           "t" -> t,
-          "m" -> d.m(t),
-          "kd" -> d.kd(t),
-          "k" -> d.k(t)
+          "m" -> data.m(t),
+          "kd" -> data.kd(t),
+          "k" -> data.k(t)
         )).toJsArray, false,
         ChartSerie("m", "green"),
         ChartSerie("kd", "blue"),
@@ -173,14 +178,14 @@ object KineticCoefficientPage {
         else Seq[TagMod](
           <.h3("Quá trình hiếu khí"),
           aerobicTbl(p.aerobic),
-          aerobicGraph(p.aerobic),
+          //aerobicGraph(p.aerobic),
           <.h3("Quá trình nitrat và khử nitrat"),
-          nitratTbl(p.nitrate),
-          nitratGraph(p.nitrate)
-        ),
-        <.h3("Quá trình yếm khí"),
-        anaerobicTbl(p.anaerobic),
-        anaerobicGraph(p.anaerobic)
+          nitratTbl(p.nitrate)
+          //nitratGraph(p.nitrate)
+        )
+//        <.h3("Quá trình yếm khí"),
+//        anaerobicTbl(p.anaerobic),
+//        anaerobicGraph(p.anaerobic)
       )
     }
   }

@@ -7,10 +7,10 @@ object DirectTable {
   /** Thông số dòng vào hệ thống xử lý
     *
     * @note q: Double = 8000 (m3/day) is taken from InfoData
-    * @param s mg/l
+    * @param so mg/l
     * @param tn mg/l
     * @param tss mg/l */
-  @Lenses case class StreamInData(s: Double, tn: Double, tss: Double)
+  @Lenses case class StreamInData(so: Double, tn: Double, tss: Double, sso: Double, s: Double, x: Double, n: Double, xt: Double)
 
   /** Thông số bể xử lý sơ cấp
     * Tài liệu tham khảo 	Metcalf and Eddy (2002)
@@ -19,7 +19,9 @@ object DirectTable {
     * @param prSS (%) value in range [0,1]
     * @param q m3/day
     */
-  @Lenses case class PrimaryPoolData(prBOD: Double, prSS: Double, q: Double)
+  @Lenses case class PrimaryPoolData(prBOD: Double, prSS: Double, q: Double, qv: Double, qx: Double, ssv: Double) {
+    //val qv = StreamInData.so - PrimaryPoolData.q
+  }
 
   /** Thông số bể yếm khí hoặc hiếu khí
     *
@@ -31,8 +33,9 @@ object DirectTable {
     *       v and hrt have a relation (v = hrt * q), we must provide only one value.
     *       But for simply, hrt is input & v is calculated based on hrt
     */
-  @Lenses case class PoolData(t: Double, srt: Double, hrt: Double, qxRatio: Double = .2) {
+  @Lenses case class PoolData(t: Double, srt: Double, hrt: Double, v: Double, qxRatio: Double = .2) {
     val hrtDay = hrt / 24
+
     /** m3, = hrtDay * q */
 //    def v: Double
   }
@@ -43,7 +46,7 @@ object DirectTable {
     * @param n mg/l
     * @param vss mg/l
     * @param s (mg/l) là thông số dòng ra, là giá trị được tính toán nhưng hiện tại cho input :D. */
-  @Lenses case class StreamOutData(t: Double, s: Double, n: Double, vss: Double)
+  @Lenses case class StreamOutData(t: Double, s: Double, n: Double, vss: Double, ss: Double, x: Double)
 }
 
 import DirectTable._
@@ -55,4 +58,4 @@ case class DirectTable(streamIn: StreamInData, primaryPool: PrimaryPoolData,
                        decayPool: PoolData,
                        anaerobicPool: Option[DirectTable.PoolData] = None,
                        aerobicPool: Option[DirectTable.PoolData] = None,
-                       streamOut: DirectTable.StreamOutData = DirectTable.StreamOutData(10, 5, 2.54, 10))
+                       streamOut: DirectTable.StreamOutData = DirectTable.StreamOutData(10, 4.54, 10, 10, 30, 25.5))

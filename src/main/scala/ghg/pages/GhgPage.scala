@@ -2,7 +2,7 @@ package ghg.pages
 
 import diode.react.ModelProxy
 import ghg.components.{AppHeader, LeftNav}
-import ghg.routes.{AppRoutes, AppRoute}
+import ghg.routes.{AppRoute, AppRoutes}
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
@@ -13,17 +13,33 @@ import scalacss.ScalaCssReact._
 object GhgPage {
   object Style extends StyleSheet.Inline { import dsl._
     val container = style(
-      fontFamily := "'Helvetica Neue',Helvetica,Arial,sans-serif",
-      fontSize(10.px),
+      fontFamily := "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif",
+      fontSize(14.px),
       display.flex,
-      minHeight(600.px))
-    val nav = style(
-      width(190.px),
-      backgroundColor(lightblue)
+      minHeight(94.vh),
+      backgroundColor(c"#e4e5e6"),
+      height :=! "100%"
     )
-    val content = style(      
-      padding(10.px),
-      borderLeft :=! "1px solid rgb(223, 220, 220)",
+
+    val nav = style(
+      display.flex,
+      position.fixed,
+      flexDirection.column,
+      padding.`0`,
+      width(300.px),
+      backgroundColor(c"#263238"),
+      color(c"#fff"),
+      height :=! "100%"
+
+    )
+
+    val content = style(
+      marginLeft(300.px),
+      paddingLeft(10.px),
+      paddingRight(10.px),
+      paddingTop(5.px),
+      paddingBottom(5.px),
+      border :=! "1px solid rgb(223, 220, 220)",
       flex := "1")
   }
 

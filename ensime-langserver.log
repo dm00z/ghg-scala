@@ -1,0 +1,13 @@
+[2017-05-23 18:26:39,097] INFO org.github.dragos.vscode.Main$ - Starting server in /Users/nguyenlehung/Documents/Projects/ghg-scala
+[2017-05-23 18:26:39,097] INFO org.github.dragos.vscode.Main$ - Starting server in /Users/nguyenlehung/Documents/Projects/ghg-scala
+[2017-05-23 18:26:39,106] INFO org.github.dragos.vscode.Main$ - Classpath: /Users/nguyenlehung/.vscode/extensions/dragos.scala-lsp-0.1.4/coursier
+[2017-05-23 18:26:39,106] INFO org.github.dragos.vscode.Main$ - Classpath: /Users/nguyenlehung/.vscode/extensions/dragos.scala-lsp-0.1.4/coursier
+[2017-05-23 18:26:39,126] INFO langserver.core.MessageReader - End of stream, terminating thread
+[2017-05-23 18:26:39,126] INFO langserver.core.MessageReader - End of stream, terminating thread
+[2017-05-23 18:26:39,412] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
+[2017-05-23 18:26:39,426] INFO org.github.dragos.vscode.EnsimeLanguageServer - Shutdown request
+[2017-05-23 18:26:39,426] INFO org.github.dragos.vscode.EnsimeLanguageServer - Shutdown request
+[2017-05-23 18:26:39,426] INFO org.github.dragos.vscode.EnsimeLanguageServer - Shutting down actor system.
+[2017-05-23 18:26:39,426] INFO org.github.dragos.vscode.EnsimeLanguageServer - Shutting down actor system.
+[2017-05-23 18:26:39,448] INFO org.github.dragos.vscode.EnsimeLanguageServer - Actor system down.
+[2017-05-23 18:26:39,448] INFO org.github.dragos.vscode.EnsimeLanguageServer - Actor system down.

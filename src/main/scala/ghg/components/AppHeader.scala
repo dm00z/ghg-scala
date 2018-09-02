@@ -21,9 +21,12 @@ object AppHeader {
     def render(P: Props) = {
       val f = P.d().info.f
       <.div(
-        if(P.readonly) ^.backgroundColor := "lightcyan" else EmptyTag,
-        ^.marginTop := "-30px",
-        <.h1("Tính toán phát thải khí nhà kính từ hệ thống xử lý nước thải"),
+        <.div(
+          <.h1("Mô hình MTH, tính toán phát thải khí nhà kính từ hệ thống xử lý nước thải")
+        ),
+        if(P.readonly) ^.backgroundColor := "#20a8d8" else EmptyTag,
+        ^.padding := "20px", ^.borderRadius := "5px", ^.width := "82%",
+
         if (P.readonly) EmptyTag else <.div(
           <.label("Tải dữ liệu: "),
           <.select(
@@ -39,35 +42,38 @@ object AppHeader {
             }
           )
         ),
-        <.div(<.label("Loại nước thải: "),
-          if(P.readonly) f.tpe.toString
-          else <.select(
-            WaterType.values.map { tpe =>
-              if (tpe == f.tpe)
-                <.option(tpe.toString, ^.value := tpe.id, ^.selected := "selected")
-              else
-                <.option(tpe.toString, ^.value := tpe.id)
-            },
-            ^.onChange ==> { e: ReactEventI =>
-              val fNew = f.copy(tpe = WaterType(e.target.value.toInt))
-              val relationNew = fNew.tpe match {
-                case WaterType.Domestic => KineticRelationData.dataDomestic
-                case WaterType.Industrial => KineticRelationData.dataIndustrial
-              }
-              val d = P.d()
-              val dNew = d.copy(
-                info = d.info.copy(f = fNew),
-                direct = d.direct.copy(relation = relationNew)
-              )
-              P.d.dispatch(dNew)
-            }
-          )),
+//        <.div(<.label("Loại nước thải: "),
+//          if(P.readonly) f.tpe.toString
+//          else <.select(
+//            WaterType.values.map { tpe =>
+//              if (tpe == f.tpe)
+//                <.option(tpe.toString, ^.value := tpe.id, ^.selected := "selected")
+//              else
+//                <.option(tpe.toString, ^.value := tpe.id)
+//            },
+//            ^.onChange ==> { e: ReactEventI =>
+//              val fNew = f.copy(tpe = WaterType(e.target.value.toInt))
+//              val relationNew = fNew.tpe match {
+//                case WaterType.Domestic => KineticRelationData.dataDomestic
+//                case WaterType.Industrial => KineticRelationData.dataIndustrial
+//              }
+//              val d = P.d()
+//              val dNew = d.copy(
+//                info = d.info.Nghiên cứu sinhcopy(f = fNew),
+//                direct = d.direct.copy(relation = relationNew)
+//              )
+//              P.d.dispatch(dNew)
+//            }
+//          )
+//        ),
         <.div(<.label("Tên nhà máy: "),
           if(P.readonly) f.name
-          else MuiTextField(value = f.name, style = txtStyle, onChange = { e: ReactEventI => P.d.dispatch(f.copy(name = e.target.value))})()),
+          else MuiTextField(value = f.name, style = txtStyle, onChange = { e: ReactEventI => P.d.dispatch(f.copy(name = e.target.value))})()
+        ),
         <.div(<.label("Địa điểm: "),
           if(P.readonly) f.addr
-          else MuiTextField(value = f.addr, style = txtStyle, onChange = {e: ReactEventI => P.d.dispatch(f.copy(addr = e.target.value))})()),
+          else MuiTextField(value = f.addr, style = txtStyle, onChange = {e: ReactEventI => P.d.dispatch(f.copy(addr = e.target.value))})()
+        ),
         <.div(<.label("Hạng mục: "), P.group),
         P.subGroup.fold(EmptyTag)(v => <.div(<.label("Tiểu mục: "), v))
       )

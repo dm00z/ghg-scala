@@ -1,7 +1,7 @@
 enablePlugins(ScalaJSPlugin)
 
 name := "ghg"
-version := "0.1"
+version := "0.2"
 scalaVersion := "2.11.7"
 
 scalacOptions ++= Seq(
@@ -53,3 +53,5 @@ dependencyOverrides ++= Set(
 )
 resolvers += Resolver.sonatypeRepo("releases")
 addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full)
+
+//libraryDependencies += "com.github.karasiq" %%% "scalajs-bootstrap-v4" % "2.3.2"

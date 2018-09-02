@@ -1,7 +1,7 @@
 const gulp = require('gulp'),
     symdest = require('gulp-symdest'),
     del = require('del'),
-    electron = require('gulp-awesome-electron'),
+    electron = require('gulp-atom-electron'),
     runSequence = require('run-sequence');
 
 const paths = ['assets/**/*', 'mui/**/*', 'bower_components/**/*', 'package.json', 'main.js', 'index.html'];    
@@ -13,13 +13,8 @@ gulp.task('clean', function() {
 gulp.task('package-darwin', function() {
     return gulp.src(paths, {base: "."})
         .pipe(electron({
-            version: '1.4.0',
-            platform: 'darwin',
-            cache: '.electron-cache/',
-            companyName: 'NA',
-            token: process.env.GH_TOKEN,
-            linuxExecutableName: 'AwesomeElectron',
-            //darwinIcon: 'electron.icns'
+            version: '1.7.16',
+            platform: 'darwin'
         }))
         .pipe(symdest('app/darwin'))
 })
@@ -27,15 +22,11 @@ gulp.task('package-darwin', function() {
 gulp.task('package-win32', function() {
     return gulp.src(paths, {base: "."})
         .pipe(electron({
-            version: '1.4.0',
+            version: '1.7.16',
             platform: 'win32',
-            cache: '.electron-cache/',
-            companyName: 'NA',
-            token: process.env.GH_TOKEN,
-            linuxExecutableName: 'AwesomeElectron',
             arch: 'ia32'
         }))
-        .pipe(gulp.dest('app/win32-ia32'));
+        .pipe(gulp.dest('app/win32-x64'));
 })
 
 gulp.task('build', function(cb) {

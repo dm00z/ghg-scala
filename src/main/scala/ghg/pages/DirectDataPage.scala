@@ -31,17 +31,81 @@ object DirectDataPage {
             <.td("Lưu lượng dòng vào hệ thống xử lý")
           ),
           <.tr(td("S", "o,v"), <.td("mg/l"),
-            tdInput(StreamInData.s),
+            tdInput(StreamInData.so),
             <.td("Nồng độ cơ chất dòng vào hệ thống")
           ),
-          <.tr(td("TN", "v"), <.td("mg/l"),
-            tdInput(StreamInData.tn),
+          <.tr(td("SS", "o,v"), <.td("mg/l"),
+            tdInput(StreamInData.sso),
+            <.td("")
+          ),
+          <.tr(td("SS", "v"), <.td("mg/l"),
+            tdInput(PrimaryPoolData.ssv),
+            <.td("")
+          ),
+          <.tr(td("SS", "r"), <.td("mg/l"),
+            tdInput(StreamOutData.ss),
             <.td()
           ),
-          <.tr(<.td("TSS"), <.td("mg/l"),
-            tdInput(StreamInData.tss),
+          <.tr(td("N", "v"), <.td("mg/l"),
+            tdInput(StreamInData.n),
+            <.td("")
+          ),
+          <.tr(td("N", "r"), <.td("mg/l"),
+            tdInput(StreamOutData.n),
             <.td()
           ),
+          <.tr(td("Q", "bl"), <.td("m3/day"),
+            tdInput(PrimaryPoolData.q),
+            <.td("Lưu lượng xả bùn ở bể lắng sơ cấp")
+          ),
+          <.tr(td("Q", "v"), <.td("m3/day"),
+            tdInput(PrimaryPoolData.qv),
+            <.td("")
+          ),
+          <.tr(td("Q", "x"), <.td("m3/day"),
+            tdInput(PrimaryPoolData.qx),
+            <.td("")
+          ),
+          <.tr(td("S", "v"), <.td("ml/g"),
+            tdInput(StreamInData.s),
+            <.td("")
+          ),
+          <.tr(td("S", "r"), <.td("ml/g"),
+            tdInput(StreamOutData.s),
+            <.td("")
+          ),
+          <.tr(td("X", "v"), <.td("ml/g"),
+            tdInput(StreamInData.x),
+            <.td("")
+          ),
+          <.tr(td("X", "r"), <.td("ml/g"),
+            tdInput(StreamOutData.x),
+            <.td("")
+          ),
+          <.tr(td("X", "T"), <.td("ml/g"),
+            tdInput(StreamInData.xt),
+            <.td("")
+          ),
+          <.tr(td("V", ""), <.td("m3"),
+            tdInput(PoolData.v),
+            <.td("")
+          ),
+          <.tr(
+            <.td("HRT"), <.td("ngày"),
+            tdInput(PoolData.hrt),
+            <.td("Thời gian lưu thủy lực")
+          ),
+          <.tr(
+            <.td("SRT"), <.td("days"),
+            tdInput(PoolData.srt),
+            <.td("Tuổi bùn")
+          ),
+          <.tr(
+            <.td("Nhiệt độ"), <.td("°C"),
+            tdInput(PoolData.t),
+            <.td()
+          ),
+
           /*---------------------------------------------*/
           <.tr(td("Pr", "bl,BOD"), <.td("*100%"),
             tdInput(PrimaryPoolData.prBOD),
@@ -50,43 +114,38 @@ object DirectDataPage {
           <.tr(td("Pr", "bl,SS"), <.td("*100%"),
             tdInput(PrimaryPoolData.prSS),
             <.td("Tỉ lệ khử SS trong bể lắng sơ cấp")
-          ),
-          <.tr(td("Q", "bl"), <.td("m3/day"),
-            tdInput(PrimaryPoolData.q),
-            <.td("Lưu lượng xả bùn ở bể lắng sơ cấp")
-          ),
-          /*---------------------------------------------*/
-          <.tr(td("S", "r"), <.td("mg/l"),
-            tdInput(StreamOutData.s),
-            <.td()
-          ),
-          <.tr(td("N", "r"), <.td("mg/l"),
-            tdInput(StreamOutData.n),
-            <.td()
-          ),
-          <.tr(td("VSS", "r"), <.td("mg/l"),
-            tdInput(StreamOutData.vss),
-            <.td()
-          ),
-          /*---------------------------------------------*/
-          <.tr(<.td("Nhiệt độ"), <.td("°C"),
-            tdInput(PoolData.t),
-            <.td()
-          ),
-          <.tr(<.td("SRT"), <.td("days"),
-            tdInput(PoolData.srt),
-            <.td("Tuổi bùn")
-          ),
-          <.tr(
-            <.td("HRT"), <.td("hours"),
-            tdInput(PoolData.hrt),
-            <.td("Thời gian lưu thủy lực")
-          ),
-          if (tpe == "decay") EmptyTag else <.tr(
-            <.td("Q_ratio"), <.td(),
-            tdInput(PoolData.qxRatio),
-            <.td("Tỉ lệ `Q_(xa) / Q_v`".teX)
           )
+//          <.tr(td("TN", "v"), <.td("mg/l"),
+//            tdInput(StreamInData.tn),
+//            <.td()
+//          ),
+//          <.tr(<.td("TSS"), <.td("mg/l"),
+//            tdInput(StreamInData.tss),
+//            <.td()
+//          ),
+//          /*---------------------------------------------*/
+//
+//
+//          <.tr(td("VSS", "r"), <.td("mg/l"),
+//            tdInput(StreamOutData.vss),
+//            <.td()
+//          ),
+//          /*---------------------------------------------*/
+//
+//          <.tr(<.td("SRT"), <.td("days"),
+//            tdInput(PoolData.srt),
+//            <.td("Tuổi bùn")
+//          ),
+//          <.tr(
+//            <.td("HRT"), <.td("hours"),
+//            tdInput(PoolData.hrt),
+//            <.td("Thời gian lưu thủy lực")
+//          ),
+//          if (tpe == "decay") EmptyTag else <.tr(
+//            <.td("Q_ratio"), <.td(),
+//            tdInput(PoolData.qxRatio),
+//            <.td("Tỉ lệ `Q_(xa) / Q_v`".teX)
+//          )
         )
 
       }

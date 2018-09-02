@@ -43,7 +43,7 @@ object ElectricPage {
       }
 
       <.div(
-        <.h2("A. Công suất tiêu thụ điện năng"),
+        <.h2("2.1. Công suất điện năng sử dụng trong HTXLNT"),
         <.label("Cách tính công suất tiêu thụ điện năng: "),
         MuiDropDownMenu(
           menuItems = calcMethods,
@@ -55,7 +55,7 @@ object ElectricPage {
           case CalcMethod.Method2 => Electric2(P)
           case CalcMethod.Method3 => Electric3(P)
         },
-        <.h2("B. Hệ số phát thải khí nhà kính từ điện năng"),
+        <.h2("2.2. Hệ số phát thải khí nhà kính từ sản xuất điện năng"),
         table(
           <.th("Nguồn điện"),
           <.th("Hệ số phát thải EFi (g", <.sub("CO2-td"), "/Kwh)"),
@@ -69,7 +69,14 @@ object ElectricPage {
             <.td()
           ) :_*
         ),
-        <.h2(s"C. Phát thải KNK từ tiêu thụ điện năng = ${P().ghgElectric.toFixed(3)} (kg", <.sub("CO2-td"), "/day)")
+        <.h2("2.3. Phát thải KNK từ tiêu thụ điện năng sử dụng trong HTXLNT"), // = ${P().ghgElectric.toFixed(3)} (kg", <.sub("CO2-td"), "/day)"
+        <.div("Công thức tính: `P_(CO2,điện) = QE * tổng(PF_i * EF_i)`",
+          dataTbl(
+            tr("P", "CO2, điện", P().ghgElectric, "gCO2/ngày"), //Lượng SS bị khử trong bể lắng sơ cấp (g/day)
+            tr("QE", "", P().electricPower, "kwh/ngày"), //Công suất dòng vào ban đầu
+            tr("Tổng (PFi * EFi)", "", my.powerStruct.totalRatio, "gC02/kwh")
+          )
+        )
       )
     }
   }

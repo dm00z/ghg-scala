@@ -3,7 +3,7 @@ package ghg.components
 import ghg.Utils._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import japgolly.scalajs.react.{BackendScope, ReactComponentB}
-import model.KineticCoefficientData.Nitrate
+//import model.KineticCoefficientData.Nitrate
 import model.{Bien2Output, GhgData}
 import tex.TeX._
 
@@ -61,7 +61,7 @@ object Bien2Anaerobic {
         dataTbl(2,
           tr("SS", "v", b2.ss_v, "mg/l"),
           tr("`VSS_v = 0.85 * SS_v`".teX, b2.vss_v, "mg/l"),
-          tr("X", "o,v", b1.x_ov, "mg/l"), //Nồng độ SS dòng vào ban đầu
+          tr("X", "o,v", b1.s_ov, "mg/l"), //Nồng độ SS dòng vào ban đầu
           tr("SS", "khu,bl", b1.ss_khuBl, "g/day"), //Lượng SS bị khử trong bể lắng sơ cấp (g/day)
           tr("Q", "v", b2.q_v, "m3/day")
         ),
@@ -108,7 +108,7 @@ object Bien2Anaerobic {
         <.h5("a. Lượng bùn tạo ra do khử BOD"),
         <.div("Công thức tính: `P_(SS,BOD) = (X * V) / (SRT)`".teX),
         dataTbl(
-          tr("P", "SS,BOD", b2.p_ssBod, "g/day"),
+          tr("P", "SS,BOD", b2.p_XBod, "g/day"),
           tr("X", b2.X, "mg/l"),
           tr("V", b2.V, "mg/l"),
           tr("SRT", pool.srt, "day")
@@ -139,7 +139,7 @@ object Bien2Anaerobic {
           tr("HRT", pool.hrt, "hour")
         ),
         <.h5(s"e. Tổng lượng bùn sinh ra `P_(SS) = ${b2.p_ss}`(g/day)".teX),
-        <.h5(s"f. Tổng lượng bùn sinh ra do phân hủy sinh học `P_(SS,bio) = P_(SS) - Q_v * X_(nb,VSS) = ${b2.p_ssBio}`(g/day)".teX),
+        <.h5(s"f. Tổng lượng bùn sinh ra do phân hủy sinh học `P_(SS,bio) = P_(SS) - Q_v * X_(nb,VSS) = ${b2.p_XBio}`(g/day)".teX),
 
 //        <.h4("2.6. Tính nồng độ Nito bị ô xi hóa trong bể xử lý sinh học"),
 //        <.div("Công thức tính: `N = TN_v - N_r - (0.12 * P_(SS,bio)) / Q_v`".teX),
@@ -161,7 +161,7 @@ object Bien2Anaerobic {
           tr("S", "v", b2.s_v, "mg/l"),
           tr("S", b2.s, "mg/l"),
           tr("r", "O2,phanhuy", relation.rCO2Decay, "g/g"),
-          tr("P", "SS,bio", b2.p_ssBio, "g/day")
+          tr("P", "SS,bio", b2.p_XBio, "g/day")
         ),
 //        <.div("b. Lượng BOD bị khử trong quá trình denitrat hóa"),
 //        <.div("Công thức tính: `BOD_(o x,dnt) = r_(BOD,dnt) * N * Q_v`".teX),

@@ -16,6 +16,6 @@ object ChartSerie {
             color: UndefOr[String] = js.undefined,
             name: UndefOr[String] = js.undefined): ChartSerie =
     js.Dynamic
-      .literal(field = field, color = color, name = name)
+      .literal("field" -> field, "color" -> color, "name" -> name)
       .asInstanceOf[ChartSerie]
 }

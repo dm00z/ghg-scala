@@ -6,6 +6,8 @@ import scala.scalajs.js.annotation.JSName
 @js.native @JSName("ReactD3Basic")
 object ReactD3Basic extends js.Object {
   val LineChart: js.Dynamic = js.native
+  val PieChart: js.Dynamic = js.native
+  val BarChart: js.Dynamic = js.native
   val Chart: js.Dynamic = js.native
 }
 
@@ -22,4 +24,5 @@ object ReactD3 extends js.Object {
 @js.native @JSName("ReactD3Shape")
 object ReactD3Shape extends js.Object {
   val Line: js.Dynamic = js.native
+  val Pie: js.Dynamic = js.native
 }

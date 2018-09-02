@@ -55,6 +55,7 @@ object Utils {
   @inline def tr(symbol: TagMod, data: Double, unit: TagMod) = <.tr(<.td(symbol), <.td(data.toFixed(3)), <.td(unit))
   @inline def tr(symbol: String, sub: String, data: Double) = <.tr(td(symbol, sub), <.td(data.toFixed(3)), <.td())
   @inline def tr(symbol: String, sub: String, data: Double, unit: TagMod) = <.tr(td(symbol, sub), <.td(data.toFixed(3)), <.td(unit))
+  @inline def tr(desc: String, data1: Double, data2: Double, percent: Double) = <.tr(<.td(desc), <.td(data1.toFixed(2)), <.td(data2.toFixed(2)), <.td((percent * 100).toFixed(2) + "%"))
 
   def input[D](lens: Lens[D, Double],
                validator: String => Boolean = _.decimal)
@@ -70,6 +71,11 @@ object Utils {
                          validator: String => Boolean = _.decimal)
                         (implicit d: D, dispatch: D => Callback) =
     <.td(input(lens, validator)(d, dispatch))
+
+  //def tdInput[D]()
+
+  //@inline def tdInput[D]()
+
 
   def tdStrInput[D](lens: Lens[D,String])(implicit d: D, dispatch: D => Callback) =
     <.td(<.input(

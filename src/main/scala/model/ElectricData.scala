@@ -50,12 +50,12 @@ object ElectricData {
     }
     object Row { def apply(): Row = Row("", 0, 1, 0) }
 
-    val RatioOther = RNorm(R(.5, 1), .5)
+    val RatioOther = RNorm(R(.01, 1), .01)
     val EtieuThu = RNorm(R(0, 1), .85)
   }
   @Lenses case class D3(rows: List[D3.Row], ratioOther: Double = D3.RatioOther.norm, etieuThu: Double = D3.EtieuThu.norm) {
     lazy val powerCalc = rows.map(_.kwhPerDay).sum
-    def powerOther = powerCalc * ratioOther / 100
+    def powerOther = powerCalc * ratioOther
     def powerTheory = powerOther + powerCalc
     def power = powerTheory * etieuThu
   }
