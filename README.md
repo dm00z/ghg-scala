@@ -26,7 +26,7 @@ browse http://localhost:8090/
 ```
 sbt fullOptJS
 webpack --config webpack.config.prod.js
-gulp electron
+gulp
 ```
 
 # TODO
