@@ -12,3 +12,15 @@ npm-debug.log
 /bower_components/
 /cache/
 /release/
+
+app/
+.electron-cache/
+
+# OSX
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
