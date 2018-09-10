@@ -374,7 +374,7 @@ case class GhgData(info: InfoData, indirect: IndirectData, direct: DirectData) {
     val tyle_co2BODra = M_co2BODra/sumKNKByWasteDisposal
     val tyle_phatThai_co2td_n2o = phatThai_co2td_n2o/sumKNKByWasteDisposal
 
-    val sumKNKAll = sumKNKByElecPower + sumKNKByWasteDisposal
+    val sumKNKAll = sumKNKByElecPower + sumKNKByWasteDisposal/1000
     val tyle_elecPower = sumKNKByElecPower/sumKNKAll
     val tyle_wasteDisposal = sumKNKByWasteDisposal/sumKNKAll
 
