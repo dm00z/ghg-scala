@@ -22,10 +22,11 @@ object AppHeader {
       val f = P.d().info.f
       <.div(
         <.div(
-          <.h1("Mô hình MTH, tính toán phát thải khí nhà kính từ hệ thống xử lý nước thải")
+          <.h1("MÔ HÌNH MTH"),
+          <.h2("TÍNH TOÁN PHÁT THẢI KHÍ NHÀ KÍNH TỪ HỆ THỐNG XỬ LÝ NƯỚC THẢI")
         ),
-        if(P.readonly) ^.backgroundColor := "#20a8d8" else EmptyTag,
-        ^.padding := "20px", ^.borderRadius := "5px", ^.width := "82%",
+        if(P.readonly) ^.backgroundColor := "#e4e5e6" else EmptyTag,
+        ^.padding := "20px", ^.borderRadius := "5px", ^.width := "82%", ^.color := "#1254d6",
 
         if (P.readonly) EmptyTag else <.div(
           <.label("Tải dữ liệu: "),

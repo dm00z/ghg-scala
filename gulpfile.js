@@ -4,7 +4,7 @@ const gulp = require('gulp'),
     electron = require('gulp-atom-electron'),
     runSequence = require('run-sequence');
 
-const paths = ['assets/**/*', 'mui/**/*', 'bower_components/**/*', 'package.json', 'main.js', 'index.html'];    
+const paths = ['assets/**/*', 'mui/**/*', 'bower_components/**/*', 'package.json', 'main.js', 'index.html'];
 
 gulp.task('clean', function() {  
   return del(['app']);
@@ -13,7 +13,7 @@ gulp.task('clean', function() {
 gulp.task('package-darwin', function() {
     return gulp.src(paths, {base: "."})
         .pipe(electron({
-            version: '1.7.16',
+            version: '2.0.9',
             platform: 'darwin'
         }))
         .pipe(symdest('app/darwin'))
@@ -22,14 +22,14 @@ gulp.task('package-darwin', function() {
 gulp.task('package-win32', function() {
     return gulp.src(paths, {base: "."})
         .pipe(electron({
-            version: '1.7.16',
+            version: '2.0.9',
             platform: 'win32',
             arch: 'ia32'
         }))
         .pipe(gulp.dest('app/win32-x64'));
 })
 
-gulp.task('build', function(cb) {
+gulp.task('dist', function(cb) {
     runSequence(
         ['clean'],
         ['package-darwin', 'package-win32'],
@@ -50,4 +50,4 @@ gulp.task('build', function(cb) {
     );
 });
 
-gulp.task('default', ['build']);
+gulp.task('default', ['dist']);

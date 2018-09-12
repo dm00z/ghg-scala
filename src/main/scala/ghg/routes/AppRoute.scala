@@ -15,7 +15,7 @@ object AppRoutes {
   //object Indirect extends AppRoute("2. Gián tiếp", "indirect", IndirectPage.apply, "Tính toán phát thải khí nhà kính gián tiếp")
   object Electric extends AppRoute("2. Phát thải KNK từ tiêu thụ điện năng phục vụ HTXLNT", "electric", ElectricPage.apply,
   //  "Tính toán phát thải khí nhà kính gián tiếp",
-    "Phát thải KNK từ tiêu thụ điện năng")
+    "Phát thải khí nhà kính từ tiêu thụ điện năng")
   //object Gas      extends AppRoute("b. Nhiên liêu", "gas", GasPage.apply,
   //  "Tính toán phát thải khí nhà kính gián tiếp",
   //  "Phát thải KNK từ sản xuất và vận chuyển khí tự nhiên")
@@ -23,19 +23,19 @@ object AppRoutes {
 //    "Tính toán phát thải khí nhà kính gián tiếp",
 //    "Phát thải KNK từ sử dụng hóa chất")
 
-  object Direct   extends AppRoute("3. Phát thải KNK từ quá trình xử lý", "direct", DirectPage.apply, "Tính toán phát thải khí nhà kính trực tiếp")
-  object KineticRelation     extends AppRoute("3.1. Hệ số cân bằng hóa học", "kinetic-relation", KRData.apply,
-    "Tính toán phát thải khí nhà kính trực tiếp",
-    "Thông số quan hệ động học của các quá trình")
+  object Direct   extends AppRoute("3. Phát thải KNK từ quá trình xử lý", "direct", DirectPage.apply, "Phát thải khí nhà kính từ quá trình xử lý")
+  object KineticRelation     extends AppRoute("3.1. Hệ số năng suất Y", "kinetic-relation", KRData.apply,
+    "Phát thải khí nhà kính từ quá trình xử lý",
+    "Hệ số năng suất Y")
   object KineticCoefficient  extends AppRoute("3.2. Hệ số động học", "kinetic-coefficient", KineticCoefficientPage.apply,
-    "Tính toán phát thải khí nhà kính trực tiếp",
+    "Phát thải khí nhà kính từ quá trình xử lý",
     "Hệ số động học của các quá trình")
   object DirectData          extends AppRoute("3.3. Thông số hệ thống xử lý", "direct-data", DirectDataPage.apply,
-    "Tính toán phát thải khí nhà kính trực tiếp",
+    "Phát thải khí nhà kính từ quá trình xử lý",
     "Thông số dòng vào")
   object Aerobic             extends AppRoute("3.4. Tính toán phát thải KNK từ quá trình xử lý", "aerobic", AerobicPage.apply,
-    "Tính toán phát thải khí nhà kính trực tiếp",
-    "Tính toán hệ hiếu khí")
+    "Phát thải khí nhà kính từ quá trình xử lý  ",
+    "Tính toán phát thải khí nhà kính")
 //  object AerobicUnstable     extends AppRoute("e. Hệ hiếu khí không ổn định", "aerobic-unstable", AerobicPage.apply,
 //    "Tính toán phát thải khí nhà kính trực tiếp",
 //    "Tính toán hệ hiếu khí không ổn định")

@@ -71,14 +71,14 @@ object RetrievePage {
       def dataTbl() = {
         table(
           <.tr(<.th(^.rowSpan := 2, "Nguồn phát thải"), <.th(^.colSpan := 2, "Loại phát thải"), <.th(^.rowSpan := 2, "Tỷ lệ % theo nguồn")),
-          <.tr(<.th("Từ sản xuất điện năng phục vụ HTXLNT (g/ngày)"), <.th("Từ quá trình xử lý nước thải (g/ngày)")),
+          <.tr(<.th("Từ sản xuất điện năng phục vụ HTXLNT (kg/ngày)"), <.th("Từ quá trình xử lý nước thải (kg/ngày)")),
           <.tr(<.td("Tiêu thụ điện năng"), <.td(retrieve.elecPower.toFixed(2)), <.td(), <.td()),
-          <.tr(<.td("Quá trình xử lý sinh học"), <.td(), <.td(retrieve.M_co2_quaTrinh.toFixed(2)), <.td((retrieve.tyle_co2_quaTrinh*100).toFixed(2) + "%")),
-          <.tr(<.td("Phân huỷ bùn yếm khí, thu hồi và đốt CH4"), <.td(), <.td(retrieve.M_co2tdPhanHuyDot.toFixed(2)), <.td((retrieve.tyle_co2tdPhanHuyDot*100).toFixed(2) + "%")),
-          <.tr(<.td("Phân huỷ BOD dòng ra"), <.td(""), <.td(retrieve.M_co2BODra.toFixed(2)), <.td((retrieve.tyle_co2BODra*100).toFixed(2) + "%")),
-          <.tr(<.td("Phát thải CO2-tđ từ khí N2O"), <.td(""), <.td(retrieve.phatThai_co2td_n2o.toFixed(2)), <.td((retrieve.tyle_phatThai_co2td_n2o*100).toFixed(2) + "%")),
-          <.tr(<.td("Tổng phát thải KNK theo loại"), <.td(retrieve.sumKNKByElecPower.toFixed(2)), <.td(retrieve.sumKNKByWasteDisposal.toFixed(2)), <.td()),
-          <.tr(<.td("Tổng lượng KNK"), <.td(^.colSpan := 2, retrieve.sumKNKAll.toFixed(2)), <.td()),
+          <.tr(<.td("Bể xử lý sinh học"), <.td(), <.td((retrieve.M_co2_quaTrinh).toFixed(2)), <.td((retrieve.tyle_co2_quaTrinh*100).toFixed(2) + "%")),
+          <.tr(<.td("Phân huỷ bùn yếm khí, thu hồi và đốt CH4"), <.td(), <.td((retrieve.M_co2tdPhanHuyDot).toFixed(2)), <.td((retrieve.tyle_co2tdPhanHuyDot*100).toFixed(2) + "%")),
+          <.tr(<.td("Phân huỷ BOD dòng ra"), <.td(""), <.td((retrieve.M_co2BODra).toFixed(2)), <.td((retrieve.tyle_co2BODra*100).toFixed(2) + "%")),
+          <.tr(<.td("Phát thải CO2-tđ từ khí N2O"), <.td(""), <.td((retrieve.phatThai_co2td_n2o).toFixed(2)), <.td((retrieve.tyle_phatThai_co2td_n2o*100).toFixed(2) + "%")),
+          <.tr(<.td("Tổng phát thải KNK theo loại"), <.td(retrieve.sumKNKByElecPower.toFixed(2)), <.td((retrieve.sumKNKByWasteDisposal).toFixed(2)), <.td()),
+          <.tr(<.td("Tổng lượng KNK"), <.td(^.colSpan := 2, (retrieve.sumKNKAll).toFixed(2)), <.td()),
           <.tr(<.td("Tỷ lệ % phát thải theo loại"), <.td((retrieve.tyle_elecPower*100).toFixed(2) + "%"), <.td((retrieve.tyle_wasteDisposal*100).toFixed(2) + "%"), <.td("100%"))
         )
       }

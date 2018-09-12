@@ -9,10 +9,10 @@ object KineticCoefficientData {
   object Aerobic {
     val Y = RNorm(R(.4, .8), .5)
     val Ks = RNorm(R(25, 100), 60)
-    val Kd = RNorm(R(.02, .1), .1)
+    val Kd = RNorm(R(.02, .2), .15)
 
     def default = Aerobic(KT(5, 1.07), KT(60, 1), KT(Kd.norm, 1.04), KT(Y.norm, 1))
-    def yenSo = Aerobic(KT(2, 1), KT(60, 1), KT(Kd.norm, 1.1), KT(.6, 1), t = 22)
+    def yenSo = Aerobic(KT(2, 1), KT(65, 1), KT(Kd.norm, 1), KT(.55, 1), t = 22)
   }
   @Lenses final case class Aerobic(m: KT, ks: KT, kd: KT, y: KT, fd: Double = .1, t: Double = 25) {
     @inline def k(t: Double) = m(t) //k
@@ -25,8 +25,8 @@ object KineticCoefficientData {
 
   object Nitrate {
     val M = RNorm(R(.4, 2), .45)
-    val Y = RNorm(R(.1, .3), .12)
-    val Kd = RNorm(R(.03, .06), .08)
+    val Y = RNorm(R(.1, .3), .16)
+    val Kd = RNorm(R(.03, .06), .04)
 
     val Kdo = 1.3
     val DO = 2

@@ -65,7 +65,7 @@ object ElectricPage {
         )(
           rows :+ <.tr(
             <.td(^.colSpan := 3, "Tổng"),
-            <.td(my.powerStruct.totalRatio),
+            <.td(my.powerStruct.totalRatio.toFixed(3)),
             <.td()
           ) :_*
         ),

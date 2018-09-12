@@ -19,23 +19,6 @@ object LeftNav {
       minHeight :=! "100%"
     )
 
-//    .sidebar .nav {
-//      width: 200px;
-//      -ms-flex-direction: column;
-//      flex-direction: column;
-//      min-height: 100%;
-//      padding: 0;
-//    }
-//
-//      .nav {
-//        display: -ms-flexbox;
-//        display: flex;
-//        -ms-flex-wrap: wrap;
-//        flex-wrap: wrap;
-//        padding-left: 0;
-//        margin-bottom: 0;
-//        list-style: none;
-//      }
 
     val menuItem = styleF(Domain.ofValues(0, 1) *** Domain.boolean) {
       case (indentLevel, selected) => styleS(
@@ -44,13 +27,12 @@ object LeftNav {
         padding :=! "0 25px",
         cursor.pointer,
         textDecoration := "none",
-
         marginLeft((indentLevel * 5).px),
         mixinIf(indentLevel == 0)(fontWeight.bold),
 
         mixinIfElse(selected)(
           color.white,
-          backgroundColor(c"#304047")
+          backgroundColor(c"#a0d4f3")
         )(color.black,
           &.hover(
             color(c"#555555"),
@@ -59,15 +41,10 @@ object LeftNav {
         ),
 
         transition := "background .3s ease-in-out",
-        color.white
+        color.black
       )
     }
 
-//    position: relative;
-//    margin: 0;
-//    -webkit-transition: background .3s ease-in-out;
-//    -o-transition: background .3s ease-in-out;
-//    transition: background .3s ease-in-out;
 
     val sidebarNav = style(
       position.relative,
@@ -80,13 +57,6 @@ object LeftNav {
       padding.`0`,
       transition := "width .25s"
     )
-
-//    position: relative;
-//    -ms-flex: 1 1;
-//    flex: 1 1;
-//    overflow-x: hidden;
-//    overflow-y: auto;
-//    width: 200px;
   }
 
   case class Props(menus: List[AppRoute], selectedPage: AppRoute, ctrl: RouterCtl[AppRoute])

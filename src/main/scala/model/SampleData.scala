@@ -85,12 +85,12 @@ object SampleData {
           powerStruct = CountryPowerStruct(
             "Việt Nam", "Báo cáo thường niên của EVN năm 2013",
             Seq(
-              PowerSupply("Thủy điện", 10, R(16, 410), 48.78, "Rasha and Hammad, 2000"),
+              PowerSupply("Thủy điện", 16, R(16, 410), 38, "Rasha and Hammad, 2000"),
               PowerSupply("Hạt nhân", 9, R(9, 30), 0, "Andesta et al., 1998"),
-              PowerSupply("Than", 877, R(860, 1290), 23.07, "IPCC,2001"),
-              PowerSupply("Khí tự nhiên", 640, R(460, 1234), 0, ""),
-              PowerSupply("Sinh học, gió, thủy triều", 11, R(11, 279), 0.43, ""),
-              PowerSupply("Nhiên liệu khác", 604, R(600, 890), 27.72, "IPCC,2001")
+              PowerSupply("Than", 860, R(860, 1290), 33.50, "IPCC,2001"),
+              PowerSupply("Khí tự nhiên", 460, R(460, 1234), 20.7, ""),
+              PowerSupply("Sinh học, gió, thủy triều", 11, R(11, 279), 0, ""),
+              PowerSupply("Nhiên liệu khác", 690, R(689, 890), 7.8, "IPCC,2001")
             )),
           CalcMethod.Method3,
           D1(), sampleElectricD2, sampleElectricD3
@@ -104,10 +104,10 @@ object SampleData {
       DirectData(
         DirectTable(
           StreamInData(250, 24.74, 186.33, 200, 220, 90, 40, 700),
-          PrimaryPoolData(.12, .10, 0, 1050, 27, 180),
-          PoolData(22, 7.5, 245f/1050f, 245),
+          PrimaryPoolData(0, 0, 0, 1050, 27, 200),
+          PoolData(22, 7, 245f/1050f, 245),
           None,
-          Some(PoolData(22, 7.5, 245f/1050f, 245))
+          Some(PoolData(22, 7, 245f/1050f, 245))
         ),
         KineticCoefficientData(
           KineticCoefficientData.Aerobic.yenSo,

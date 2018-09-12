@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module external.linked.project.id="ghg-scala" external.linked.project.path="$MODULE_DIR$/../.." external.root.project.path="$MODULE_DIR$/../.." external.system.id="SBT" type="JAVA_MODULE" version="4">
+<module type="JAVA_MODULE" version="4">
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
     <output url="file://$MODULE_DIR$/../../target/scala-2.11/classes" />
     <output-test url="file://$MODULE_DIR$/../../target/scala-2.11/test-classes" />
@@ -8,11 +8,11 @@
       <sourceFolder url="file://$MODULE_DIR$/../../src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../../src/main/scala" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../../src/main/scala-2.11" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/../../target/scala-2.11/src_managed/main" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../../src/test/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/../../src/test/scala" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/../../src/test/scala-2.11" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/../../target/scala-2.11/src_managed/test" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../target/scala-2.11/src_managed/main" isTestSource="false" generated="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../target/scala-2.11/src_managed/test" isTestSource="true" generated="true" />
       <sourceFolder url="file://$MODULE_DIR$/../../src/main/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/../../target/scala-2.11/resource_managed/main" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/../../src/test/resources" type="java-test-resource" />
@@ -43,5 +43,6 @@
     <orderEntry type="library" name="SBT: com.github.japgolly.fork.monocle:monocle-core_sjs0.6_2.11:1.2.0:jar" level="project" />
     <orderEntry type="library" name="SBT: com.github.chandu0101.scalajs-react-components:macros_sjs0.6_2.11:0.3.0:jar" level="project" />
     <orderEntry type="library" name="SBT: com.github.chandu0101.scalajs-react-components:core_sjs0.6_2.11:0.3.0:jar" level="project" />
+    <orderEntry type="library" name="scala-sdk-2.12.6 (2)" level="application" />
   </component>
 </module>

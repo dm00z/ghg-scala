@@ -129,7 +129,7 @@ case class GhgData(info: InfoData, indirect: IndirectData, direct: DirectData) {
     //@inline def srtNit(N: Double) = 1 / m_nit(N)
     def srtNit = pool.srt
 
-    def x_nit(N: Double) = srtNit / pool.hrtDay * nit.y_ * N / (1 + nit.kd_ * srtNit)
+    def x_nit(N: Double) = (srtNit / pool.hrtDay) * (nit.y_ * N) / (1 + nit.kd_ * srtNit)
     def p_ssNit(N: Double) = x_nit(N) * V / srtNit
     def p_ss(N: Double) =p_XBod + p_ssNit(N) + p_ssManhTeBao + p_ssNbVss
     def p_ssBio(N: Double) = p_ss(N) - p_ssNbVss //=..
@@ -153,7 +153,7 @@ case class GhgData(info: InfoData, indirect: IndirectData, direct: DirectData) {
       calc(0, 1, 0)
     }
 
-    val N = calcNRatio(.001, 30) * direct.d.streamIn.n
+    val N = calcNRatio(.001, 1000) * direct.d.streamIn.n
 
     val relation = direct.relation
     //val bod_ox = relation.yCO2 * (q_v* (s_v - s) - relation.rCO2Decay * p_ssBio(N))
@@ -330,20 +330,20 @@ case class GhgData(info: InfoData, indirect: IndirectData, direct: DirectData) {
 
     val elecPower = ghgElectric // to be changed
 
-    val M_co2_quaTrinh = b2.co2_quaTrinh
-    val M_co2tdPhanHuyDot = b4.M_co2tdPhanHuyDot
-    val M_co2BODra = b3.m_CO2BODra
-    val phatThai_co2td_n2o = b5.phatThai_co2td_n2o
+    val M_co2_quaTrinh = b2.co2_quaTrinh/1000
+    val M_co2tdPhanHuyDot = b4.M_co2tdPhanHuyDot/1000
+    val M_co2BODra = b3.m_CO2BODra/1000
+    val phatThai_co2td_n2o = b5.phatThai_co2td_n2o/1000
 
     val sumKNKByElecPower = elecPower
-    val sumKNKByWasteDisposal = M_co2_quaTrinh + M_co2tdPhanHuyDot + M_co2BODra + phatThai_co2td_n2o
+    val sumKNKByWasteDisposal = (M_co2_quaTrinh + M_co2tdPhanHuyDot + M_co2BODra + phatThai_co2td_n2o)
 
     val tyle_co2_quaTrinh = M_co2_quaTrinh/sumKNKByWasteDisposal
     val tyle_co2tdPhanHuyDot = M_co2tdPhanHuyDot/sumKNKByWasteDisposal
     val tyle_co2BODra = M_co2BODra/sumKNKByWasteDisposal
     val tyle_phatThai_co2td_n2o = phatThai_co2td_n2o/sumKNKByWasteDisposal
 
-    val sumKNKAll = sumKNKByElecPower + sumKNKByWasteDisposal
+    val sumKNKAll = (sumKNKByElecPower + sumKNKByWasteDisposal)
     val tyle_elecPower = sumKNKByElecPower/sumKNKAll
     val tyle_wasteDisposal = sumKNKByWasteDisposal/sumKNKAll
 
@@ -361,20 +361,20 @@ case class GhgData(info: InfoData, indirect: IndirectData, direct: DirectData) {
 
     val elecPower = ghgElectric // to be changed
 
-    val M_co2_quaTrinh = b2.co2_quaTrinh
-    val M_co2tdPhanHuyPhongKhong = b4.M_co2tdPhanHuyPhongKhong
-    val M_co2BODra = b3.m_CO2BODra
-    val phatThai_co2td_n2o = b5.phatThai_co2td_n2o
+    val M_co2_quaTrinh = b2.co2_quaTrinh/1000
+    val M_co2tdPhanHuyPhongKhong = b4.M_co2tdPhanHuyPhongKhong/1000
+    val M_co2BODra = b3.m_CO2BODra/1000
+    val phatThai_co2td_n2o = b5.phatThai_co2td_n2o/1000
 
     val sumKNKByElecPower = elecPower
-    val sumKNKByWasteDisposal = M_co2_quaTrinh + M_co2tdPhanHuyPhongKhong + M_co2BODra + phatThai_co2td_n2o
+    val sumKNKByWasteDisposal = (M_co2_quaTrinh + M_co2tdPhanHuyPhongKhong + M_co2BODra + phatThai_co2td_n2o)
 
     val tyle_co2_quaTrinh = M_co2_quaTrinh/sumKNKByWasteDisposal
     val tyle_co2tdPhanHuyPhongKhong = M_co2tdPhanHuyPhongKhong/sumKNKByWasteDisposal
     val tyle_co2BODra = M_co2BODra/sumKNKByWasteDisposal
     val tyle_phatThai_co2td_n2o = phatThai_co2td_n2o/sumKNKByWasteDisposal
 
-    val sumKNKAll = sumKNKByElecPower + sumKNKByWasteDisposal/1000
+    val sumKNKAll = (sumKNKByElecPower + sumKNKByWasteDisposal)
     val tyle_elecPower = sumKNKByElecPower/sumKNKAll
     val tyle_wasteDisposal = sumKNKByWasteDisposal/sumKNKAll
 

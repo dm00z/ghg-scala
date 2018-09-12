@@ -34,7 +34,7 @@ object DirectTable {
     *       But for simply, hrt is input & v is calculated based on hrt
     */
   @Lenses case class PoolData(t: Double, srt: Double, hrt: Double, v: Double, qxRatio: Double = .2) {
-    val hrtDay = hrt / 24
+    val hrtDay = hrt
 
     /** m3, = hrtDay * q */
 //    def v: Double

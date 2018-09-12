@@ -27,7 +27,7 @@ object GhgPage {
       flexDirection.column,
       padding.`0`,
       width(300.px),
-      backgroundColor(c"#263238"),
+      backgroundColor(c"#ebfaeb"),
       color(c"#fff"),
       height :=! "100%"
 

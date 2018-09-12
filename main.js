@@ -21,7 +21,7 @@ const template = [
                 accelerator: 'CmdOrCtrl+P',
                 click: function(item, focusedWindow) {
                     if (focusedWindow)
-                        focusedWindow.print();
+                        mainWindow.webContents.print();
                 }
             },
             {
