@@ -2,31 +2,25 @@
 + scala.js
 
 # Dev setup
-1. install node.js
+1. install node.js and yarn
 2. run:
 ```
-npm install -g electron-prebuilt webpack webpack-dev-server bower
-npm install
-bower install
+yarn global add electron
+yarn
 sbt ~fastOptJS
 ```
-//npm start
-
+Start development server:
 ```
-webpack --watch
-```
-
-```
-webpack-dev-server --progress --colors --port 8090
+yarn start
 ```
 
-browse http://localhost:8090/
+Browse http://localhost:8090/
 
 # Dist guide
 ```
 sbt fullOptJS
-webpack --config webpack.config.prod.js
-gulp
+yarn build
+yarn dist
 ```
 
 # TODO
