@@ -3,6 +3,8 @@ const electron = require('electron'),
     Menu = electron.Menu,
     BrowserWindow = electron.BrowserWindow;
 
+const { autoUpdater } = require("electron-updater");
+
 function zoom(win, i) {
     if (!win) return;
 
@@ -71,6 +73,19 @@ const template = [
                 click: function(item, focusedWindow) {
                     if (focusedWindow)
                         focusedWindow.toggleDevTools();
+                }
+            },
+            {
+                label: 'Check for update',
+                accelerator: (function() {
+                    if (process.platform == 'darwin')
+                        return 'Alt+Command+u';
+                    else
+                        return 'Ctrl+Shift+U';
+                })(),
+                click: function(item, focusedWindow) {
+                    if (focusedWindow)
+                        autoUpdater.checkForUpdatesAndNotify();
                 }
             }
         ]
