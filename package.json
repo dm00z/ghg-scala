@@ -11,7 +11,7 @@
   "scripts": {
     "start": "concurrently \"webpack --watch\" \"webpack-dev-server --progress --colors --port 8090\"",
     "build": "webpack --config webpack.config.prod.js",
-    "dist": ""
+    "dist": "electron-builder"
   },
   "devDependencies": {
     "concurrently": "^4.0.1",
@@ -43,6 +43,14 @@
   },
   "build": {
     "appId": "com.dm00z.mthmodel",
-    "productName": "MTH Model"
+    "productName": "MTH Model",
+    "files": ["assets/**/*", "mui/**/*", "bower_components/**/*", "package.json", "main.js", "index.html"],
+    "win": {
+      "target": ["nsis", "zip"]
+    },
+    "mac": {
+      "category": "public.app-category.utilities",
+      "target": ["dir"]
+    }
   }
 }
