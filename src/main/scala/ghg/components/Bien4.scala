@@ -20,7 +20,7 @@ object Bien4 {
       <.div(
         <.h3("4. Lượng KNK từ phân hủy yếm khí"),
         <.h4("4.1. Lượng bùn phân hủy sinh học"),
-        <.div("Công thức tính: `P_(bunsinhhoc) = 0.8 * P_(X, bio)`".teX),
+        <.div("Công thức tính: `P_(bunsinhhoc) = 0.6 * P_(X, bio)`".teX),
         dataTbl(
           tr("P","bunsinhhoc", b4.P_bunSinhHoc, "g/ngày"), //Lượng `BOD_5` bị khử trong bể lắng sơ cấp (g/day)
           //tr("Pr", "CH4,rori",   b4.Pr_ch4_roRi , ""), //Nồng độ `BOD_5` dòng vào ban đầu

@@ -8,7 +8,7 @@ object Styles extends StyleSheet.Standalone {
   @inline def borderCls = "border"
 
   s".$borderCls, .$borderCls tr, .$borderCls td, .$borderCls th" - (
-    border(1.px, solid, black),
+    border(1.px, solid, white),
     borderCollapse.collapse
   )
 
@@ -28,7 +28,7 @@ object Styles extends StyleSheet.Standalone {
     marginTop(10.px),
     borderCollapse.collapse,
     borderSpacing(2.px),
-    width :=! "85%",
+    width :=! "40%",
     backgroundColor.white,
     borderRadius(5.px),
     overflow.hidden,
@@ -45,8 +45,8 @@ object Styles extends StyleSheet.Standalone {
     //fontWeight.unset,
     paddingRight(10.px),
     borderBottom(2.px, solid),
-    paddingTop(15.px),
-    paddingBottom(15.px),
+    paddingTop(5.px),
+    paddingBottom(5.px),
     paddingLeft(20.px)
   )
 

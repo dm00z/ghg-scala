@@ -24,8 +24,8 @@ object ElectricPage {
       val my = P.my()
 
       val rows = my.powerStruct.supplies.zipWithIndex.map {
-        case (suply, i) =>
-          implicit val r: PowerSupply = suply
+        case (supply, i) =>
+          implicit val r: PowerSupply = supply
           implicit val dispatch: PowerSupply => Callback = d => {
             my.powerStruct.supplies.splitAt(i) match {
               case (r1, _ :: r2) => P.my.dispatch(my.powerStruct.copy(supplies = (r1 :+ d) ++ r2))

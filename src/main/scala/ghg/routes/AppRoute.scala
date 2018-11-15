@@ -4,9 +4,9 @@ import diode.react.ModelProxy
 import ghg.components.KRData
 import ghg.pages._
 import japgolly.scalajs.react.ReactElement
-import model.GhgData
+import model.{GhgData, InfoData}
 
-abstract class AppRoute(val name: String, val route: String, val render: (ModelProxy[GhgData]) => ReactElement,
+abstract class AppRoute(val name: String, val route: String, val render: ModelProxy[GhgData] => ReactElement,
                         val group: String, val subGroup: String = null)
 
 object AppRoutes {
@@ -33,7 +33,12 @@ object AppRoutes {
   object DirectData          extends AppRoute("3.3. Thông số hệ thống xử lý", "direct-data", DirectDataPage.apply,
     "Phát thải khí nhà kính từ quá trình xử lý",
     "Thông số dòng vào")
+
+
   object Aerobic             extends AppRoute("3.4. Tính toán phát thải KNK từ quá trình xử lý", "aerobic", AerobicPage.apply,
+    "Phát thải khí nhà kính từ quá trình xử lý  ",
+    "Tính toán phát thải khí nhà kính")
+  object Anaerobic           extends AppRoute("3.5. Tính toán phát thải KNK từ quá trình xử lý 2", "anaerobic", AnaerobicPage.apply,
     "Phát thải khí nhà kính từ quá trình xử lý  ",
     "Tính toán phát thải khí nhà kính")
 //  object AerobicUnstable     extends AppRoute("e. Hệ hiếu khí không ổn định", "aerobic-unstable", AerobicPage.apply,
@@ -45,12 +50,12 @@ object AppRoutes {
   object Graph               extends AppRoute("5. Biểu đồ các yếu tố ảnh hưởng", "graph", GraphPage.apply, "Biểu đồ các yếu tố ảnh hưởng")
   object TemperatureGraph    extends AppRoute("5.1 Biến thiên theo nhiệt độ", "tempgraph", TemperatureGraphPage.apply, "Biểu đồ các yếu tố ảnh hưởng", "Biểu đồ nhiệt độ")
   object SubstanceGraph      extends AppRoute("5.2 Biến thiên theo nồng độ cơ chất dòng vào", "subgraph", SubstanceGraphPage.apply, "Biểu đồ các yếu tố ảnh hưởng", "Biểu đồ cơ chất dòng vào")
-  object SRTGraph            extends AppRoute("5.3 Biến thiên theo tuổi bùn", "mudgraph", SRTGraphPage.apply, "Biểu đồ các yếu tố ảnh hưởng", "Biểu đồ cơ chất dòng vào")
+  object SRTGraph            extends AppRoute("5.3 Biến thiên theo tuổi bùn", "srtgraph", SRTGraphPage.apply, "Biểu đồ các yếu tố ảnh hưởng", "Biểu đồ cơ chất dòng vào")
 
   val all: List[AppRoute] = List(
     Info,
     Electric,
-    Direct, KineticRelation, KineticCoefficient, DirectData, Aerobic,
+    Direct, KineticRelation, KineticCoefficient, DirectData, Aerobic, Anaerobic,
     Overview, Retrieve, Release,
     Graph, TemperatureGraph, SubstanceGraph, SRTGraph
   )

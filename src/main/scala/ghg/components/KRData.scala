@@ -29,18 +29,18 @@ object KRData {
           <.tr(DonVi, <.td("gCO2/gVSS"), <.td("gO2/gVSS")),
           <.tr(GiaTri, tdInput(Data.yCO2Decay), tdInput(Data.rCO2Decay))
         ),
-//        <.h3("2. Quá trình yếm khí"),
-//        table(
-//          <.tr(ThongSo, td("Y", "CO2", "an"), td("Y", "CH4", "an"), td("Y", "VSS", "an")),
-//          <.tr(DonVi, <.td("kgCO2/kgBOD"), <.td("kgCH4/kgBOD"), <.td("kgVSS/kgBOD")),
-//          <.tr(GiaTri, tdInput(Data.yCO2An), tdInput(Data.yCH4An), tdInput(Data.yVSSAn))
-//        ),
-//        <.h4("* Phân hủy nội bào trong yếm khí"),
-//        table(
-//          <.tr(ThongSo, td("Y", "CO2,decay", "an"), td("Y", "CH4,decay", "an")),
-//          <.tr(DonVi, <.td("kgCO2/kgVSS"), <.td("kgCH4/kgVSS"), <.td("gCaCO3/gVSS")),
-//          <.tr(GiaTri, tdInput(Data.yCO2AnDecay), tdInput(Data.yCH4AnDecay))
-//        ),
+        <.h3("2. Quá trình yếm khí"),
+        table(
+          <.tr(ThongSo, td("Y", "CO2", "an"), td("Y", "CH4", "an"), td("Y", "VSS", "an")),
+          <.tr(DonVi, <.td("kgCO2/kgBOD"), <.td("kgCH4/kgBOD"), <.td("kgVSS/kgBOD")),
+          <.tr(GiaTri, tdInput(Data.yCO2An), tdInput(Data.yCH4An), tdInput(Data.yVSSAn))
+        ),
+        <.h4("* Phân hủy nội bào trong yếm khí"),
+        table(
+          <.tr(ThongSo, td("Y", "CO2,decay", "an"), td("Y", "CH4,decay", "an")),
+          <.tr(DonVi, <.td("kgCO2/kgVSS"), <.td("kgCH4/kgVSS"), <.td("gCaCO3/gVSS")),
+          <.tr(GiaTri, tdInput(Data.yCO2AnDecay), tdInput(Data.yCH4AnDecay))
+        ),
         <.h3("2. Quá trình khử Nitơ"),
         <.h4("* Quá trình Nitrat hóa"),
         table(

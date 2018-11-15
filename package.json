@@ -18,6 +18,7 @@
     "concurrently": "^4.0.1",
     "css-loader": "^0.23.1",
     "del": "^2.2.2",
+    "electron": "^2.0.9",
     "electron-builder": "^20.28.4",
     "file-loader": "^0.8.5",
     "gulp": "^3.9.0",
@@ -29,6 +30,7 @@
     "webpack-dev-server": "1.16.2"
   },
   "dependencies": {
+    "@bower_components/MathJax": "mathjax/MathJax#~2.7.1",
     "d3": "^3.5.12",
     "electron-updater": "^3.1.2",
     "gulp-atom-electron": "^1.17.1",
@@ -74,5 +76,8 @@
         "dir"
       ]
     }
+  },
+  "engines": {
+    "yarn": ">= 1.0.0"
   }
 }

@@ -182,10 +182,10 @@ object KineticCoefficientPage {
           <.h3("Quá trình nitrat và khử nitrat"),
           nitratTbl(p.nitrate)
           //nitratGraph(p.nitrate)
-        )
-//        <.h3("Quá trình yếm khí"),
-//        anaerobicTbl(p.anaerobic),
-//        anaerobicGraph(p.anaerobic)
+        ),
+        <.h3("Quá trình yếm khí"),
+        anaerobicTbl(p.anaerobic),
+        anaerobicGraph(p.anaerobic)
       )
     }
   }

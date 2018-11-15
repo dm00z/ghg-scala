@@ -29,16 +29,16 @@ object SubstanceGraphPage {
         val b2 = d.bien2Ae
         val b3 = d.bien3
 
-        val rel = d.releaseResult
-        val rei = d.retrieveResult
+        val release = d.releaseResult
+        val retrieve = d.retrieveResult
 
         js.Dynamic.literal(
           "t" -> temp,
           "Nồng độ cơ chất (S)" -> b2.s,
           "Nồng độ sinh khối (X)" -> b2.X,
-          "Bể sinh học" -> rei.M_co2_quaTrinh,
-          "Bể bùn thu hồi - đốt" -> rei.M_co2tdPhanHuyDot,
-          "Bể bùn phóng không" -> rel.M_co2tdPhanHuyPhongKhong
+          "Bể sinh học" -> retrieve.M_co2_quaTrinh,
+          "Bể bùn thu hồi - đốt" -> retrieve.M_co2tdPhanHuyDot,
+          "Bể bùn phóng không" -> release.M_co2tdPhanHuyPhongKhong
         )
       }.toJsArray, true,
       ChartSerie("Nồng độ cơ chất (S)", "#008000"),

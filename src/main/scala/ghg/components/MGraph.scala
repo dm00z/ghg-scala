@@ -11,9 +11,10 @@ object MGraph {
             data: js.Array[js.Object with js.Dynamic],
             large: Boolean,
             chartSerie: ChartSerie*) = {
+
     val otherProps = js.Dynamic.literal(
-      width = if (large) 420 else 280,
-      height = 260,
+      width = 840,
+      height = 620,
       margins = js.Dynamic.literal(
         top = 20, bottom = 20, right = 34,
         left = if (large) 100 else 38

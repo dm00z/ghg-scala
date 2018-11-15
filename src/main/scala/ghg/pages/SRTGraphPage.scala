@@ -46,8 +46,8 @@ object SRTGraphPage {
     def graph2(r: Range, f: Double => GhgData, large: Boolean) = {
 
       val otherProps = js.Dynamic.literal(
-        width = if (large) 420 else 280,
-        height = 260,
+        width = if (large) 840 else 280,
+        height = 620,
         margins = js.Dynamic.literal(
           top = 20, bottom = 20, right = 34,
           left = if (large) 100 else 38
@@ -81,8 +81,8 @@ object SRTGraphPage {
     def graphTotal(r: Range, f: Double => GhgData, large: Boolean) = {
 
       val otherProps = js.Dynamic.literal(
-        width = if (large) 420 else 280,
-        height = 260,
+        width = if (large) 840 else 280,
+        height = 620,
         margins = js.Dynamic.literal(
           top = 20, bottom = 20, right = 34,
           left = if (large) 100 else 38

@@ -22,8 +22,7 @@ object AppHeader {
       val f = P.d().info.f
       <.div(
         <.div(
-          <.h1("MÔ HÌNH MTH"),
-          <.h2("TÍNH TOÁN PHÁT THẢI KHÍ NHÀ KÍNH TỪ HỆ THỐNG XỬ LÝ NƯỚC THẢI")
+          <.h1("MÔ HÌNH TÍNH TOÁN PHÁT THẢI KHÍ NHÀ KÍNH TỪ HỆ THỐNG XỬ LÝ NƯỚC THẢI")
         ),
         if(P.readonly) ^.backgroundColor := "#e4e5e6" else EmptyTag,
         ^.padding := "20px", ^.borderRadius := "5px", ^.width := "82%", ^.color := "#1254d6",

@@ -58,4 +58,4 @@ case class DirectTable(streamIn: StreamInData, primaryPool: PrimaryPoolData,
                        decayPool: PoolData,
                        anaerobicPool: Option[DirectTable.PoolData] = None,
                        aerobicPool: Option[DirectTable.PoolData] = None,
-                       streamOut: DirectTable.StreamOutData = DirectTable.StreamOutData(10, 4.54, 10, 10, 30, 25.5))
+                       streamOut: StreamOutData)
