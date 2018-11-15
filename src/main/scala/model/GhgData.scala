@@ -129,56 +129,6 @@ case class GhgData(info: InfoData, indirect: IndirectData, direct: DirectData) {
       co2_quaTrinhHieuKhi, n2o, co2_n2o, 0, tyLePhatThai)
   }
 
-
-//  lazy val bien2Ana: Bien2Output = {
-//    val pool = direct.d.anaerobicPool.get
-//    val ef = direct.coef.anaerobic
-//
-//    val b1 = bien1
-//    val s = ef.ks(ef.t_an) * (1 + ef.kd * pool.srt) / (pool.srt * (ef.y * ef.k(ef.t_an) - ef.kd) - 1)
-//
-//    val pPool = direct.d.primaryPool
-//    val q_v = info.power - pPool.q
-//
-//    val s_v = direct.d.streamIn.s - b1.bod_khuBl / q_v
-//
-//    val X = pool.srt / pool.hrtDay * ef.y * (s_v - s) / (1 + ef.kd * pool.srt)
-//
-//    val ss_v = b1.s_ov - b1.ss_khuBl / q_v
-//    val vss_v = 0.85 * ss_v
-//
-//    val X_nbV = 0 //vss_v * (1 - 60D/ 73)
-//    val X_nb = ef.fd * ef.kd *  X * pool.srt + X_nbV * pool.srt / pool.hrtDay
-//
-//    val V = pool.hrtDay * q_v
-//    val p_ssBod = X * V / pool.srt
-//
-//    val p_ssManhTeBao = ef.fd * ef.kd * X * V
-//    val p_ssNbVss = X_nbV * V / pool.hrtDay
-//
-//    val p_ss = p_ssBod + p_ssManhTeBao + p_ssNbVss
-//    val p_ssBio = p_ss - p_ssNbVss //=..
-//
-//    val relation = direct.relation
-//    //bod_khu
-//    val bod_khu_an = q_v * (s_v - s) - relation.rCO2Decay * p_ssBio
-//    val co2_khu_bod = relation.yCO2An * bod_khu_an
-//    val vss_phanhuy = .85 * V * ef.kd * X
-//    val co2_phanhuy = relation.yCO2AnDecay * vss_phanhuy
-//
-//    val co2_quaTrinh = co2_khu_bod + co2_phanhuy
-//    val ch4_beYemKhi = relation.yCH4An * bod_khu_an + relation.yCH4AnDecay * vss_phanhuy
-//
-//    val tyLePhatThai = co2_quaTrinh/pPool.q
-//
-//    Bien2Output(s, q_v, s_v, X, ss_v, vss_v, X_nbV, X_nb, V, p_ssBod, p_ssManhTeBao, p_ssNbVss,
-//      0, 0, 0, 0, 0, 0/*N, calcN, m_nit, srtNit, x_nit, p_ssNit*/, p_ssBio, p_ss,
-//      bod_khu_an /*bod_ox*/, 0, 0 /*bod_ox_dnt, bod_khuThuc*/, co2_khu_bod, vss_phanhuy, co2_phanhuy, 0, 0/*co2_dnt, co2_tieuThuNit*/,
-//      co2_quaTrinh, 0, 0 /*n2o, co2_n2o*/,
-//      ch4_beYemKhi, tyLePhatThai)
-//  }
-  // --------------------------------------------------------------------------------------------------
-
   /** required: direct.d.aerobicPool.isDefined */
   lazy val bien2Ae: Bien2Output = {
     val pool = direct.d.aerobicPool.get
@@ -468,27 +418,6 @@ case class GhgData(info: InfoData, indirect: IndirectData, direct: DirectData) {
       sumKNKByWasteDisposal, tyle_co2_quaTrinh, tyle_co2tdPhanHuyPhongKhong, tyle_co2BODra, tyle_phatThai_co2td_n2o, sumKNKAll,
       tyle_elecPower, tyle_wasteDisposal)
   }
-
-
-//  lazy val bien2un: Bien2UnstablOutput = {
-//    val pPool = direct.d.primaryPool
-//
-//    //val solver = new RungeKutta("RK4", AdjustParameters(0, 2, .2))
-//    //val S = solver.solve(0, 2, (x: Double, y: Double) => 60/8-y/8-(2.18*x*y)/(4763*(60+y)))
-//
-//    def rk4(max: Double, f: (Double, Double) => Double): List[Double] = {
-//      def calc(h: Double,x: Double, y: Double, func: (Double, Double) => Double): Double = {
-//        val dy1 = h * func(x, y)
-//        val dy2 = h * func(x + h/2, y + dy1/2)
-//        val dy3 = h * func(x + h/2, y + dy2/2)
-//        val dy4 = h * func(x + h, y + dy3)
-//
-//        y + ((dy1 + 2 * dy2 + 2 * dy3 + dy4) / 6)
-//      }
-//
-//
-//    }
-//  }
 }
 
 case class Bien1Output(ss_ov: Double,

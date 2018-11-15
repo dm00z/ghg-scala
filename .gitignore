@@ -15,6 +15,7 @@ npm-debug.log
 /app/
 /dist/
 /.electron-cache/
+/exportToHTML/
 
 # OSX
 .DS_Store
