@@ -21,14 +21,14 @@ object SampleData {
   ))
 
   val sampleElectricD3 = D3(List(
-    D3.Row("Bơm nước thải bể điều hòa", 3.7, 1, 20),
-    D3.Row("Bơm nước thải bể thoát nước", 3.7, 1, 20),
+    D3.Row("Bơm nước thải bể điều hòa", 3.7, 2, 12),
+    D3.Row("Bơm nước thải bể thoát nước", 3.7, 2, 12),
     D3.Row("Máy thổi khí trên cạn bể hiếu khí", 15, 1, 24),
-    D3.Row("Máy thổi khí bể điều hòa", 4, 1, 20),
-    D3.Row("Bơm bùn", 1.5, 1, 20),
-    D3.Row("Máy khuấy chìm", 0.75, 2, 20),
-    D3.Row("Bơm định lượng", 0.18, 1, 20),
-    D3.Row("Động cơ khuấy trộn hóa chất", 0.4, 1, 0.5),
+    D3.Row("Máy thổi khí bể điều hòa", 4, 1, 24),
+    D3.Row("Bơm bùn", 1.5, 1, 12),
+    D3.Row("Máy khuấy chìm", 0.75, 1, 24),
+    D3.Row("Bơm định lượng", 0.18, 1, 24),
+    D3.Row("Động cơ khuấy trộn hóa chất", 0.4, 1, 24),
     D3.Row("Quạt hút mùi", 0.75, 1, 24)
   ))
 

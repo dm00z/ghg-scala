@@ -1,18 +1,13 @@
 package ghg.pages
 
+import reactd3.{ChartSerie, PieChart}
+import scala.scalajs.js
+import ghg.Utils._
 import diode.react.ModelProxy
-import ghg.components.MGraph
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
-import model.KineticCoefficientData.Nitrate.MT
-import model.{GhgData, KineticCoefficientData, TechMethod}
-import reactd3.{ChartSerie, PieChart}
-
-import scala.scalajs.js
-import tex.TeX._
-import ghg.Utils._
-import KineticCoefficientData._
-import ghg.pages.DirectDataPage.Props
+import model.GhgData
+import scalacss.Defaults._
 
 object RetrievePage {
   type Props = ModelProxy[GhgData]
@@ -70,8 +65,11 @@ object RetrievePage {
 
       def dataTbl() = {
         table(
-          <.tr(<.th(^.rowSpan := 2, "Nguồn phát thải"), <.th(^.colSpan := 2, "Loại phát thải"), <.th(^.rowSpan := 2, "Tỷ lệ % theo nguồn")),
-          <.tr(<.th("Từ sản xuất điện năng phục vụ HTXLNT (kg/ngày)"), <.th("Từ quá trình xử lý nước thải (kg/ngày)")),
+          <.tr(<.th(^.color := "white", ^.backgroundColor := "#145dbf",^.rowSpan := 2, "Nguồn phát thải"),
+            <.th(^.color := "white", ^.colSpan := 2, ^.backgroundColor := "#145dbf", "Loại phát thải"),
+            <.th(^.color := "white", ^.rowSpan := 2, ^.backgroundColor := "#145dbf", "Tỷ lệ % theo nguồn")),
+          <.tr(<.th(^.color := "white", ^.backgroundColor := "#145dbf", "Từ sản xuất điện năng phục vụ HTXLNT (kg/ngày)"),
+            <.th(^.color := "white", ^.backgroundColor := "#145dbf", "Từ quá trình xử lý nước thải (kg/ngày)")),
           <.tr(<.td("Tiêu thụ điện năng"), <.td(retrieve.elecPower.toFixed(2)), <.td(), <.td()),
           <.tr(<.td("Bể xử lý sinh học"), <.td(), <.td((retrieve.M_co2_quaTrinh).toFixed(2)), <.td((retrieve.tyle_co2_quaTrinh*100).toFixed(2) + "%")),
           <.tr(<.td("Phân huỷ bùn yếm khí, thu hồi và đốt CH4"), <.td(), <.td((retrieve.M_co2tdPhanHuyDot).toFixed(2)), <.td((retrieve.tyle_co2tdPhanHuyDot*100).toFixed(2) + "%")),
@@ -85,7 +83,13 @@ object RetrievePage {
 
       <.div(
         <.h2("4.1.Trường hợp thu hồi và đốt khí CH4"),
-        dataTbl()
+        dataTbl(),
+        <.div(
+        <.div(^.`class` := "input-field note-area",
+          <.label("Ghi chú"), <.p(<.textarea("Ghi chú ở đây"))),
+        <.div(^.`class` := "graph-area",
+          <.label("Biểu đồ"))
+        )
         //pieGraph(1 to 1, true, data)
       )
     }
