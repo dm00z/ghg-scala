@@ -17,7 +17,7 @@ object GhgPage {
       fontSize(14.px),
       display.flex,
       minHeight(94.vh),
-      backgroundColor(c"#e4e5e6"),
+      backgroundColor.white,
       height :=! "100%"
     )
 
@@ -27,19 +27,21 @@ object GhgPage {
       flexDirection.column,
       padding.`0`,
       width(300.px),
-      backgroundColor(c"#ebfaeb"),
+      backgroundColor(c"#145dbf"),
       color(c"#fff"),
       height :=! "100%"
 
     )
 
     val content = style(
-      marginLeft(300.px),
+      marginLeft(320.px),
+      marginTop(20.px),
+      marginRight(20.px),
       paddingLeft(10.px),
       paddingRight(10.px),
       paddingTop(5.px),
       paddingBottom(5.px),
-      border :=! "1px solid rgb(223, 220, 220)",
+      border :=! "3px solid rgb(223, 220, 220)",
       flex := "1")
   }
 

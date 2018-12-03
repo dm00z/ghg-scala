@@ -61,7 +61,7 @@ object Utils {
                validator: String => Boolean = _.decimal)
               (implicit d: D, dispatch: D => Callback) =
     <.input(
-      ^.value := lens.get(d),
+      ^.value := lens.get(d).toFixed(2),
       ^.onChange ==> { e: ReactEventI =>
         val valid = validator(e.target.value)
         Callback.ifTrue(valid, dispatch(lens.set(e.target.value.toDouble)(d)))

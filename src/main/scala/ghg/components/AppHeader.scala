@@ -24,8 +24,8 @@ object AppHeader {
         <.div(
           <.h1("MÔ HÌNH TÍNH TOÁN PHÁT THẢI KHÍ NHÀ KÍNH TỪ HỆ THỐNG XỬ LÝ NƯỚC THẢI")
         ),
-        if(P.readonly) ^.backgroundColor := "#e4e5e6" else EmptyTag,
-        ^.padding := "20px", ^.borderRadius := "5px", ^.width := "82%", ^.color := "#1254d6",
+        if(P.readonly) ^.backgroundColor := "white" else EmptyTag,
+        ^.padding := "20px", ^.borderRadius := "5px", ^.width := "96%", ^.color := "#1254d6",
 
         if (P.readonly) EmptyTag else <.div(
           <.label("Tải dữ liệu: "),
@@ -41,7 +41,7 @@ object AppHeader {
               P.d.dispatch(SampleData.data)
             }
           )
-        ),
+        )
 //        <.div(<.label("Loại nước thải: "),
 //          if(P.readonly) f.tpe.toString
 //          else <.select(
@@ -66,16 +66,17 @@ object AppHeader {
 //            }
 //          )
 //        ),
-        <.div(<.label("Tên nhà máy: "),
-          if(P.readonly) f.name
-          else MuiTextField(value = f.name, style = txtStyle, onChange = { e: ReactEventI => P.d.dispatch(f.copy(name = e.target.value))})()
-        ),
-        <.div(<.label("Địa điểm: "),
-          if(P.readonly) f.addr
-          else MuiTextField(value = f.addr, style = txtStyle, onChange = {e: ReactEventI => P.d.dispatch(f.copy(addr = e.target.value))})()
-        ),
-        <.div(<.label("Hạng mục: "), P.group),
-        P.subGroup.fold(EmptyTag)(v => <.div(<.label("Tiểu mục: "), v))
+
+//        <.div(<.label("Tên nhà máy: "),
+//          if(P.readonly) f.name
+//          else MuiTextField(value = f.name, style = txtStyle, onChange = { e: ReactEventI => P.d.dispatch(f.copy(name = e.target.value))})()
+//        ),
+//        <.div(<.label("Địa điểm: "),
+//          if(P.readonly) f.addr
+//          else MuiTextField(value = f.addr, style = txtStyle, onChange = {e: ReactEventI => P.d.dispatch(f.copy(addr = e.target.value))})()
+//        ),
+//        <.div(<.label("Hạng mục: "), P.group),
+//        P.subGroup.fold(EmptyTag)(v => <.div(<.label("Tiểu mục: "), v))
       )
     }
   }

@@ -8,9 +8,11 @@ object Styles extends StyleSheet.Standalone {
   @inline def borderCls = "border"
 
   s".$borderCls, .$borderCls tr, .$borderCls td, .$borderCls th" - (
-    border(1.px, solid, white),
+    border(1.px, solid, black),
     borderCollapse.collapse
   )
+
+  "h2" - fontSize(1.2.em)
 
   ".visitors .sparkline" - (
     fill.none,
@@ -28,11 +30,11 @@ object Styles extends StyleSheet.Standalone {
     marginTop(10.px),
     borderCollapse.collapse,
     borderSpacing(2.px),
-    width :=! "40%",
+    width :=! "100%",
     backgroundColor.white,
     borderRadius(5.px),
     overflow.hidden,
-    boxShadow := ("0 0px 40px 0px rgba(0, 0, 0, 0.15)")
+    boxShadow := "0 0px 40px 0px rgba(0, 0, 0, 0.15)"
   )
 
   "tr" - (
@@ -59,6 +61,7 @@ object Styles extends StyleSheet.Standalone {
     borderBottomColor :=! ("#21A8DE"),
     borderBottomWidth(1.px),
     backgroundColor.transparent
+    //width :=! "15%"
   )
 
   "hr" - (
@@ -66,5 +69,42 @@ object Styles extends StyleSheet.Standalone {
     borderStyle.solid,
     borderTopWidth(0.5.px),
     borderTopColor :=! "#0275d8"
+  )
+
+  "#container h1" - (
+    textAlign.center,
+    backgroundColor.white,
+    fontSize.large,
+    marginTop(-40.px)
+  )
+
+  ".note-area" - (
+    float.left,
+    padding(5.px),
+    width :=! "30%",
+    maxWidth :=! "30%",
+    border(2.px, solid, rgb(223, 220, 220)),
+    marginTop(20.px),
+    height(207.px)
+  )
+
+  ".note-area label" - (
+    //fontStyle.italic,
+    fontWeight.bold
+  )
+
+  ".graph-area" - (
+    float.right,
+    padding(5.px),
+    width :=! "65%",
+    maxWidth :=! "65%",
+    border(2.px, solid, rgb(223, 220, 220)),
+    marginTop(20.px),
+    height(207.px)
+  )
+
+  ".graph-area label" - (
+    //fontStyle.italic,
+    fontWeight.bold
   )
 }

@@ -27,21 +27,21 @@ object LeftNav {
         padding :=! "0 25px",
         cursor.pointer,
         textDecoration := "none",
-        marginLeft((indentLevel * 5).px),
-        mixinIf(indentLevel == 0)(fontWeight.bold),
+        marginLeft((indentLevel * 17).px),
+
 
         mixinIfElse(selected)(
           color.white,
-          backgroundColor(c"#a0d4f3")
-        )(color.black,
+          backgroundColor(c"#3d7ed5")
+        )(color.white,
           &.hover(
             color(c"#555555"),
-            backgroundColor(c"#ecf0f1")
+            backgroundColor(c"#3d7ed5")
           )
         ),
-
-        transition := "background .3s ease-in-out",
-        color.black
+        mixinIf(indentLevel == 0)(fontWeight.bold, color.white),
+        mixinIf(indentLevel != 0)(color(c"#bac4d1")),
+        transition := "background .3s ease-in-out"
       )
     }
 
@@ -57,6 +57,15 @@ object LeftNav {
       padding.`0`,
       transition := "width .25s"
     )
+
+    val sideSpan = style(
+      position.relative,
+      fontWeight._700,
+      backgroundColor(c"#124e9f"),
+      minHeight.maxContent,
+      lineHeight(35.px),
+      padding :=! "0 25px"
+    )
   }
 
   case class Props(menus: List[AppRoute], selectedPage: AppRoute, ctrl: RouterCtl[AppRoute])
@@ -64,6 +73,7 @@ object LeftNav {
   case class Backend($: BackendScope[Props, _]){
     def render(P: Props) = {
       <.nav(Style.sidebarNav)(
+        <.span(Style.sideSpan)("Menu"),
         <.ul(Style.container)(
           P.menus.map { item =>
             <.li(
