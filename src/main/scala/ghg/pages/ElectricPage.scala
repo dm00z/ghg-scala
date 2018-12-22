@@ -1,6 +1,6 @@
 package ghg.pages
 
-import chandu0101.scalajs.react.components.materialui.{MuiDropDownMenuItem, MuiDropDownMenu}
+import chandu0101.scalajs.react.components.materialui.{MuiDropDownMenuItem, MuiDropDownMenu, MuiTabs, MuiTab}
 import diode.react.ModelProxy
 import ghg.components.{Electric1, Electric2, Electric3}
 import japgolly.scalajs.react._
@@ -9,7 +9,10 @@ import model.ElectricData.{PowerSupply, CalcMethod}
 import model.GhgData
 import scala.scalajs.js, js.JSConverters._
 import ghg.Utils._
-import scala.scalajs.js.JSNumberOps._
+
+import scala.scalajs.js.Dynamic.{literal => jsObj}
+
+
 
 object ElectricPage {
   type Props = ModelProxy[GhgData]
@@ -21,6 +24,8 @@ object ElectricPage {
     @inline def calcMethods = CalcMethod.values.map(m => MuiDropDownMenuItem(m.id.toString, m.toString)).toJSArray
 
     def render(P: Props) = {
+      lazy val tabLabel = jsObj(backgroundColor = "#145dbf", fontWeight = 700, textTransform = "none")
+      import scala.scalajs.js.JSNumberOps._
       val my = P.my()
 
       val rows = my.powerStruct.supplies.zipWithIndex.map {
@@ -42,41 +47,83 @@ object ElectricPage {
           )
       }
 
+
+
       <.div(
-        <.h2("2.1. Công suất điện năng sử dụng trong HTXLNT"),
-        <.label("Cách tính công suất tiêu thụ điện năng: "),
-        MuiDropDownMenu(
-          menuItems = calcMethods,
-          selectedIndex = my.method.id,
-          onChange = (_: ReactEventI, i: Int, _: js.Any) => P.dispatch(CalcMethod(i))
-        )(),
-        my.method match {
-          case CalcMethod.Method1 => Electric1(P)
-          case CalcMethod.Method2 => Electric2(P)
-          case CalcMethod.Method3 => Electric3(P)
-        },
-        <.h2("2.2. Hệ số phát thải khí nhà kính từ sản xuất điện năng"),
-        table(
-          <.th("Nguồn điện"),
-          <.th("Hệ số phát thải EFi (g", <.sub("CO2-td"), "/Kwh)"),
-          <.th("Cơ cấu nguồn điện PFi (%)"),
-          <.th("PFi * EFi"),
-          <.th("Tài liệu tham khảo")
-        )(
-          rows :+ <.tr(
-            <.td(^.colSpan := 3, "Tổng"),
-            <.td(my.powerStruct.totalRatio.toFixed(3)),
-            <.td()
-          ) :_*
-        ),
-        <.h2("2.3. Phát thải KNK từ tiêu thụ điện năng sử dụng trong HTXLNT"), // = ${P().ghgElectric.toFixed(3)} (kg", <.sub("CO2-td"), "/day)"
-        <.div("Công thức tính: `P_(CO2,điện) = QE * tổng(PF_i * EF_i)`",
-          dataTbl(
-            tr("P", "CO2, điện", P().ghgElectric, "gCO2/ngày"), //Lượng SS bị khử trong bể lắng sơ cấp (g/day)
-            tr("QE", "", P().electricPower, "kwh/ngày"), //Công suất dòng vào ban đầu
-            tr("Tổng (PFi * EFi)", "", my.powerStruct.totalRatio, "gC02/kwh")
+        MuiTabs()(
+          MuiTab(label = "Công suất điện năng sử dụng trong HTXLNT", style = tabLabel)(
+            <.label("Cách tí" +
+              "nh công suất tiêu thụ điện năng: "),
+            MuiDropDownMenu(
+              menuItems = calcMethods,
+              selectedIndex = my.method.id,
+              onChange = (_: ReactEventI, i: Int, _: js.Any) => P.dispatch(CalcMethod(i))
+            )(),
+            my.method match {
+              case CalcMethod.Method1 => Electric1(P)
+              case CalcMethod.Method2 => Electric2(P)
+              case CalcMethod.Method3 => Electric3(P)
+            }
+          ),
+          MuiTab(label = "Hệ số phát thải khí nhà kính từ sản xuất điện năng", style = tabLabel)(
+            table(
+              <.th("Nguồn điện"),
+              <.th("Hệ số phát thải EFi (g", <.sub("CO2-td"), "/Kwh)"),
+              <.th("Cơ cấu nguồn điện PFi (%)"),
+              <.th("PFi * EFi"),
+              <.th("Tài liệu tham khảo")
+            )(
+              rows :+ <.tr(
+                <.td(^.colSpan := 3, "Tổng"),
+                <.td(my.powerStruct.totalRatio.toFixed(3)),
+                <.td()
+              ) :_*
+            )
+          ),
+          MuiTab(label = "Công suất điện năng sử dụng trong HTXLNT", style = tabLabel)(
+            <.div("Công thức tính: `P_(CO2,điện) = QE * tổng(PF_i * EF_i)`",
+              dataTbl(
+                tr("P", "CO2, điện", P().ghgElectric, "gCO2/ngày"), //Lượng SS bị khử trong bể lắng sơ cấp (g/day)
+                tr("QE", "", P().electricPower, "kwh/ngày"), //Công suất dòng vào ban đầu
+                tr("Tổng (PFi * EFi)", "", my.powerStruct.totalRatio, "gC02/kwh")
+              )
+            )
           )
         )
+//        <.h2("2.3. Phát thải KNK từ tiêu thụ điện năng sử dụng trong HTXLNT"),
+//        <.label("Cách tính công suất tiêu thụ điện năng: "),
+//        MuiDropDownMenu(
+//          menuItems = calcMethods,
+//          selectedIndex = my.method.id,
+//          onChange = (_: ReactEventI, i: Int, _: js.Any) => P.dispatch(CalcMethod(i))
+//        )(),
+//        my.method match {
+//          case CalcMethod.Method1 => Electric1(P)
+//          case CalcMethod.Method2 => Electric2(P)
+//          case CalcMethod.Method3 => Electric3(P)
+//        },
+//        <.h2("2.2. Hệ số phát thải khí nhà kính từ sản xuất điện năng"),
+//        table(
+//          <.th("Nguồn điện"),
+//          <.th("Hệ số phát thải EFi (g", <.sub("CO2-td"), "/Kwh)"),
+//          <.th("Cơ cấu nguồn điện PFi (%)"),
+//          <.th("PFi * EFi"),
+//          <.th("Tài liệu tham khảo")
+//        )(
+//          rows :+ <.tr(
+//            <.td(^.colSpan := 3, "Tổng"),
+//            <.td(my.powerStruct.totalRatio.toFixed(3)),
+//            <.td()
+//          ) :_*
+//        ),
+//        <.h2("2.3. Phát thải KNK từ tiêu thụ điện năng sử dụng trong HTXLNT"), // = ${P().ghgElectric.toFixed(3)} (kg", <.sub("CO2-td"), "/day)"
+//        <.div("Công thức tính: `P_(CO2,điện) = QE * tổng(PF_i * EF_i)`",
+//          dataTbl(
+//            tr("P", "CO2, điện", P().ghgElectric, "gCO2/ngày"), //Lượng SS bị khử trong bể lắng sơ cấp (g/day)
+//            tr("QE", "", P().electricPower, "kwh/ngày"), //Công suất dòng vào ban đầu
+//            tr("Tổng (PFi * EFi)", "", my.powerStruct.totalRatio, "gC02/kwh")
+//          )
+//        )
       )
     }
   }

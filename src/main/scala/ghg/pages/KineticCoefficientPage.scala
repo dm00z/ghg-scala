@@ -1,16 +1,21 @@
 package ghg.pages
 
+import chandu0101.macros.tojs.GhPagesMacros
+import chandu0101.scalajs.react.components.materialui.{MuiTab, MuiTabs}
 import diode.react.ModelProxy
+import ghg.Utils._
 import ghg.components.MGraph
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import model.KineticCoefficientData.Nitrate.MT
-import model.{TechMethod, KineticCoefficientData, GhgData}
+import model.KineticCoefficientData._
+import model.{GhgData, TechMethod}
 import reactd3.ChartSerie
-import scala.scalajs.js
+import scalacss.ProdDefaults._
 import tex.TeX._
-import ghg.Utils._
-import KineticCoefficientData._
+import scala.scalajs.js.Dynamic.{literal => jsObj}
+
+import scala.scalajs.js
 
 object KineticCoefficientPage {
   type Props = ModelProxy[GhgData]
@@ -20,10 +25,22 @@ object KineticCoefficientPage {
 
   @inline def td2(s: String) = <.td(^.rowSpan := 2, <.b(s))
 
+  object Style extends StyleSheet.Inline {
+
+    import dsl._
+
+    val tabContent = style(
+      textAlign.center,
+      padding(40.px)
+    )
+  }
+
   case class Backend($: BackendScope[Props, _]) {
+
     def render(P: Props) = {
       def aerobicTbl(implicit d: Aerobic) = {
         import scala.scalajs.js.JSNumberOps._
+        import chandu0101.scalajs.react.components.materialui._
         @inline implicit def dispatch: Aerobic => Callback = P.my.dispatch
 
         val tbl = table(
@@ -173,19 +190,45 @@ object KineticCoefficientPage {
       val tech = P().info.tech
       val p = P.my()
 
+//      <.div(
+//        MuiTabs(value = current) {
+//          MuiTab(label = js.defined("Tab1"), value = 1)(
+//            <.h3(Style.tabContent, "Tab1 Content")
+//          ),
+//          MuiTab(label = js.defined("Tab2"), value = 2)(
+//            <.h3(Style.tabContent, "Tab2 Content")
+//          )
+//        }
+//      )
+
+      lazy val tabLabel = jsObj(backgroundColor = "#145dbf", fontWeight = 700, textTransform = "none")
+
       <.div(
         if (tech == TechMethod.An) EmptyTag
         else Seq[TagMod](
-          <.h3("Quá trình hiếu khí"),
-          aerobicTbl(p.aerobic),
-          //aerobicGraph(p.aerobic),
-          <.h3("Quá trình nitrat và khử nitrat"),
-          nitratTbl(p.nitrate)
-          //nitratGraph(p.nitrate)
-        ),
-        <.h3("Quá trình yếm khí"),
-        anaerobicTbl(p.anaerobic),
-        anaerobicGraph(p.anaerobic)
+          MuiTabs()(
+            MuiTab(label = "Quá trình hiếu khí", style = tabLabel)(
+              aerobicTbl(p.aerobic)
+            ),
+            MuiTab(label = "Quá trình nitrat và khử nitrat", style = tabLabel)(
+              nitratTbl(p.nitrate)
+            ),
+            MuiTab(label = "Quá trình yếm khí", style = tabLabel)(
+              anaerobicTbl(p.anaerobic),
+              anaerobicGraph(p.anaerobic)
+            )
+          )
+//          <.h3("Quá trình hiếu khí"),
+//          aerobicTbl(p.aerobic),
+//          //aerobicGraph(p.aerobic),
+//          <.h3("Quá trình nitrat và khử nitrat"),
+//          nitratTbl(p.nitrate)
+//          //nitratGraph(p.nitrate)
+//        ),
+//        <.h3("Quá trình yếm khí"),
+//        anaerobicTbl(p.anaerobic),
+//        anaerobicGraph(p.anaerobic)
+      )
       )
     }
   }

@@ -12,6 +12,10 @@ object Styles extends StyleSheet.Standalone {
     borderCollapse.collapse
   )
 
+  ".dataTable" - (
+    width :=! "75%"
+  )
+
   "h2" - fontSize(1.2.em)
 
   ".visitors .sparkline" - (
@@ -30,7 +34,6 @@ object Styles extends StyleSheet.Standalone {
     marginTop(10.px),
     borderCollapse.collapse,
     borderSpacing(2.px),
-    width :=! "100%",
     backgroundColor.white,
     borderRadius(5.px),
     overflow.hidden,
@@ -60,8 +63,8 @@ object Styles extends StyleSheet.Standalone {
     borderRightColor.transparent,
     borderBottomColor :=! ("#21A8DE"),
     borderBottomWidth(1.px),
-    backgroundColor.transparent
-    //width :=! "15%"
+    backgroundColor.transparent,
+    width :=! "35%"
   )
 
   "hr" - (

@@ -47,7 +47,7 @@ object Utils {
     <.thead(<.tr(th: _*)),
     <.tbody(xs: _*)
   )
-  def table(xs: TagMod*) = <.table(^.className := Styles.borderCls, <.tbody(xs: _*))
+  def table(xs: TagMod*) = <.table(^.className := Styles.borderCls,^.className := "dataTable",<.col(^.width := "34%"),<.col(^.width := "33%"),<.col(^.width := "33%"), <.tbody(xs: _*))
   @inline def td(n: String, sub: String) = <.td(n, <.sub(sub))
   def td(n: String, sub: String, sup: String) = <.td(n, <.sup(sup), <.sub(^.marginLeft := "-10px", sub))
 
@@ -109,9 +109,9 @@ object Utils {
 
   def dataTbl(result: TagMod, dataRows: TagMod*) =
     table(
-      <.tr(<.td(^.colSpan := 3, <.b("Dữ liệu:"))),
+      <.tr(<.td(^.colSpan := 3, ^.color := "white",^.backgroundColor := "#145dbf", <.b("Dữ liệu:"))),
       dataRows,
-      <.tr(<.td(^.colSpan := 3, <.b("Kết quả tính toán:"))),
+      <.tr(<.td(^.colSpan := 3, ^.color := "white",^.backgroundColor := "#145dbf", <.b("Kết quả tính toán:"))),
       result
     )
 
@@ -119,9 +119,9 @@ object Utils {
     rows.splitAt(numResult) match {
       case (results, dataRows) =>
         table(
-          <.tr(<.td(^.colSpan := 3, <.b("Dữ liệu:"))),
+          <.tr(<.td(^.colSpan := 3, ^.color := "white",^.backgroundColor := "#145dbf", <.b("Dữ liệu:"))),
           dataRows,
-          <.tr(<.td(^.colSpan := 3, <.b("Kết quả tính toán:"))),
+          <.tr(<.td(^.colSpan := 3, ^.color := "white",^.backgroundColor := "#145dbf", <.b("Kết quả tính toán:"))),
           results
         )
     }
