@@ -24,7 +24,7 @@ object DirectDataPage {
         @inline implicit def dispatchPriPool: PrimaryPoolData => Callback = my.dispatch
         @inline implicit def dispatch: PoolData => Callback = pd => my.dispatch(tpe -> pd)
 
-        table(
+        table4(
           <.tr(ThongSo, DonVi, GiaTri, GhiChu),
           <.tr(td("Q", "o,v"), <.td("m3/day"),
             <.td(P().info.power),

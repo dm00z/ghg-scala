@@ -17,7 +17,7 @@ object D3Graph {
       val a: js.Array[Double] = js.Array()
       var x = range.min
       while (x < range.max) {
-        a push f(x)
+        a.push(f(x))
         x += step
       }
       a

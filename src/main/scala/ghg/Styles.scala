@@ -12,7 +12,11 @@ object Styles extends StyleSheet.Standalone {
     borderCollapse.collapse
   )
 
-  ".dataTable" - (
+  ".4col .dataTable" - (
+    width :=! "75%"
+  )
+
+  ".calcTable .dataTable" - (
     width :=! "75%"
   )
 
@@ -64,7 +68,7 @@ object Styles extends StyleSheet.Standalone {
     borderBottomColor :=! ("#21A8DE"),
     borderBottomWidth(1.px),
     backgroundColor.transparent,
-    width :=! "35%"
+    width :=! "100%"
   )
 
   "hr" - (
@@ -103,7 +107,7 @@ object Styles extends StyleSheet.Standalone {
     maxWidth :=! "65%",
     border(2.px, solid, rgb(223, 220, 220)),
     marginTop(20.px),
-    height(207.px)
+    height :=! "auto"
   )
 
   ".graph-area label" - (

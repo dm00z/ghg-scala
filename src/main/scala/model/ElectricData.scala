@@ -50,7 +50,7 @@ object ElectricData {
     }
     object Row { def apply(): Row = Row("", 0, 1, 0) }
 
-    val heSoDien = .85*850/1050
+    val heSoDien = .85
 
     val RatioOther = RNorm(R(.01, 1), .01)
     val EtieuThu = RNorm(R(0, 1), heSoDien)

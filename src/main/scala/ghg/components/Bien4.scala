@@ -17,7 +17,7 @@ object Bien4 {
       val b2 = d.bien2Ae
       val relation = d.direct.relation
 
-      <.div(
+      <.div(^.className := "calcTable",
         <.h3("4. Lượng KNK từ phân hủy yếm khí"),
         <.h4("4.1. Lượng bùn phân hủy sinh học"),
         <.div("Công thức tính: `P_(bunsinhhoc) = 0.6 * P_(X, bio)`".teX),

@@ -13,7 +13,7 @@ object Bien5 {
   case class Backend($: BackendScope[Props, _]) {
     def render(d: Props) = {
       val b5 = d.bien5
-      <.div(
+      <.div(^.className := "calcTable",
         <.h3(f"5. Tính toán phát thải khí N2O từ hệ thống XLNT"),
         <.h4("5.1 Phát thải N2O gián tiếp từ nước thải dòng ra"),
         <.div("Công thức tính: Phát thải `N_2O = N_(dòng ra) * EF_(dòng ra) * 44/28`".teX),

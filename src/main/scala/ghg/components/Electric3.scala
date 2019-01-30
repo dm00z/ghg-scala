@@ -61,7 +61,7 @@ object Electric3 {
       @inline def addRow(e: ReactMouseEvent) = P.dispatch(my.copy(rows = my.rows :+ D3.Row()))
 
       <.div(
-        table(
+        table7(
           <.th("TT"), <.th(), <.th("Thiết bị"), <.th("CS lắp đặt (kw)"), <.th("Số lượng"),
           <.th("Số giờ làm việc / ngày"), <.th("Công suất tiêu thụ điện năng (kwh/day)")
         )(rows ++ List(

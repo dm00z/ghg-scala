@@ -20,7 +20,7 @@ object Bien3 {
       val (b2, b3) = if(props.isAerobic) (d.bien2Ae, d.bien3) else (d.bien2Ana, d.bien3Ana)
       val ane = d.direct.coef.anaerobic
 
-      <.div(
+      <.div(^.className := "calcTable",
         <.h3("3. Lượng CO2 từ phân hủy BOD còn lại trong dòng ra"),        
         <.div("Công thức tính: `MCO2, BODra = (Y_(CO2) +Y_(VSS).Y_(CO2,phanhuy))*S*Qr`".teX),
         dataTbl(

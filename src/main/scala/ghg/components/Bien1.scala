@@ -12,7 +12,7 @@ object Bien1 {
   case class Backend($: BackendScope[Props, _]) {
     def render(d: Props) = {
       val b1 = d.bien1
-      <.div(
+      <.div(^.className := "calcTable",
         <.h3("1. Đường biên 1 - Bể xử lý sơ cấp"),
         <.h4("1.1. Lượng SS bị khử trong bể xử lý sơ cấp"),
         <.div("Công thức tính: `SS_(khu,bl) = Pr_(bl,SS) * Q_(o,v) * SS_(o,v)`".teX),

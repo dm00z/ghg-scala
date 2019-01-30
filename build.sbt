@@ -1,8 +1,16 @@
-enablePlugins(ScalaJSPlugin)
+lazy val root = (project in file(".")).
+  enablePlugins(ScalaJSPlugin).
+  settings(
+    name := "ghg",
+    version := "0.3",
+    scalaVersion := "2.11.7"
+  )
 
-name := "ghg"
-version := "0.2"
-scalaVersion := "2.11.7"
+//enablePlugins(ScalaJSPlugin)
+//
+//name := "ghg"
+//version := "0.3"
+//scalaVersion := "2.11.7"
 
 scalacOptions ++= Seq(
   "-encoding", "UTF-8", "-deprecation", "-unchecked", "-feature"
@@ -45,11 +53,18 @@ libraryDependencies ++= Seq(
   "me.chrons" %%% "diode-react" % Vdiode,
   "com.github.chandu0101.scalajs-react-components" %%% "core" % VsReactCom,
   "com.github.japgolly.scalacss" %%% "ext-react" % VsCss,
-  "com.github.japgolly.scalajs-react" %%% "extra" % VsReact
+  "org.scala-js" %%% "scalajs-dom" % "0.8.0",
+  "com.github.japgolly.scalajs-react" %%% "extra" % VsReact,
+  "eu.unicredit" %%% "paths-scala-js" % "0.4.5",
+  "io.spray" %%  "spray-json" % "1.3.5"
 )
 dependencyOverrides ++= Set(
   "com.github.japgolly.scalacss"      %%% "core" % VsCss,
   "com.github.japgolly.scalajs-react" %%% "core" % VsReact
+)
+
+jsDependencies ++= Seq(
+  "org.webjars" % "react" % "0.12.1" / "react-with-addons.js" commonJSName "React"
 )
 resolvers += Resolver.sonatypeRepo("releases")
 addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full)

@@ -21,7 +21,7 @@ object Bien2Aerobic {
       val ae = d.direct.coef.aerobic
       val nit = d.direct.coef.nitrate
 
-      Seq(
+      Seq(^.className := "calcTable",
         <.h3("2. Đường biên 2 - Hệ xử lý hiếu khí"),
         <.h4("2.1. Tính toán nồng độ cơ chất trong bể hiếu khí"),
         <.div("Công thức tính: `S = (K_s * (1 + K_d * SRT))/(SRT * (Y * k - k_d) - 1)`".teX),

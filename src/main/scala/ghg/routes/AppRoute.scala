@@ -38,7 +38,7 @@ object AppRoutes {
   object Aerobic             extends AppRoute("3.4. Tính toán phát thải KNK từ quá trình xử lý", "aerobic", AerobicPage.apply,
     "Phát thải khí nhà kính từ quá trình xử lý  ",
     "Tính toán phát thải khí nhà kính")
-  object Anaerobic           extends AppRoute("3.5. Tính toán phát thải KNK từ quá trình xử lý 2", "anaerobic", AnaerobicPage.apply,
+  object Anaerobic           extends AppRoute("3.4. Tính toán phát thải KNK từ quá trình xử lý ", "anaerobic", AnaerobicPage.apply,
     "Phát thải khí nhà kính từ quá trình xử lý  ",
     "Tính toán phát thải khí nhà kính")
 //  object AerobicUnstable     extends AppRoute("e. Hệ hiếu khí không ổn định", "aerobic-unstable", AerobicPage.apply,

@@ -1,12 +1,15 @@
 package ghg
 
 import japgolly.scalajs.react._
-import model.R
+import model.{C, Col, GraphData, R}
 import monocle._
 import org.scalajs.dom.html
 import org.widok.moment.Moment
+
 import scala.scalajs.js
 import scala.scalajs.js.JSNumberOps._
+import spray.json._
+import DefaultJsonProtocol._
 
 object Utils {
   val dateFormater = (d: js.Date) => Moment(d).format("DD/MM/YYYY")
@@ -48,6 +51,40 @@ object Utils {
     <.tbody(xs: _*)
   )
   def table(xs: TagMod*) = <.table(^.className := Styles.borderCls,^.className := "dataTable",<.col(^.width := "34%"),<.col(^.width := "33%"),<.col(^.width := "33%"), <.tbody(xs: _*))
+  def table7(xs: TagMod*) = <.table(^.className := Styles.borderCls,^.className := "dataTable",
+    <.col(^.width := "4%"),
+    <.col(^.width := "4%"),
+    <.col(^.width := "34%"),
+    <.col(^.width := "14%"),
+    <.col(^.width := "14%"),
+    <.col(^.width := "14%"),
+    <.col(^.width := "14%"),
+    <.tbody(xs: _*))
+  def table4(xs: TagMod*) = <.table(^.className := Styles.borderCls,^.className := "dataTable",
+    <.col(^.width := "32%"),
+    <.col(^.width := "25%"),
+    <.col(^.width := "25%"),
+    <.col(^.width := "18%"),
+    <.tbody(xs: _*))
+  def table3(xs: TagMod*) = <.table(^.className := Styles.borderCls,^.className := "dataTable",
+    <.col(^.width := "31%"),
+    <.col(^.width := "25%"),
+    <.col(^.width := "25%"),
+    <.tbody(xs: _*))
+  def table5(xs: TagMod*) = <.table(^.className := Styles.borderCls,^.className := "dataTable",
+    <.col(^.width := "20%"),
+    <.col(^.width := "20%"),
+    <.col(^.width := "20%"),
+    <.col(^.width := "20%"),
+    <.col(^.width := "20%"),
+    <.tbody(xs: _*))
+  def table6(xs: TagMod*) = <.table(^.className := Styles.borderCls,^.className := "dataTable",
+    <.col(^.width := "16.6%"),
+    <.col(^.width := "16.6%"),
+    <.col(^.width := "16.6%"),
+    <.col(^.width := "16.6%"),
+    <.col(^.width := "16.6%"),
+    <.tbody(xs: _*))
   @inline def td(n: String, sub: String) = <.td(n, <.sub(sub))
   def td(n: String, sub: String, sup: String) = <.td(n, <.sup(sup), <.sub(^.marginLeft := "-10px", sub))
 
@@ -125,4 +162,158 @@ object Utils {
           results
         )
     }
+
+  //<iframe src='//charts.hohli.com/embed.html?#w=640&h=480&d=
+//   {
+//     "containerId":"chart",
+//     "dataTable":{
+//        "cols":[
+//           {
+//              "label":"A",
+//              "type":"string"
+//           },
+//           {
+//              "label":"B",
+//              "type":"number"
+//           }
+//        ],
+//        "rows":[
+//           {
+//              "c":[
+//                 {
+//                    "v":"Science Fiction"
+//                 },
+//                 {
+//                    "v":217
+//                 }
+//              ]
+//           },
+//           {
+//              "c":[
+//                 {
+//                    "v":"General Science"
+//                 },
+//                 {
+//                    "v":203
+//                 }
+//              ]
+//           },
+//           {
+//              "c":[
+//                 {
+//                    "v":"Computer Science"
+//                 },
+//                 {
+//                    "v":175
+//                 }
+//              ]
+//           },
+//           {
+//              "c":[
+//                 {
+//                    "v":"History"
+//                 },
+//                 {
+//                    "v":155
+//                 }
+//              ]
+//           },
+//           {
+//              "c":[
+//                 {
+//                    "v":"General Fiction"
+//                 },
+//                 {
+//                    "v":72
+//                 }
+//              ]
+//           },
+//           {
+//              "c":[
+//                 {
+//                    "v":"Fantasy"
+//                 },
+//                 {
+//                    "v":51
+//                 }
+//              ]
+//           },
+//           {
+//              "c":[
+//                 {
+//                    "v":"Law"
+//                 },
+//                 {
+//                    "v":29
+//                 }
+//              ]
+//           }
+//        ]
+//     },
+//     "options":{
+//        "width":640,
+//        "height":480
+//     },
+//     "state":{
+//
+//     },
+//     "isDefaultVisualization":true,
+//     "chartType":"PieChart"
+//  }' frameborder='0' width='650' height='490'></iframe>
+
+  case class ResultPercentage(name: String, value: Double)
+
+  def PieChartBuilder(results: List[(String, Double)], width: Int, height: Int) = {
+    var result: (String, Double) = ("", 0)
+
+    var data: String = ""
+
+    var i = 0
+    for (result <- results) {
+      i += 1
+      if (i == results.length) {
+        data += "{\"c\":[{\"v\":\""+ result._1 +"\"},{\"v\":"+ result._2 +"}]}"
+      } else {
+        data += "{\"c\":[{\"v\":\""+ result._1 +"\"},{\"v\":"+ result._2 +"}]},"
+      }
+    }
+
+    <.div(<.iframe(^.src := "http://charts.hohli.com/embed.html?created=1548273688850#w="+width+"&h="+height+"&d=" +
+      "{\"containerId\":\"chart\",\"dataTable\":{\"cols\":[{\"label\":\"A\",\"type\":\"string\"},{\"label\":\"B\",\"type\":\"number\"}]," +
+      "\"rows\":[" +
+        data +
+        "]" +
+      "}" +
+      ",\"options\":{\"width\":"+width+",\"height\":"+height+"},\"state\":{},\"isDefaultVisualization\":true,\"chartType\":\"PieChart\"}", ^.frameBorder := 0, ^.width := width+10, ^.height := height+10
+    ))
+  }
+
+  def BarChartBuilder(results: List[(String, Double)], title: String, leftTitle: String, botTitle: String, width: Int, height: Int) = {
+    var result: (String, Double) = ("", 0)
+
+    var data: String = ""
+
+    var i = 0
+    for (result <- results) {
+      i += 1
+      if (i == results.length) {
+        data += "{\"c\":[{\"v\":\""+ result._1 +"\"},{\"v\":"+ result._2 +"}]}"
+      } else {
+        data += "{\"c\":[{\"v\":\""+ result._1 +"\"},{\"v\":"+ result._2 +"}]},"
+      }
+    }
+
+    /*
+    <iframe src='//charts.hohli.com/embed.html?created=1548652577834#w=640&h=480&d={"containerId":"chart","dataTable":{"cols":[{"label":"A","type":"string","p":{}},{"label":"B","type":"number"}],"rows":[{"c":[{"v":"Science Fiction"},{"v":217}]},{"c":[{"v":"General Science"},{"v":203}]},{"c":[{"v":"Computer Science"},{"v":175}]},{"c":[{"v":"History"},{"v":155}]},{"c":[{"v":"General Fiction"},{"v":72}]},{"c":[{"v":"Fantasy"},{"v":51}]},{"c":[{"v":"Law"},{"v":29}]}]},"options":{"hAxis":{"useFormatFromData":true,"viewWindow":null,"minValue":null,"maxValue":null,"viewWindowMode":null,"title":"Ngu\u1ed3n ph\u00e1t th\u1ea3i","slantedText":true,"slantedTextAngle":30},"legacyScatterChartLabels":true,"vAxes":[{"useFormatFromData":true,"viewWindow":{"max":null,"min":null},"minValue":null,"maxValue":null,"logScale":false,"title":"t\u1ea5n CO2/n\u0103m","minorGridlines":{"count":"0"},"formatOptions":{"source":"data","scaleFactor":null}},{"useFormatFromData":true,"viewWindow":{"max":null,"min":null},"minValue":null,"maxValue":null,"logScale":false}],"isStacked":false,"booleanRole":"certainty","legend":"none","width":640,"height":480,"title":"Thu h\u1ed3i v\u00e0 \u0111\u1ed1t","domainAxis":{"direction":1},"series":{"0":{"errorBars":{"errorType":"none"},"targetAxisIndex":0}}},"state":{},"view":{"columns":null,"rows":null},"isDefaultVisualization":false,"chartType":"ColumnChart"}' frameborder='0' width='650' height='490'></iframe>
+     */
+
+    <.div(<.iframe(^.src := "http://charts.hohli.com/embed.html?created=1548273688850#w="+width+"&h="+height+"&d=" +
+      "{\"containerId\":\"chart\",\"dataTable\":{\"cols\":[{\"label\":\"A\",\"type\":\"string\"},{\"label\":\"Khí nhà kính\",\"type\":\"number\"}]," +
+      "\"rows\":[" +
+      data +
+      "]" +
+      "}" +
+      ",\"options\":{\"hAxis\":{\"useFormatFromData\":true,\"viewWindow\":null,\"minValue\":null,\"maxValue\":null,\"viewWindowMode\":null,\"title\":\""+botTitle+"\",\"slantedText\":false,\"slantedTextAngle\":0},\"legacyScatterChartLabels\":true,\"vAxes\":[{\"useFormatFromData\":true,\"viewWindow\":{\"max\":null,\"min\":null},\"minValue\":null,\"maxValue\":null,\"logScale\":false,\"title\":\""+leftTitle+"\",\"minorGridlines\":{\"count\":\"0\"},\"formatOptions\":{\"source\":\"data\",\"scaleFactor\":null}},{\"useFormatFromData\":true,\"viewWindow\":{\"max\":null,\"min\":null},\"minValue\":null,\"maxValue\":null,\"logScale\":false}],\"isStacked\":false,\"booleanRole\":\"certainty\",\"legend\":\"none\",\"width\":"+width+",\"height\":"+height+",\"title\":\""+title+"\",\"domainAxis\":{\"direction\":1},\"series\":{\"0\":{\"errorBars\":{\"errorType\":\"none\"},\"targetAxisIndex\":0}}},\"state\":{},\"view\":{\"columns\":null,\"rows\":null},\"isDefaultVisualization\":false,\"chartType\":\"ColumnChart\"}", ^.frameBorder := 0, ^.width := width+10, ^.height := height+10
+    ))
+  }
 }

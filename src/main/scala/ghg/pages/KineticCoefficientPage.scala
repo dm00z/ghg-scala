@@ -43,7 +43,7 @@ object KineticCoefficientPage {
         import chandu0101.scalajs.react.components.materialui._
         @inline implicit def dispatch: Aerobic => Callback = P.my.dispatch
 
-        val tbl = table(
+        val tbl = table6(
           <.tr(
             td2("Thông số"),
             td2("Đơn vị"),
@@ -82,7 +82,7 @@ object KineticCoefficientPage {
       def nitratTbl(implicit d: Nitrate) = {
         import scala.scalajs.js.JSNumberOps._
         @inline implicit def dispatch: Nitrate => Callback = P.my.dispatch
-        val tbl = table(
+        val tbl = table5(
           <.tr(
             td2("Thông số"),
             td2("Đơn vị"),
@@ -113,7 +113,7 @@ object KineticCoefficientPage {
         Seq(
           <.div("Nhiệt độ bể yếm khí t_an °C: ", input(Anaerobic.t_an)),
           <.div("Nhiệt độ bể phân hủy bùn t_dr °C: ", input(Anaerobic.t_dr)),
-          table(
+          table6(
             <.tr(
               td2("Thông số"),
               td2("Đơn vị"),

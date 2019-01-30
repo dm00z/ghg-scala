@@ -27,7 +27,7 @@ object InfoPage {
               powerRef = r
             },
             onChange = (e: ReactEventI) => Callback {
-              powerRef.setErrorText(if (e.target.value ># 0) "" else "power phải là số > 0")
+              powerRef.setErrorText(if (e.target.value ># 0) "" else "power phải là số lớn hơn 0")
             })()
         ),
         <.div(
