@@ -8,13 +8,15 @@ import ghg.Utils._
 import scala.scalajs.js.JSNumberOps._
 
 object Bien4 {
-  type Props = GhgData
+  //type Props = GhgData
 
+  case class Props(d: GhgData, isAerobic: Boolean)
   case class Backend($: BackendScope[Props, _]) {
-    def render(d: Props) = {
+    def render(props: Props) = {
+      val d = props.d
       val b1 = d.bien1
-      val b4 = d.bien4
-      val b2 = d.bien2Ae
+      val b4 = if (props.isAerobic) d.bien4 else d.bien4Ana
+      val b2 = if (props.isAerobic) d.bien2Ae else d.bien2Ana
       val relation = d.direct.relation
 
       <.div(^.className := "calcTable",
@@ -87,5 +89,5 @@ object Bien4 {
     .renderBackend[Backend]
     .build
 
-  def apply(d: GhgData) = component(d)
+  def apply(props: Props) = component(props)
 }

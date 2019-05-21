@@ -124,7 +124,7 @@ object SampleData {
           StreamOutData(10, 23.584, 10, 10, 30, 25.5)
         ),
         KineticCoefficientData(
-          KineticCoefficientData.Aerobic.yenSo,
+          KineticCoefficientData.Aerobic.goldmark,
           KineticCoefficientData.Nitrate.default,
           KineticCoefficientData.Anaerobic.default
         ),
@@ -166,10 +166,10 @@ object SampleData {
         DirectTable(
           StreamInData(650, 24.74, 186.33, 400, 455, 90, 0, 700),
           PrimaryPoolData(.3, .65, 0, 8000, 27, 140),
-          PoolData(30, 35, .33, 2633),
-          Some(PoolData(30, 20, 8, .1)),
-          Some(PoolData(30, 20, 8, .1)),
-          StreamOutData(30, 121.58, 0, 10, 30, 25.5)
+          PoolData(30, 35, 2633f/8000f, 2633),
+          Some(PoolData(30, 35, 2633f/8000f, 2633)),
+          Some(PoolData(30, 35, 2633f/8000f, 2633)),
+          StreamOutData(30, 121.58, 0, 10, 117.65, 25.5)
         ),
         KineticCoefficientData(
           KineticCoefficientData.Aerobic.default,

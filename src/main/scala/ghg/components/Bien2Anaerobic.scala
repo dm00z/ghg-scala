@@ -47,7 +47,7 @@ object Bien2Anaerobic {
         dataTbl(
           tr("X", b2.X, "mg/l"),
           tr("SRT", pool.srt, "day"),
-          tr("HRT", pool.hrt, "hour"),
+          tr("HRT", pool.hrtDay, "day"),
           tr("S", "v", b2.s_v, "mg/l"),
           tr("S", b2.s, "mg/l"),
           tr("Y", ana.y, "mg/mg"),
@@ -110,7 +110,7 @@ object Bien2Anaerobic {
         dataTbl(
           tr("P", "SS,BOD", b2.p_XBod, "g/day"),
           tr("X", b2.X, "mg/l"),
-          tr("V", b2.V, "mg/l"),
+          tr("V", b2.V, "m3"),
           tr("SRT", pool.srt, "day")
         ),
 //        <.h5("b. Lượng bùn tạo ra do nitrat hóa"),
@@ -161,7 +161,7 @@ object Bien2Anaerobic {
           tr("S", "v", b2.s_v, "mg/l"),
           tr("S", b2.s, "mg/l"),
           tr("r", "O2,phanhuy", relation.rCO2Decay, "g/g"),
-          tr("P", "SS,bio", b2.p_XBio, "g/day")
+          tr("P", "X,BOD", b2.p_XBod, "g/day")
         ),
 //        <.div("b. Lượng BOD bị khử trong quá trình denitrat hóa"),
 //        <.div("Công thức tính: `BOD_(o x,dnt) = r_(BOD,dnt) * N * Q_v`".teX),

@@ -63,7 +63,7 @@ case class GhgData(info: InfoData, indirect: IndirectData, direct: DirectData) {
     val ss_v = b1.ss_ov - b1.ss_khuBl / q_v
     val vss_v = 0.85 * ss_v
 
-    val X_nbV = 0 //vss_v * (1 - 60D/ 73)
+    val X_nbV = vss_v * (1 - 60D/ 73)
     val X_nb = ef.fd * ef.kd *  X * pool.srt + X_nbV * pool.srt / pool.hrtDay
 
 
@@ -108,25 +108,27 @@ case class GhgData(info: InfoData, indirect: IndirectData, direct: DirectData) {
 
     val relation = direct.relation
     //val bod_ox = relation.yCO2 * (q_v* (s_v - s) - relation.rCO2Decay * p_ssBio(N))
-    val bod_ox = relation.yCO2 * (q_v* (s_v - s) - relation.rCO2Decay * p_XBod)
+    val bod_ox = (q_v* (s_v - s) - relation.rCO2Decay * p_XBod)
     val bod_ox_dnt = relation.rBODDnt * N * q_v
     val bod_khuThuc = if (bod_ox < bod_ox_dnt) bod_ox else bod_ox - bod_ox_dnt
-    val co2_khu_bod = relation.yCO2 * bod_khuThuc
+    val co2_khu_bod = relation.yCO2An * bod_ox
     val vss_phanhuy = .85 * V * ef.kd * X
-    val co2_phanhuy = relation.yCO2Decay * vss_phanhuy
+    val co2_phanhuy = relation.yCO2AnDecay * vss_phanhuy
     val co2_dnt =  relation.yCO2Dnt * N * q_v
     val co2_tieuThuNit = relation.rCO2Nit * N * q_v
 
-    val co2_quaTrinhHieuKhi = bod_ox + co2_phanhuy + co2_dnt - co2_tieuThuNit
+    val co2_quaTrinhHieuKhi = co2_khu_bod + co2_phanhuy //+ co2_dnt - co2_tieuThuNit
     val n2o = q_v * direct.d.streamIn.n * Bien2Output.r_n2o
     val co2_n2o = 296 * n2o //fixme hardcode
 
     val tyLePhatThai = co2_quaTrinhHieuKhi / q_v
 
+    val ch4_beYemKhi = relation.yCH4An * bod_ox + relation.yCH4AnDecay * vss_phanhuy
+
     Bien2Output(s, q_v, s_v, X, ss_v, vss_v, X_nbV, X_nb, V, p_XBod, p_ssManhTeBao, p_ssNbVss,
       N, calcN(N), m_nit(N), srtNit, x_nit(N), p_ssNit(N), p_ssBio(N), p_ss(N),
       bod_ox, bod_ox_dnt, bod_khuThuc, co2_khu_bod, vss_phanhuy, co2_phanhuy, co2_dnt, co2_tieuThuNit,
-      co2_quaTrinhHieuKhi, n2o, co2_n2o, 0, tyLePhatThai)
+      co2_quaTrinhHieuKhi, n2o, co2_n2o, ch4_beYemKhi, tyLePhatThai)
   }
 
   /** required: direct.d.aerobicPool.isDefined */
@@ -273,12 +275,60 @@ case class GhgData(info: InfoData, indirect: IndirectData, direct: DirectData) {
       co2_phanHuyMetan, co2_phanHuyTotal, knk_direct, m_CO2BODra)
   }
 
-  lazy val bien4: Bien4Output = {
-    val b2 = bien2Ae
-    val relation = direct.relation
-    val ef = direct.coef.aerobic
+//  lazy val bien4: Bien4Output = {
+//    val b2 = bien2Ae
+//    val relation = direct.relation
+//    val ef = direct.coef.aerobic
+//
+//    val bun_phanHuy = 0.6 * b2.p_XBod
+//    val co2_phatThai = relation.yCO2DrDecay * bun_phanHuy
+//    val ch4_phatThai = relation.yCH4DrDecay * bun_phanHuy
+//
+//
+//    val ch4_phanHuyThuGom = ch4_phatThai
+//    val ch4_phanHuyRoRi = ch4_phanHuyThuGom
+//
+//    val y_ch4dot = relation.yCH4Combusion
+//    val ch4_phanHuyThuHoi = ch4_phanHuyThuGom - ch4_phanHuyRoRi
+//    val co2_phanHuyMetan = y_ch4dot * ch4_phanHuyThuHoi + 23 * ch4_phanHuyRoRi
+//
+//    val Pco2_bunPhanHuy = co2_phatThai + co2_phanHuyMetan
+//
+//    //-------------NEW
+//    val P_bunSinhHoc = b2.p_XBio * 0.6
+//
+//    val M_co2PhanHuy = P_bunSinhHoc * relation.yCO2DrDecay
+//
+//    val M_ch4PhanHuy = P_bunSinhHoc * relation.yCH4DrDecay
+//
+//    val M_co2tdPhanHuyPhongKhong = M_co2PhanHuy + M_ch4PhanHuy * 25
+//
+//    val Pr_ch4_roRi = 0.05
+//    val M_ch4PhanHuyRoRi = Pr_ch4_roRi * M_ch4PhanHuy
+//
+//    val M_ch4PhanHuyThuHoi = M_ch4PhanHuy - M_ch4PhanHuyRoRi
+//
+//    val M_co2tdPhanHuyMetan = relation.yCH4Combusion * M_ch4PhanHuyThuHoi + 25 * M_ch4PhanHuyRoRi
+//
+//    val M_co2tdPhanHuyDot = M_co2PhanHuy + M_co2tdPhanHuyMetan
+//
+//    Bien4Output(bun_phanHuy, co2_phatThai, ch4_phatThai, ch4_phanHuyRoRi, Pr_ch4_roRi, ch4_phanHuyThuGom, y_ch4dot,
+//    ch4_phanHuyThuHoi, co2_phanHuyMetan, Pco2_bunPhanHuy, P_bunSinhHoc, M_co2PhanHuy, M_ch4PhanHuy, M_co2tdPhanHuyPhongKhong,
+//    M_ch4PhanHuyRoRi, M_ch4PhanHuyThuHoi, M_co2tdPhanHuyMetan, M_co2tdPhanHuyDot)
+//  }
 
-    val bun_phanHuy = 0.6 * b2.p_XBod
+  lazy val bien4 = calBien4(true)
+  lazy val bien4Ana = calBien4(false)
+
+  private def calBien4(isAe: Boolean): Bien4Output = {
+    val b2 = if (isAe) bien2Ae else bien2Ana
+    val relation = direct.relation
+    //val ef = direct.coef.aerobic
+    val ef = if (isAe) direct.coef.aerobic else direct.coef.anaerobic
+
+    val const = 0.6
+
+    val bun_phanHuy = const * b2.p_XBod
     val co2_phatThai = relation.yCO2DrDecay * bun_phanHuy
     val ch4_phatThai = relation.yCH4DrDecay * bun_phanHuy
 
@@ -293,7 +343,7 @@ case class GhgData(info: InfoData, indirect: IndirectData, direct: DirectData) {
     val Pco2_bunPhanHuy = co2_phatThai + co2_phanHuyMetan
 
     //-------------NEW
-    val P_bunSinhHoc = b2.p_XBio * 0.6
+    val P_bunSinhHoc = b2.p_XBio * const
 
     val M_co2PhanHuy = P_bunSinhHoc * relation.yCO2DrDecay
 
@@ -311,8 +361,8 @@ case class GhgData(info: InfoData, indirect: IndirectData, direct: DirectData) {
     val M_co2tdPhanHuyDot = M_co2PhanHuy + M_co2tdPhanHuyMetan
 
     Bien4Output(bun_phanHuy, co2_phatThai, ch4_phatThai, ch4_phanHuyRoRi, Pr_ch4_roRi, ch4_phanHuyThuGom, y_ch4dot,
-    ch4_phanHuyThuHoi, co2_phanHuyMetan, Pco2_bunPhanHuy, P_bunSinhHoc, M_co2PhanHuy, M_ch4PhanHuy, M_co2tdPhanHuyPhongKhong,
-    M_ch4PhanHuyRoRi, M_ch4PhanHuyThuHoi, M_co2tdPhanHuyMetan, M_co2tdPhanHuyDot)
+      ch4_phanHuyThuHoi, co2_phanHuyMetan, Pco2_bunPhanHuy, P_bunSinhHoc, M_co2PhanHuy, M_ch4PhanHuy, M_co2tdPhanHuyPhongKhong,
+      M_ch4PhanHuyRoRi, M_ch4PhanHuyThuHoi, M_co2tdPhanHuyMetan, M_co2tdPhanHuyDot)
   }
 
   lazy val bien5: Bien5Output = {
@@ -462,7 +512,7 @@ final case class Bien2Output(s: Double,
                              co2_quaTrinh: Double, //qua trinh hieu / yem khi
                              n2o: Double,
                              co2_n2o: Double,
-                             ch4_beYemKhi: Double = 0,
+                             ch4_beYemKhi: Double ,
                              tyLePhatThai: Double
                       ) {
   @inline def bod_khu_an = bod_ox

@@ -117,29 +117,29 @@ object KineticCoefficientPage {
             <.tr(
               td2("Thông số"),
               td2("Đơn vị"),
-              <.td(^.colSpan := 2, <.b("Giá trị tiêu chuẩn ở 20°C")), //25
+              <.td(^.colSpan := 1, <.b("Giá trị")), //25
               td2("Giá trị ở nhiệt độ t_an °C"),
               td2("Giá trị ở nhiệt độ t_dr °C")
             ),
-            <.tr(Khoang, GiaTri),
+            <.tr("",""),
             <.tr(<.td("μ", <.sub("m,an"), ", μ", <.sub("m,dr")), Ngay1,
-              <.td(Anaerobic.M.range.text),
+              //<.td(Anaerobic.M.range.text),
               tdInput(Anaerobic.m ^|-> KT.vNorm, _.between(Anaerobic.M.range)),
               <.td(d.m(d.t_an).toFixed(3)),<.td(d.m(d.t_dr).toFixed(3))),
             <.tr(<.td("Y", <.sub("an"), ", Y", <.sub("dr")), <.td("mg/mg"),
-              <.td(Anaerobic.Y.range.text),
+              //<.td(Anaerobic.Y.range.text),
               tdInput(Anaerobic.y, _.between(Anaerobic.Y.range)),
               <.td(d.y),<.td(d.y)),
             <.tr(<.td("K", <.sub("s,an"), ", K", <.sub("s,dr")), <.td("mg/l"),
-              <.td(Anaerobic.Ks.range.text),
+              //<.td(Anaerobic.Ks.range.text),
               tdInput(Anaerobic.ks ^|-> KT.vNorm, _.between(Anaerobic.Ks.range)),
               <.td(d.ks(d.t_an).toFixed(3)),<.td(d.ks(d.t_dr).toFixed(3))),
             <.tr(<.td("k", <.sub("d,an"), ", k", <.sub("d,dr")), Ngay1,
-              <.td(Anaerobic.Kd.range.text),
+              //<.td(Anaerobic.Kd.range.text),
               tdInput(Anaerobic.kd, _.between(Anaerobic.Kd.range)),
               <.td(d.kd), <.td(d.kd)),
             <.tr(<.td("f", <.sub("d,an"), ", f", <.sub("d,dr")), <.td(),
-              <.td(),
+              //<.td(),
               tdInput(Anaerobic.fd),
               <.td(d.fd),<.td(d.fd))
           )
@@ -204,16 +204,17 @@ object KineticCoefficientPage {
       lazy val tabLabel = jsObj(backgroundColor = "#145dbf", fontWeight = 700, textTransform = "none")
 
       <.div(
-        if (tech == TechMethod.An) EmptyTag
-        else Seq[TagMod](
-          MuiTabs()(
-            MuiTab(label = "Quá trình hiếu khí", style = tabLabel)(
+//        if (tech == TechMethod.An) EmptyTag
+//        else
+          Seq[TagMod](
+          MuiTabs(key = "0")(
+            MuiTab(key = "0", label = "Quá trình hiếu khí", style = tabLabel)(
               aerobicTbl(p.aerobic)
             ),
-            MuiTab(label = "Quá trình nitrat và khử nitrat", style = tabLabel)(
+            MuiTab(key = "1", label = "Quá trình nitrat và khử nitrat", style = tabLabel)(
               nitratTbl(p.nitrate)
             ),
-            MuiTab(label = "Quá trình yếm khí", style = tabLabel)(
+            MuiTab(key = "2", label = "Quá trình yếm khí", style = tabLabel)(
               anaerobicTbl(p.anaerobic),
               anaerobicGraph(p.anaerobic)
             )

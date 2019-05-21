@@ -13,7 +13,7 @@ object AerobicPage {
         Bien1(d),
         Bien2Aerobic(d),
         Bien3(Bien3.Props(d, true)),
-        Bien4(d),
+        Bien4(Bien4.Props(d, true)),
         Bien5(d)
       )
     }.build

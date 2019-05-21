@@ -52,38 +52,43 @@ object Utils {
   )
   def table(xs: TagMod*) = <.table(^.className := Styles.borderCls,^.className := "dataTable",<.col(^.width := "34%"),<.col(^.width := "33%"),<.col(^.width := "33%"), <.tbody(xs: _*))
   def table7(xs: TagMod*) = <.table(^.className := Styles.borderCls,^.className := "dataTable",
+    <.colgroup(
     <.col(^.width := "4%"),
     <.col(^.width := "4%"),
     <.col(^.width := "34%"),
     <.col(^.width := "14%"),
     <.col(^.width := "14%"),
     <.col(^.width := "14%"),
-    <.col(^.width := "14%"),
+    <.col(^.width := "14%")),
     <.tbody(xs: _*))
   def table4(xs: TagMod*) = <.table(^.className := Styles.borderCls,^.className := "dataTable",
+    <.colgroup(
     <.col(^.width := "32%"),
     <.col(^.width := "25%"),
     <.col(^.width := "25%"),
-    <.col(^.width := "18%"),
+    <.col(^.width := "18%")),
     <.tbody(xs: _*))
   def table3(xs: TagMod*) = <.table(^.className := Styles.borderCls,^.className := "dataTable",
+    <.colgroup(
     <.col(^.width := "31%"),
     <.col(^.width := "25%"),
-    <.col(^.width := "25%"),
+    <.col(^.width := "25%")),
     <.tbody(xs: _*))
   def table5(xs: TagMod*) = <.table(^.className := Styles.borderCls,^.className := "dataTable",
+    <.colgroup(
     <.col(^.width := "20%"),
     <.col(^.width := "20%"),
     <.col(^.width := "20%"),
     <.col(^.width := "20%"),
-    <.col(^.width := "20%"),
+    <.col(^.width := "20%")),
     <.tbody(xs: _*))
   def table6(xs: TagMod*) = <.table(^.className := Styles.borderCls,^.className := "dataTable",
+    <.colgroup(
     <.col(^.width := "16.6%"),
     <.col(^.width := "16.6%"),
     <.col(^.width := "16.6%"),
     <.col(^.width := "16.6%"),
-    <.col(^.width := "16.6%"),
+    <.col(^.width := "16.6%")),
     <.tbody(xs: _*))
   @inline def td(n: String, sub: String) = <.td(n, <.sub(sub))
   def td(n: String, sub: String, sup: String) = <.td(n, <.sup(sup), <.sub(^.marginLeft := "-10px", sub))

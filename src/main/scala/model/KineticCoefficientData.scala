@@ -1,5 +1,6 @@
 package model
 
+import model.KineticCoefficientData.Aerobic.Kd
 import monocle.macros.Lenses
 
 object KineticCoefficientData {
@@ -12,7 +13,7 @@ object KineticCoefficientData {
     val Kd = RNorm(R(.02, .2), .15)
 
     def default = Aerobic(KT(5, 1.07), KT(60, 1), KT(Kd.norm, 1.04), KT(Y.norm, 1))
-    def yenSo = Aerobic(KT(2, 1), KT(65, 1), KT(Kd.norm, 1), KT(.55, 1), t = 22)
+    def goldmark = Aerobic(KT(2, 1), KT(65, 1), KT(Kd.norm, 1), KT(.55, 1), t = 22)
   }
   @Lenses final case class Aerobic(m: KT, ks: KT, kd: KT, y: KT, fd: Double = .1, t: Double = 25) {
     @inline def k(t: Double) = m(t) //k
@@ -49,12 +50,13 @@ object KineticCoefficientData {
 
   //TODO impl - không biết công thức!
   object Anaerobic {
-    val M = RNorm(R(.18, .24), .2)
-    val Y = RNorm(R(.05, .1), .08)
-    val Ks = RNorm(R(800, 1100), 900)
-    val Kd = RNorm(R(.02, .04), .03)
+    val M = RNorm(R(.1, .5), .232)
+    val Y = RNorm(R(.01, .2), .08)
+    val Ks = RNorm(R(100, 1100), 360)
+    val Kd = RNorm(R(.01, .1), .03)
 
-    val default = Anaerobic(KT(M.norm, 1.06, 25), Y.norm, KT(Ks.norm, 0.841371404, 25), Kd.norm, .15)
+    val default = Anaerobic(KT(M.norm, 1, 25), Y.norm, KT(Ks.norm, 1, 25), Kd.norm, .15)
+    //def baiBang = Anaerobic(KT(2, 1), 4.3, KT(Kd.norm, 1), 4.5, fd = 8.7)
   }
 
   /** Quá trình yếm khí
