@@ -2,27 +2,30 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7abfbb2d-8908-4c06-a504-03b26cb68cb6" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/ghg-build.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/ghg-build.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules/ghg.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/ghg.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/ghg/Utils.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/ghg/Utils.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/ghg/components/Bien2Anaerobic.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/ghg/components/Bien2Anaerobic.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/ghg/components/Bien4.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/ghg/components/Bien4.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/ghg/pages/AerobicPage.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/ghg/pages/AerobicPage.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/ghg/pages/AnaerobicPage.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/ghg/pages/AnaerobicPage.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/ghg/pages/KineticCoefficientPage.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/ghg/pages/KineticCoefficientPage.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/model/GhgData.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/model/GhgData.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/model/KineticCoefficientData.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/model/KineticCoefficientData.scala" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/model/SampleData.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/model/SampleData.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.sbt" beforeDir="false" afterPath="$PROJECT_DIR$/build.sbt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/ghg/components/AppHeader.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/ghg/components/AppHeader.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/ghg/components/LeftNav.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/ghg/components/LeftNav.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/ghg/pages/GhgPage.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/ghg/pages/GhgPage.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/ghg/routes/AppRouter.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/ghg/routes/AppRouter.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn-error.log" beforeDir="false" afterPath="$PROJECT_DIR$/yarn-error.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
-    <ignored path="$PROJECT_DIR$/out/" />
-    <ignored path="$PROJECT_DIR$/project/project/target/" />
-    <ignored path="$PROJECT_DIR$/project/target/" />
-    <ignored path="$PROJECT_DIR$/target/" />
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
+  </component>
+  <component name="ExportToHTMLSettings">
+    <option name="OUTPUT_DIRECTORY" value="$PROJECT_DIR$/../ghg-scala\exportToHTML" />
   </component>
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
@@ -39,171 +42,14 @@
   <component name="FavoritesManager">
     <favorites_list name="ghg" />
   </component>
-  <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5">
-      <split-first>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/scala/model/SampleData.scala">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="2988">
-                  <caret line="168" column="46" selection-start-line="168" selection-start-column="46" selection-end-line="168" selection-end-column="46" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/scala/ghg/components/Electric3.scala">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1224">
-                  <caret line="74" column="25" selection-start-line="74" selection-start-column="25" selection-end-line="74" selection-end-column="25" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/scala/ghg/Utils.scala">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1656">
-                  <caret line="101" column="6" selection-start-line="101" selection-start-column="6" selection-end-line="101" selection-end-column="6" />
-                  <folding>
-                    <element signature="e#13#44#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/scala/ghg/components/Bien2Anaerobic.scala">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="2448">
-                  <caret line="141" column="115" selection-start-line="141" selection-start-column="109" selection-end-line="141" selection-end-column="115" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/gulpfile.js">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="504">
-                  <caret line="28" column="42" selection-start-line="28" selection-start-column="42" selection-end-line="28" selection-end-column="42" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/scala/ghg/components/Bien4.scala">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="324">
-                  <caret line="23" column="49" selection-start-line="23" selection-start-column="49" selection-end-line="23" selection-end-column="49" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/main/scala/ghg/pages/RetrievePage.scala">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="458">
-                  <caret line="79" selection-start-line="79" selection-end-line="79" />
-                  <folding>
-                    <element signature="e#19#44#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/scala/model/GhgData.scala">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="6156">
-                  <caret line="345" column="20" selection-start-line="345" selection-start-column="8" selection-end-line="345" selection-end-column="20" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/scala/ghg/pages/AerobicPage.scala">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="306">
-                  <caret line="21" column="1" selection-start-line="21" selection-start-column="1" selection-end-line="21" selection-end-column="1" />
-                  <folding>
-                    <element signature="e#19#48#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/main/scala/ghg/components/Bien3.scala">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="540">
-                  <caret line="30" column="26" selection-start-line="30" selection-start-column="26" selection-end-line="30" selection-end-column="26" />
-                  <folding>
-                    <element signature="e#24#66#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/main/scala/ghg/pages/AnaerobicPage.scala">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="198">
-                  <caret line="15" column="36" selection-start-line="15" selection-start-column="36" selection-end-line="15" selection-end-column="36" />
-                  <folding>
-                    <element signature="e#19#48#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-second>
-    </splitter>
-  </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Scala Script" />
         <option value="Package Object" />
+        <option value="Scala Class" />
       </list>
     </option>
-  </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>nội bào</find>
-      <find>phân hủy nội bào</find>
-      <find>kết quả</find>
-      <find>num</find>
-      <find>công suất điện</find>
-      <find>.69</find>
-      <find>d</find>
-      <find>core</find>
-      <find>dom</find>
-      <find>color</find>
-      <find>setting</find>
-      <find>jsd</find>
-      <find>pie</find>
-      <find>slan</find>
-      <find>title</find>
-      <find>thu</find>
-      <find>width</find>
-      <find>kg</find>
-      <find>ngu</find>
-      <find>hệ số năng</find>
-      <find>Thông số dòng vào hệ thống xử lý</find>
-      <find>defauk</find>
-      <find>bãi bằng</find>
-      <find>aero</find>
-      <find>khoảng</find>
-      <find>20</find>
-      <find>2.7.1</find>
-      <find>cal</find>
-    </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="PREVIOUS_COMMIT_AUTHORS">
@@ -218,159 +64,29 @@
       </map>
     </option>
   </component>
-  <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/src/main/scala/ghg/components/Electric1.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/ghg/pages/ElectricPage.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/ghg/components/Bien1.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/ghg/components/Bien2Aerobic.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/ghg/components/Bien3.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/ghg/components/Bien5.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/ghg/components/D3Graph.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/ghg/components/Electric3.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/pathjs/Pie.scala" />
-        <option value="$PROJECT_DIR$/project/plugins.sbt" />
-        <option value="$PROJECT_DIR$/src/main/scala/pathjs/Colors.scala" />
-        <option value="$PROJECT_DIR$/project/build.properties" />
-        <option value="$PROJECT_DIR$/src/main/scala/pathjs/BarChart.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/pathjs/PieChart.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/ghg/Styles.scala" />
-        <option value="$PROJECT_DIR$/build.sbt" />
-        <option value="$PROJECT_DIR$/src/main/scala/model/GraphData.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/ghg/pages/ReleasePage.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/ghg/pages/RetrievePage.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/ghg/components/KRData.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/ghg/pages/InfoPage.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/ghg/routes/AppRoute.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/ghg/components/LeftNav.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/ghg/Utils.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/ghg/pages/KineticCoefficientPage.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/model/ElectricData.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/model/KineticCoefficientData.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/model/DirectTable.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/ghg/pages/DirectDataPage.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/model/SampleData.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/ghg/components/Bien2Anaerobic.scala" />
-        <option value="$PROJECT_DIR$/package.json" />
-        <option value="$PROJECT_DIR$/src/main/scala/ghg/pages/AnaerobicPage.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/ghg/pages/AerobicPage.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/model/GhgData.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/ghg/components/Bien4.scala" />
-      </list>
-    </option>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="1" />
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="54" />
-    <option name="y" value="-8" />
-    <option name="width" value="1874" />
-    <option name="height" value="1216" />
-  </component>
+  <component name="ProjectId" id="1UwRHOb207Zq2AQD4EtdarFc1hS" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
-  <component name="ProjectView">
-    <navigator proportions="" version="1">
-      <foldersAlwaysOnTop value="true" />
-    </navigator>
-    <panes>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="ghg" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ghg-scala" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ghg" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ghg-scala" type="462c0819:PsiDirectoryNode" />
-              <item name="project" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ghg" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ghg-scala" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ghg" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ghg-scala" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ghg" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ghg-scala" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="scala" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ghg" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ghg-scala" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="scala" type="462c0819:PsiDirectoryNode" />
-              <item name="ghg" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ghg" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ghg-scala" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="scala" type="462c0819:PsiDirectoryNode" />
-              <item name="ghg" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ghg" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ghg-scala" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="scala" type="462c0819:PsiDirectoryNode" />
-              <item name="ghg" type="462c0819:PsiDirectoryNode" />
-              <item name="pages" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ghg" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ghg-scala" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="scala" type="462c0819:PsiDirectoryNode" />
-              <item name="ghg" type="462c0819:PsiDirectoryNode" />
-              <item name="routes" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ghg" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ghg-scala" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="scala" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-    </panes>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../paths-scala-js-demo" />
     <property name="project.structure.last.edited" value="Global Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="sbt.project.settings.configurable" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="sbt ~fastOptJS" />
     </option>
   </component>
   <component name="RunManager">
@@ -393,11 +109,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Scala Console" type="ScalaScriptConsoleRunConfiguration" factoryName="Scala Console" temporary="true">
+    <configuration name="Scala Console" type="ScalaScriptConsoleRunConfiguration" factoryName="Scala Console" temporary="true" show_console_on_std_err="false" show_console_on_std_out="false">
       <module name="ghg-scala" />
-      <setting name="vmparams4" value="-Djline.terminal=NONE" />
-      <setting name="workingDirectory" value="$PROJECT_DIR$" />
-      <setting name="consoleArgs" value="-usejavacp" />
+      <option name="allowRunningInParallel" value="false" />
+      <option name="javaOptions" value="-Djline.terminal=NONE" />
+      <option name="myConsoleArgs" value="-usejavacp" />
+      <option name="workingDirectory" value="$PROJECT_DIR$" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -448,10 +165,22 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$/build.sbt" value="1567840584" />
-        <entry key="$PROJECT_DIR$/project/build.properties" value="3250841289" />
-        <entry key="$PROJECT_DIR$/project/plugins.sbt" value="3678378203" />
+        <entry key="$PROJECT_DIR$/build.sbt" value="1001711859" />
+        <entry key="$PROJECT_DIR$/project/build.properties" value="1827141576" />
+        <entry key="$PROJECT_DIR$/project/plugins.sbt" value="3673206346" />
       </map>
+    </option>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
     </option>
   </component>
   <component name="TaskManager">
@@ -461,6 +190,9 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1493368200590</updated>
+      <workItem from="1576265593318" duration="327000" />
+      <workItem from="1576265951165" duration="76000" />
+      <workItem from="1576266050164" duration="22133000" />
     </task>
     <task id="LOCAL-00001" summary="Add additional calculation in Aerobic and various minor changes">
       <created>1494573348514</created>
@@ -501,35 +233,8 @@
       <is-autoscroll-to-source value="true" />
     </todo-panel>
   </component>
-  <component name="ToolWindowManager">
-    <frame x="54" y="-8" width="2514" height="1456" extended-state="6" />
-    <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49887386" visible="true" weight="0.17848411" />
-      <window_info id="Structure" order="1" weight="0.24973376" />
-      <window_info id="Designer" order="2" />
-      <window_info id="Favorites" order="3" sideWeight="0.5011261" side_tool="true" weight="0.15268113" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49979535" weight="0.32804233" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.3291262" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49979535" weight="0.32955405" />
-      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.514122" side_tool="true" weight="0.32879817" />
-      <window_info anchor="bottom" id="Messages" order="8" weight="0.32913843" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="9" sideWeight="0.48587802" visible="true" weight="0.20937264" />
-      <window_info anchor="bottom" id="Version Control" order="10" sideWeight="0.49934584" weight="0.32728648" />
-      <window_info anchor="bottom" id="sbt-shell-toolwindow" order="11" sideWeight="0.4989097" weight="0.32804233" />
-      <window_info anchor="bottom" id="Build" order="12" sideWeight="0.49365535" weight="0.32804233" />
-      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.24973376" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="SBT" order="3" />
-      <window_info anchor="right" id="Maven Projects" order="4" />
-      <window_info anchor="right" id="Gradle" order="5" />
-      <window_info anchor="right" id="Palette&#9;" order="6" />
-      <window_info anchor="right" id="sbt" order="7" weight="0.32960597" />
-    </layout>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
@@ -539,392 +244,35 @@
     <MESSAGE value="Updated data and calculation" />
     <option name="LAST_COMMIT_MESSAGE" value="Updated data and calculation" />
   </component>
-  <component name="editorHistoryManager">
-    <entry file="jar://$USER_HOME$/.sbt/boot/scala-2.10.5/org.scala-sbt/sbt/0.13.9/main-0.13.9.jar!/sbt/Project.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="20" column="6" selection-start-line="20" selection-start-column="6" selection-end-line="20" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/pathjs/package.scala" />
-    <entry file="file://$PROJECT_DIR$/src/main/scala/reactd3/BarChart.scala" />
-    <entry file="file://$PROJECT_DIR$/src/main/scala/reactd3/PieChart.scala" />
-    <entry file="jar://$USER_HOME$/.ivy2/cache/com.github.japgolly.scalajs-react/core_sjs0.6_2.11/srcs/core_sjs0.6_2.11-0.10.3-sources.jar!/japgolly/scalajs/react/vdom/SvgAttrs.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="338">
-          <caret line="1052" column="12" selection-start-line="1052" selection-start-column="12" selection-end-line="1052" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/ghg/Main.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="17" selection-start-line="17" selection-end-line="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.ivy2/cache/scala_2.10/sbt_0.13/org.scala-js/sbt-scalajs/jars/sbt-scalajs-0.6.5.jar!/org/scalajs/sbtplugin/ScalaJSPlugin.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="702">
-          <caret line="39" column="8" selection-start-line="39" selection-start-column="8" selection-end-line="39" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/project/plugins.sbt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="37" selection-start-column="37" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/pathjs/Colors.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
-          <caret line="3" column="13" selection-start-line="3" selection-start-column="13" selection-end-line="3" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/ghg/components/D3Graph.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="30" column="13" selection-start-line="30" selection-start-column="13" selection-end-line="30" selection-end-column="13" />
-          <folding>
-            <element signature="e#24#38#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.ivy2/cache/com.github.japgolly.scalajs-react/core_sjs0.6_2.11/srcs/core_sjs0.6_2.11-0.10.3-sources.jar!/japgolly/scalajs/react/vdom/HtmlAttrs.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="287">
-          <caret line="288" column="12" selection-start-line="288" selection-start-column="12" selection-end-line="288" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.ivy2/cache/eu.unicredit/paths-scala-js_sjs0.6_2.11/srcs/paths-scala-js_sjs0.6_2.11-0.4.5-sources.jar!/paths/high/Pie.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="666">
-          <caret line="37" column="10" selection-start-line="37" selection-start-column="10" selection-end-line="37" selection-end-column="10" />
-          <folding>
-            <element signature="e#28#51#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.ivy2/cache/com.github.japgolly.scalajs-react/core_sjs0.6_2.11/srcs/core_sjs0.6_2.11-0.10.3-sources.jar!/japgolly/scalajs/react/ReactComponentB.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="804">
-          <caret line="102" column="50" selection-start-line="102" selection-start-column="35" selection-end-line="102" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.ivy2/cache/com.github.japgolly.scalajs-react/core_sjs0.6_2.11/srcs/core_sjs0.6_2.11-0.10.3-sources.jar!/japgolly/scalajs/react/vdom/HtmlTags.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="287">
-          <caret line="324" column="12" selection-start-line="324" selection-start-column="12" selection-end-line="324" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/pathjs/PieChart.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="6" column="14" selection-start-line="6" selection-start-column="14" selection-end-line="6" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/pathjs/BarChart.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="372">
-          <caret line="22" column="25" selection-start-line="22" selection-start-column="25" selection-end-line="22" selection-end-column="25" />
-          <folding>
-            <element signature="e#15#38#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/model/GraphData.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="9" column="3" selection-start-line="9" selection-start-column="3" selection-end-line="9" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build.sbt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1044">
-          <caret line="58" column="39" selection-start-line="58" selection-start-column="39" selection-end-line="58" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/ghg/pages/ReleasePage.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="804">
-          <caret line="78" column="26" selection-start-line="78" selection-start-column="26" selection-end-line="78" selection-end-column="26" />
-          <folding>
-            <element signature="e#19#48#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/ghg/Styles.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2016">
-          <caret line="113" column="18" selection-start-line="113" selection-start-column="18" selection-end-line="113" selection-end-column="18" />
-          <folding>
-            <element signature="e#13#47#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/ghg/components/LeftNav.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1386">
-          <caret line="82" column="26" selection-start-line="82" selection-start-column="26" selection-end-line="82" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/ghg/components/KRData.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1152">
-          <caret line="70" column="18" selection-start-line="70" selection-start-column="18" selection-end-line="70" selection-end-column="18" />
-          <folding>
-            <element signature="e#24#53#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/ghg/pages/ElectricPage.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="16" column="7" selection-start-line="16" selection-start-column="7" selection-end-line="16" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/ghg/pages/GhgPage.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="954">
-          <caret line="61" column="33" selection-start-line="61" selection-start-column="18" selection-end-line="61" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/project/build.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="18" selection-start-column="18" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor />
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/model/InfoData.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="4" column="7" selection-start-line="4" selection-start-column="7" selection-end-line="4" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/ghg/components/Bien2UnstableAerobic.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="540">
-          <caret line="34" selection-start-line="34" selection-end-line="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/ghg/pages/KineticCoefficientPage.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="354">
-          <caret line="129" column="45" selection-start-line="129" selection-start-column="45" selection-end-line="129" selection-end-column="45" />
-          <folding>
-            <element signature="e#19#62#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/ghg/components/Electric1.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="56">
-          <caret line="10" column="7" selection-start-line="10" selection-start-column="7" selection-end-line="10" selection-end-column="7" />
-          <folding>
-            <element signature="e#24#117#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/ghg/components/Electric2.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="35" column="46" selection-start-line="35" selection-start-column="46" selection-end-line="35" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/ghg/pages/MaterialPage.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="10" column="7" selection-start-line="10" selection-start-column="7" selection-end-line="10" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/ghg/routes/AppRoute.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="32" column="99" selection-start-line="32" selection-start-column="99" selection-end-line="32" selection-end-column="99" />
-          <folding>
-            <element signature="e#20#49#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/ghg/pages/InfoPage.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="576">
-          <caret line="38" column="17" selection-start-line="38" selection-start-column="17" selection-end-line="38" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/model/ElectricData.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="521">
-          <caret line="58" column="50" selection-start-line="58" selection-start-column="50" selection-end-line="58" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/model/DirectTable.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="21" column="79" selection-start-line="21" selection-start-column="77" selection-end-line="21" selection-end-column="79" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/model/KineticCoefficientData.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="612">
-          <caret line="52" column="33" selection-start-line="52" selection-start-column="33" selection-end-line="52" selection-end-column="33" />
-          <folding>
-            <element signature="e#15#61#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/ghg/pages/DirectPage.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="11" column="7" selection-start-line="11" selection-start-column="7" selection-end-line="11" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/ghg/pages/DirectDataPage.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3996">
-          <caret line="228" column="16" selection-start-line="228" selection-start-column="16" selection-end-line="228" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="40" column="23" selection-start-line="40" selection-start-column="23" selection-end-line="40" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/model/SampleData.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2988">
-          <caret line="168" column="46" selection-start-line="168" selection-start-column="46" selection-end-line="168" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/ghg/components/Electric3.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1224">
-          <caret line="74" column="25" selection-start-line="74" selection-start-column="25" selection-end-line="74" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/ghg/Utils.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1656">
-          <caret line="101" column="6" selection-start-line="101" selection-start-column="6" selection-end-line="101" selection-end-column="6" />
-          <folding>
-            <element signature="e#13#44#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/ghg/components/Bien2Anaerobic.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2448">
-          <caret line="141" column="115" selection-start-line="141" selection-start-column="109" selection-end-line="141" selection-end-column="115" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/gulpfile.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="28" column="42" selection-start-line="28" selection-start-column="42" selection-end-line="28" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/ghg/components/Bien4.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="23" column="49" selection-start-line="23" selection-start-column="49" selection-end-line="23" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/model/GhgData.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6156">
-          <caret line="345" column="20" selection-start-line="345" selection-start-column="8" selection-end-line="345" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/ghg/pages/AerobicPage.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="21" column="1" selection-start-line="21" selection-start-column="1" selection-end-line="21" selection-end-column="1" />
-          <folding>
-            <element signature="e#19#48#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/ghg/components/Bien3.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="540">
-          <caret line="30" column="26" selection-start-line="30" selection-start-column="26" selection-end-line="30" selection-end-column="26" />
-          <folding>
-            <element signature="e#24#66#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/ghg/pages/AnaerobicPage.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="15" column="36" selection-start-line="15" selection-start-column="36" selection-end-line="15" selection-end-column="36" />
-          <folding>
-            <element signature="e#19#48#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/ghg/pages/RetrievePage.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="458">
-          <caret line="79" selection-start-line="79" selection-end-line="79" />
-          <folding>
-            <element signature="e#19#44#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+  <component name="WindowStateProjectService">
+    <state x="903" y="378" key="#Notifications" timestamp="1576265885715">
+      <screen x="62" y="0" width="2498" height="1440" />
+    </state>
+    <state x="903" y="378" key="#Notifications/62.0.2498.1440/-2560.17.2498.1440@62.0.2498.1440" timestamp="1576265885715" />
+    <state x="903" y="378" key="#Plugins" timestamp="1576266023717">
+      <screen x="62" y="0" width="2498" height="1440" />
+    </state>
+    <state x="903" y="378" key="#Plugins/62.0.2498.1440/-2560.17.2498.1440@62.0.2498.1440" timestamp="1576266023717" />
+    <state x="812" y="362" key="SettingsEditor" timestamp="1576349296799">
+      <screen x="62" y="0" width="2498" height="1440" />
+    </state>
+    <state x="812" y="362" key="SettingsEditor/62.0.2498.1440/-2560.17.2498.1440@62.0.2498.1440" timestamp="1576349296799" />
+    <state x="1012" y="543" key="com.intellij.ide.util.TipDialog" timestamp="1576266055034">
+      <screen x="62" y="0" width="2498" height="1440" />
+    </state>
+    <state x="1012" y="543" key="com.intellij.ide.util.TipDialog/62.0.2498.1440/-2560.17.2498.1440@62.0.2498.1440" timestamp="1576266055034" />
+    <state x="1007" y="457" width="607" height="526" key="find.popup" timestamp="1576349365753">
+      <screen x="62" y="0" width="2498" height="1440" />
+    </state>
+    <state x="1007" y="457" width="607" height="526" key="find.popup/62.0.2498.1440/-2560.17.2498.1440@62.0.2498.1440" timestamp="1576349365753" />
+    <state x="967" y="340" width="672" height="677" key="run.anything.popup" timestamp="1576267520865">
+      <screen x="62" y="0" width="2498" height="1440" />
+    </state>
+    <state x="967" y="340" width="672" height="677" key="run.anything.popup/62.0.2498.1440/-2560.17.2498.1440@62.0.2498.1440" timestamp="1576267520865" />
+    <state x="967" y="373" width="672" height="676" key="search.everywhere.popup" timestamp="1576349325929">
+      <screen x="62" y="0" width="2498" height="1440" />
+    </state>
+    <state x="967" y="373" width="672" height="676" key="search.everywhere.popup/62.0.2498.1440/-2560.17.2498.1440@62.0.2498.1440" timestamp="1576349325929" />
   </component>
   <component name="masterDetails">
     <states>

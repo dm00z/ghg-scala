@@ -68,5 +68,5 @@ jsDependencies ++= Seq(
 )
 resolvers += Resolver.sonatypeRepo("releases")
 addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full)
-
+ivyScala := ivyScala.value map { _.copy(overrideScalaVersion = true) }
 //libraryDependencies += "com.github.karasiq" %%% "scalajs-bootstrap-v4" % "2.3.2"

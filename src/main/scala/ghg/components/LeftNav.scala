@@ -1,11 +1,13 @@
 package ghg.components
 
+import diode.react.ModelProxy
 import ghg.routes.AppRoute
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.extra.router.RouterCtl
 import japgolly.scalajs.react.vdom.prefix_<^._
 import scalacss.Defaults._
 import scalacss.ScalaCssReact._
+import model.{GhgData, TechMethod}
 
 object LeftNav {
   object Style extends StyleSheet.Inline { import dsl._
@@ -19,6 +21,13 @@ object LeftNav {
       minHeight :=! "100%"
     )
 
+    val hiddenNav = style(
+      display.none
+    )
+
+    val visibleNav = style(
+      display.listItem
+    )
 
     val menuItem = styleF(Domain.ofValues(0, 1) *** Domain.boolean) {
       case (indentLevel, selected) => styleS(
@@ -70,7 +79,7 @@ object LeftNav {
 
   case class Props(menus: List[AppRoute], selectedPage: AppRoute, ctrl: RouterCtl[AppRoute])
 
-  case class Backend($: BackendScope[Props, _]){
+  case class BackendAe($: BackendScope[Props, _]){
     def render(P: Props) = {
       <.nav(Style.sidebarNav)(
         <.span(Style.sideSpan)("Menu"),
@@ -78,6 +87,8 @@ object LeftNav {
           P.menus.map { item =>
             <.li(
               ^.key := item.name,
+              ^.id := item.route,
+              if(item.route == "anaerobic") Style.hiddenNav else Style.visibleNav,
               Style.menuItem(if(item.subGroup == null) 0 else 1, item == P.selectedPage),
               item.name,
               P.ctrl setOnClick item
@@ -87,11 +98,42 @@ object LeftNav {
       )
     }
   }
-  val component = ReactComponentB[Props]("LeftNav")
-    .renderBackend[Backend]
+
+  case class BackendAna($: BackendScope[Props, _]){
+    def render(P: Props) = {
+      <.nav(Style.sidebarNav)(
+        <.span(Style.sideSpan)("Menu"),
+        <.ul(Style.container)(
+          P.menus.map { item =>
+            <.li(
+              ^.key := item.name,
+              ^.id := item.route,
+              if(item.route == "aerobic") Style.hiddenNav else Style.visibleNav,
+              Style.menuItem(if(item.subGroup == null) 0 else 1, item == P.selectedPage),
+              item.name,
+              P.ctrl setOnClick item
+            )
+          }
+        )
+      )
+    }
+  }
+
+
+  val componentAe = ReactComponentB[Props]("LeftNav")
+    .renderBackend[BackendAe]
+    .build
+  val componentAna = ReactComponentB[Props]("LeftNav")
+    .renderBackend[BackendAna]
     .build
 
-  def apply(menus: List[AppRoute], selectedPage: AppRoute, ctrl: RouterCtl[AppRoute]) = component(Props(menus, selectedPage, ctrl))
+  def apply(menus: List[AppRoute], selectedPage: AppRoute, ctrl: RouterCtl[AppRoute], m: ModelProxy[GhgData]) = {
+    val d = m()
+    if (d.info.tech == TechMethod.Ae)
+      componentAe(Props(menus, selectedPage, ctrl))
+    else
+      componentAna(Props(menus, selectedPage, ctrl))
+  }
 
 //  def apply(menus: List[AppRoute], selectedPage: AppRoute, ctrl: RouterCtl[AppRoute],
 //            ref: UndefOr[String] = "",

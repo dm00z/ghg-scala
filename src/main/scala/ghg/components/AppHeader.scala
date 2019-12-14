@@ -6,6 +6,8 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import model.{GhgData, WaterType, SampleData, KineticRelationData}
 import scala.scalajs.js.Dynamic.{literal => jsObj}
+import org.scalajs.dom
+import dom.document
 
 object AppHeader {
   lazy val txtStyle = jsObj(width = "600px")
@@ -38,6 +40,15 @@ object AppHeader {
             },
             ^.onChange ==> { e: ReactEventI =>
               SampleData.selected = e.target.value
+              val ae = document.getElementById("aerobic")
+              val ana = document.getElementById("anaerobic")
+              if (e.target.value == "goldmark") {
+                ae.setAttribute("style", "display:list-item")
+                ana.setAttribute("style", "display:none")
+              } else {
+                ae.setAttribute("style", "display:none")
+                ana.setAttribute("style", "display:list-item")
+              }
               P.d.dispatch(SampleData.data)
             }
           )

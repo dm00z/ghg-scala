@@ -34,7 +34,7 @@ object AppRouter {
         //<.hr(),
         <.p(^.fontFamily := "-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif",
           ^.fontWeight := "bold", ^.color := "#145dbf",
-          "Nghiên cứu sinh: Nguyễn Thị Vân Anh; Người hướng dẫn: Đặng Xuân Hiển")
+          "Nghiên cứu sinh: Nguyễn Thị Vân Anh; Người hướng dẫn: PGS.TS. Đặng Xuân Hiển")
       )
     )
   }

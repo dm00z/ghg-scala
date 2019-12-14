@@ -46,9 +46,10 @@ object GhgPage {
   }
 
   case class Backend($: BackendScope[Props, _]) {
+
     def render(P: Props) = {
       <.div(Style.container,
-        <.div(Style.nav, LeftNav(AppRoutes.all, P.selectedPage, P.ctrl)),
+        <.div(Style.nav, LeftNav(AppRoutes.all, P.selectedPage, P.ctrl, P.proxy)),
         <.div(Style.content,
           AppHeader.component(AppHeader.Props(
             P.proxy, P.selectedPage.group, Option(P.selectedPage.subGroup), P.selectedPage != AppRoutes.Info
